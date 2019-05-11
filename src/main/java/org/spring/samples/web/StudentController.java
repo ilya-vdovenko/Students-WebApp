@@ -1,46 +1,48 @@
 package org.spring.samples.web;
 
+import org.spring.samples.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.spring.samples.repository.StudentRepository;
+import javax.validation.Valid;
 
-import java.util.Map;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
+@RequestMapping("/students")
 public class StudentController {
 
     private final StudentRepository sr;
+    private final String Student_CREATE_FORM = "/students/StudentCreateForm";
 
     @Autowired
     public StudentController(StudentRepository sr) {this.sr = sr;}
 
-    @RequestMapping(value = {"/home","/"}, method = RequestMethod.GET)
-    public String home() {
-        return "home";
+    @RequestMapping(value = "/{studentId}", method = GET)
+    public String showStudentProfile(@PathVariable int studentId, Model model) {
+        model.addAttribute(sr.findById(studentId));
+        return "studentProfile";
     }
 
-    @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public String allStudents(Map<String, Object> model) {
-        model.put("student_list", sr.getAllStudents());
+    @RequestMapping(method = GET)
+    public String showAllStudents(Model model) {
+        model.addAttribute("student_list", sr.getAllStudents());
         return "students";
     }
 
-    /*@RequestMapping(value = "/students/new", method = RequestMethod.GET)
-    public String initCreationForm(Map<String, Object> model) {
-        Owner owner = new Owner();
-        model.put("owner", owner);
-        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+    @RequestMapping(value = "/new", method = GET)
+    public String initCreationForm() {
+        return Student_CREATE_FORM;
     }
 
-    @RequestMapping(value = "/owners/new", method = RequestMethod.POST)
-    public String processCreationForm(@Valid Owner owner, BindingResult result) {
-        if (result.hasErrors()) {
-            return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-        } else {
-            this.clinicService.saveOwner(owner);
-            return "redirect:/owners/" + owner.getId();
-        }
-    }*/
+    @RequestMapping(value = "/new", method = POST)
+    public String processCreationForm(@Valid Student student, Errors errors) {
+        if (errors.hasErrors()) return Student_CREATE_FORM;
+        sr.save(student);
+        return "redirect:/students";
+    }
 }

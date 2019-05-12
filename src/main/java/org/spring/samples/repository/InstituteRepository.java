@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface InstituteRepository {
 
-    Faculty findById(int id) throws DataAccessException;
+    Faculty findFacultyById(int id) throws DataAccessException;
 
     Collection<Faculty> getAllFaculties() throws DataAccessException;
 

@@ -30,7 +30,7 @@ public class InstituteController {
         return "faculties";
     }
 
-    @RequestMapping(value = "/{facultyId}/{cathedraId}", method = GET)
+    @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}", method = GET)
     public String showCathedraProfile(@PathVariable int facultyId, @PathVariable int cathedraId, Model model) {
         model.addAttribute(ir.findCathedraById(facultyId, cathedraId));
         return "cathedraProfile";

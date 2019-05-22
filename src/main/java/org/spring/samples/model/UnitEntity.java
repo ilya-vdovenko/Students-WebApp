@@ -8,6 +8,10 @@ import javax.validation.constraints.NotEmpty;
 public class UnitEntity extends BaseEntity {
 
     @NotEmpty
+    @Column(name = "title")
+    private String title;
+
+    @NotEmpty
     @Column(name = "information")
     private String information;
 
@@ -41,5 +45,13 @@ public class UnitEntity extends BaseEntity {
 
     public void setContact_inf(String contact_inf) {
         this.contact_inf = contact_inf;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

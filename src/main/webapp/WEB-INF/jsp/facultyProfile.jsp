@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <th>Информация</th>
-        <td><c:out value="${faculty.information}"/>/td>
+        <td><c:out value="${faculty.information}"/></td>
     </tr>
     <tr>
         <th>Декан</th>
@@ -31,9 +31,14 @@
     </tr>
     <tr>
         <th>Кафедры</th>
-        <td><c:out value="${faculty.cathedras}"/></td>
+        <td>
+            <spring:url value="/{facultyId}/cathedras" var="catUrl">
+                <spring:param name="facultyId" value="${faculty.id}"/>
+            </spring:url>
+            <a href="${catUrl}"> <c:out value="${faculty.cathedras}"/></a>
+        </td>
     </tr>
-    <tr>
+    <tr>v
         <th>Студенты</th>
         <td><c:out value="${faculty.students}"/></td>
     </tr>

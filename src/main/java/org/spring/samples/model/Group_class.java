@@ -4,8 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
+//TODO: this entity haven't mapped in controller and views
 @Entity
-@Table(name = "Group_classes")
+@Table(name = "group_classes")
 public class Group_class extends BaseEntity {
 
     @NotEmpty

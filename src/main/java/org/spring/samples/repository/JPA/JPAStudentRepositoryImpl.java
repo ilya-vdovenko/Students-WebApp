@@ -19,7 +19,7 @@ public class JPAStudentRepositoryImpl implements StudentRepository {
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Student> getAllStudents() throws DataAccessException {
-        Query query = this.em.createQuery("FROM Student");
+        Query query = this.em.createQuery("from Student");
         return query.getResultList();
     }
 
@@ -34,7 +34,7 @@ public class JPAStudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student findById(int id) throws DataAccessException {
-        Query query = this.em.createQuery("FROM Student WHERE Student.id =:id");
+        Query query = this.em.createQuery("from Student as s where s.id =:id");
         query.setParameter("id", id);
         return (Student) query.getSingleResult();
     }

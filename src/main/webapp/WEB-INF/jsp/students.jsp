@@ -19,8 +19,8 @@
         <th>Адрес</th>
         <th>Контактный тел.</th>
         <th>Факультет</th>
+        <th>Кафеда</th>
         <th>Группа</th>
-        <th>Форма обучения</th>
     </tr>
     </thead>
     <tbody>
@@ -28,7 +28,7 @@
     <c:forEach items="${student_list}" var="student">
         <tr>
             <td>
-                <spring:url value="{studentId}/" var="studUrl">
+                <spring:url value="students/{studentId}" var="studUrl">
                     <spring:param name="studentId" value="${student.id}"/>
                 </spring:url>
                 <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
@@ -38,9 +38,25 @@
             <td> <c:out value="${student.fact_address}"/> </td>
             <td> <c:out value="${student.address}"/> </td>
             <td> <c:out value="${student.telephone}"/> </td>
-            <td> <c:out value="${student.faculty}"/> </td>
-            <td> <c:out value="${student.group_class}"/> </td>
-            <td> <c:out value="${student.fos}"/> </td>
+            <td>
+                <spring:url value="/faculties/{facultyId}" var="facUrl">
+                    <spring:param name="facultyId" value="${student.faculty.id}"/>
+                </spring:url>
+                <a href="${facUrl}"> <c:out value="${student.faculty.title}"/></a>
+            </td>
+            <td>
+                <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                    <spring:param name="facultyId" value="${student.faculty.id}"/>
+                    <spring:param name="cathedraId" value="${student.cathedra.id}"/>
+                </spring:url>
+                <a href="${catUrl}"> <c:out value="${student.cathedra.title}"/></a>
+            </td>
+            <td>
+                <spring:url value="/" var="gcUrl">
+                    <spring:param name="group_classId" value="${student.group_class.id}"/>
+                </spring:url>
+                <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

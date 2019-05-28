@@ -6,16 +6,16 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @NotEmpty
 @Table(name = "students")
 public class Student extends Person {
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "birthday")
-    private Date birthday;
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    private LocalDate birthday;
 
     @Column(name = "sex")
     private char sex;
@@ -34,14 +34,11 @@ public class Student extends Person {
     @JoinColumn(name = "group_class_id")
     private Group_class group_class;
 
-    @Column(name = "fos")
-    private String fos;
-
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -83,13 +80,5 @@ public class Student extends Person {
 
     public void setGroup_class(Group_class group_class) {
         this.group_class = group_class;
-    }
-
-    public String getFos() {
-        return fos;
-    }
-
-    public void setFos(String fos) {
-        this.fos = fos;
     }
 }

@@ -9,19 +9,25 @@
 </head>
 <body>
 <h2>
-    <c:if test="${student['new']}"> Добавление студента </c:if> Редактирование студента
+    <c:choose>
+        <c:when test="${student['new']}"> Добавление студента </c:when>
+        <c:otherwise> Редактирование студента </c:otherwise>
+    </c:choose>
 </h2>
-<sf:form method="POST" commandName="student">
+<sf:form method="POST" modelAttribute="student">
 <div>
-    ФИО: <sf:input path="fio" /><br/>
-    Дата рождения: <sf:input type="date" path="birthday" /><br/>
-    Пол: <sf:input type="radio" path="sex" values="жен"/><br/>
+    ФИО:<sf:input path="fio" /><br/>
+    <!--Дата рождения: <sf:input type="date" path="birthday" /><br/>-->
+    Пол: <sf:select path="sex">
+            <sf:option selected="selected" value="m">муж</sf:option>
+            <sf:option value="w">жен</sf:option>
+        </sf:select>
     Факт. адрес: <sf:input path="fact_address" /><br/>
     Адрес: <sf:input path="address" /><br/>
     Контактный тел.: <sf:input path="telephone" /><br/>
-    Факультет: <sf:input path="faculty" /><br/>
-    Группа: <sf:input path="group_class" /><br/>
-    Форма обучения: <sf:input path="fos" /><br/>
+    <!--Факультет: <sf:input path="faculty" /><br/>
+    Кафедра: <sf:input path="cathedra" /><br/>
+    Группа: <sf:input path="group_class" /><br/>-->
 </div>
     <div>
         <div>

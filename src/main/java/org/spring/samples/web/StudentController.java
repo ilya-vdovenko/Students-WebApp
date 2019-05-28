@@ -13,11 +13,11 @@ import javax.validation.Valid;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping(value = "/students")
 public class StudentController {
 
     private final StudentRepository sr;
-    private final String Student_CREATE_OR_UPDATE_FORM = "/students/StudentCreateOrUpdateForm";
+    private final String Student_CREATE_OR_UPDATE_FORM = "StudentCreateOrUpdateForm";
 
     @Autowired
     public StudentController(StudentRepository sr) {this.sr = sr;}
@@ -36,8 +36,7 @@ public class StudentController {
 
     @RequestMapping(value = "/new", method = GET)
     public String initCreationForm(Model model) {
-        Student owner = new Student();
-        model.addAttribute(owner);
+        model.addAttribute(new Student());
         return Student_CREATE_OR_UPDATE_FORM;
     }
 

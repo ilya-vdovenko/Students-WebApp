@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<!Doctype html>
 <html>
 <head>
     <title>StudentProfile</title>
@@ -15,7 +16,7 @@
     </tr>
     <tr>
         <th>Дата рождения</th>
-        <td><c:out value="${student.birthday}"/>/td>
+        <td><c:out value="${student.birthday}"/></td>
     </tr>
     <tr>
         <th>Пол</th>
@@ -36,19 +37,30 @@
     <tr>
         <th>Факультет</th>
         <td>
-            <spring:url value="{facultyId}/" var="facUrl">
-                <spring:param name="facultyId" value="${faculty.id}"/>
+            <spring:url value="/faculties/{facultyId}" var="facUrl">
+                <spring:param name="facultyId" value="${student.faculty.id}"/>
             </spring:url>
-            <a href="${facUrl}"> <c:out value="${student.faculty}"/></a>
+            <a href="${facUrl}"> <c:out value="${student.faculty.title}"/></a>
+        </td>
+    </tr>
+    <tr>
+        <th>Кафедра</th>
+        <td>
+            <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                <spring:param name="facultyId" value="${student.faculty.id}"/>
+                <spring:param name="cathedraId" value="${student.cathedra.id}"/>
+            </spring:url>
+            <a href="${catUrl}"> <c:out value="${student.cathedra.title}"/></a>
         </td>
     </tr>
     <tr>
         <th>Группа</th>
-        <td><c:out value="${student.group_class}"/></td>
-    </tr>
-    <tr>
-        <th>Форма обучения</th>
-        <td><c:out value="${student.fos}"/></td>
+        <td>
+            <spring:url value="/" var="gcUrl">
+                <spring:param name="group_classId" value="${student.group_class.id}"/>
+            </spring:url>
+            <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
+        </td>
     </tr>
 </table>
 <div>

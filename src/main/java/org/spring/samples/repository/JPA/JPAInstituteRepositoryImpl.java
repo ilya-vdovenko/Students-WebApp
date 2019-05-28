@@ -19,7 +19,7 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
 
     @Override
     public Faculty findFacultyById(int id) throws DataAccessException {
-        Query query = this.em.createQuery("FROM Faculty WHERE Faculty.id =:id");
+        Query query = this.em.createQuery("from Faculty as f where f.id =:id");
         query.setParameter("id", id);
         return (Faculty) query.getSingleResult();
     }
@@ -27,11 +27,11 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Faculty> getAllFaculties() throws DataAccessException {
-        Query query = this.em.createQuery("FROM Faculty");
+        Query query = this.em.createQuery("from Faculty");
         return query.getResultList();
     }
 
-    //TODO: проверить запрос
+    //TODO: check request
     @Override
     public Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException {
         Query query = this.em.createQuery("SELECT f FROM Faculty f left join fetch f.cathedras WHERE Faculty.id =:fid and Cathedra.id =:cid");
@@ -39,7 +39,7 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
         return (Cathedra) query.getSingleResult();
     }
 
-    //TODO: проверить запрос
+    //TODO: check request
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Cathedra> getAllCathedras(int facultyId) throws DataAccessException {

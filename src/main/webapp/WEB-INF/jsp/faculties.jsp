@@ -28,10 +28,10 @@
     <c:forEach items="${faculty_list}" var="faculty">
         <tr>
             <td>
-                <spring:url value="{facultyId}/" var="studUrl">
+                <spring:url value="faculties/{facultyId}" var="facUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
-                <a href="${studUrl}"> <c:out value="${faculty.title}"/> </a>
+                <a href="${facUrl}"> <c:out value="${faculty.title}"/> </a>
             </td>
             <td> <c:out value="${faculty.information}"/> </td>
             <td> <c:out value="${faculty.boss}"/> </td>

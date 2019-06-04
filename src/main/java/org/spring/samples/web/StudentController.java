@@ -1,5 +1,6 @@
 package org.spring.samples.web;
 
+import org.spring.samples.service.InstituteService;
 import org.spring.samples.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class StudentController {
 
     private final StudentRepository sr;
+    private final InstituteService is;
     private final String Student_CREATE_OR_UPDATE_FORM = "StudentCreateOrUpdateForm";
 
     @Autowired
-    public StudentController(StudentRepository sr) {this.sr = sr;}
+    public StudentController(StudentRepository sr, InstituteService is) {
+        this.sr = sr;
+        this.is = is;
+    }
 
     @RequestMapping(value = "/{studentId}", method = GET)
     public String showStudentProfile(@PathVariable int studentId, Model model) {
@@ -43,7 +48,7 @@ public class StudentController {
     @RequestMapping(value = "/new", method = POST)
     public String processCreationForm(@Valid Student student, Errors errors) {
         if (errors.hasErrors()) return Student_CREATE_OR_UPDATE_FORM;
-        sr.save(student);
+        is.saveStudent(student);
         return "redirect:/students";
     }
 
@@ -59,7 +64,7 @@ public class StudentController {
             return Student_CREATE_OR_UPDATE_FORM;
         } else {
             student.setId(studentId);
-            sr.save(student);
+            is.saveStudent(student);
             return "redirect:/students/{studentId}";
         }
     }

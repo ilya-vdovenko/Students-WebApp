@@ -18,7 +18,7 @@
 <sf:form method="POST" modelAttribute="student">
 <div>
     ФИО: <sf:input path="fio" /><br/>
-    Дата рождения: <sf:input type="date" path="birthday" /><br/>
+    <!--Дата рождения: <sf:input type="date" path="birthday" /><br/>-->
     Пол: <sf:select path="sex">
             <sf:option value="m">муж</sf:option>
             <sf:option value="w">жен</sf:option>
@@ -32,20 +32,27 @@
     <sql:query var="sqlresult_fac" sql="select id, title from faculties"/>
     Факультет:  <sf:select path="faculty" >
                     <c:forEach items="${sqlresult_fac.rows}" var="faculty" >
-                        <sf:option value="${faculty.id}">${faculty.title}</sf:option>
+                        <sf:option value="${faculty}">${faculty.title}</sf:option>
                     </c:forEach>
                 </sf:select>
 
     <sql:query var="sqlresult_caf" sql="select id, title from cathedras where faculty_id = ?" >
-        <sql:param value="2" />
+        <sql:param value="1" />
     </sql:query>
     Кафедра: <sf:select path="cathedra" >
                 <c:forEach items="${sqlresult_caf.rows}" var="cathedra" >
-                    <sf:option value="${cathedra.id}">${cathedra.title}</sf:option>
+                    <sf:option value="${cathedra}">${cathedra.title}</sf:option>
                 </c:forEach>
             </sf:select>
 
-    Группа: <sf:input path="group_class" /><br/>
+    <sql:query var="sqlresult_gr" sql="select id, name from group_classes where cathedra_id = ?" >
+        <sql:param value="1" />
+    </sql:query>
+    Группа: <sf:select path="group_class" >
+                <c:forEach items="${sqlresult_gr.rows}" var="group" >
+                    <sf:option value="${group}">${group.name}</sf:option>
+                </c:forEach>
+            </sf:select>
 </div>
     <div>
         <div>

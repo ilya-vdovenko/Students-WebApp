@@ -1,6 +1,6 @@
 package org.spring.samples.web;
 
-import org.spring.samples.repository.EmployeeRepository;
+import org.spring.samples.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,20 +13,22 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping(value = "/employees")
 public class EmployeeController {
 
-    private final EmployeeRepository er;
+    private final InstituteService service;
 
     @Autowired
-    EmployeeController(EmployeeRepository er) {this.er = er;}
+    EmployeeController(InstituteService is) {
+        this.service = is;
+    }
 
     @RequestMapping(value = "/{employeeId}", method = GET)
     public String showEmployeeProfile(@PathVariable int employeeId, Model model) {
-        model.addAttribute(er.findById(employeeId));
+        model.addAttribute(service.findEmployeeById(employeeId));
         return "employeeProfile";
     }
 
     @RequestMapping(method = GET)
     public String showAllEmployees(Model model) {
-        model.addAttribute("employee_list", er.getAllEmployees());
+        model.addAttribute("employee_list", service.getEmployees());
         return "employees";
     }
 }

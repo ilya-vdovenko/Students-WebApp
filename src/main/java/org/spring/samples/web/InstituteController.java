@@ -40,6 +40,7 @@ public class InstituteController {
 
     @RequestMapping(value = "/{facultyId}/cathedras", method = GET)
     public String showAllCathedras(@PathVariable int facultyId, Model model) {
+        model.addAttribute("faculty", service.findFacultyById(facultyId));
         model.addAttribute("cathedra_list", service.getCathedras(facultyId));
         return "cathedras";
     }

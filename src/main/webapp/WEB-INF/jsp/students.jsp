@@ -13,14 +13,13 @@
     <thead>
     <tr>
         <th>ФИО</th>
-        <th>Дата рождения</th>
         <th>Пол</th>
+        <th>Дата рождения</th>
         <th>Факт. адрес</th>
-        <th>Адрес</th>
         <th>Контактный тел.</th>
-        <th>Факультет</th>
-        <th>Кафеда</th>
         <th>Группа</th>
+        <th>Кафеда</th>
+        <th>Факультет</th>
     </tr>
     </thead>
     <tbody>
@@ -33,16 +32,16 @@
                 </spring:url>
                 <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
             </td>
-            <td> <c:out value="${student.birthday}"/> </td>
             <td> <c:out value="${student.sex}"/> </td>
+            <td> <c:out value="${student.birthday}"/> </td>
             <td> <c:out value="${student.fact_address}"/> </td>
-            <td> <c:out value="${student.address}"/> </td>
             <td> <c:out value="${student.telephone}"/> </td>
             <td>
-                <spring:url value="/faculties/{facultyId}" var="facUrl">
-                    <spring:param name="facultyId" value="${student.faculty.id}"/>
+                <!-- TODO: ref to groupProfile -->
+                <spring:url value="/" var="gcUrl">
+                    <spring:param name="group_classId" value="${student.group_class.id}"/>
                 </spring:url>
-                <a href="${facUrl}"> <c:out value="${student.faculty.title}"/></a>
+                <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
             </td>
             <td>
                 <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
@@ -52,10 +51,10 @@
                 <a href="${catUrl}"> <c:out value="${student.cathedra.title}"/></a>
             </td>
             <td>
-                <spring:url value="/" var="gcUrl">
-                    <spring:param name="group_classId" value="${student.group_class.id}"/>
+                <spring:url value="/faculties/{facultyId}" var="facUrl">
+                    <spring:param name="facultyId" value="${student.faculty.id}"/>
                 </spring:url>
-                <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
+                <a href="${facUrl}"> <c:out value="${student.faculty.title}"/></a>
             </td>
         </tr>
     </c:forEach>

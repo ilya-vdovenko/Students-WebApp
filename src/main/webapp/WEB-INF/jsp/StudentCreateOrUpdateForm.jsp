@@ -20,8 +20,8 @@
     ФИО: <sf:input path="fio" /><br/>
     <!--Дата рождения: <sf:input type="date" path="birthday" /><br/>-->
     Пол: <sf:select path="sex">
-            <sf:option value="m">муж</sf:option>
-            <sf:option value="w">жен</sf:option>
+            <sf:option value="муж">муж</sf:option>
+            <sf:option value="жен">жен</sf:option>
         </sf:select>
     Факт. адрес: <sf:input path="fact_address" /><br/>
     Адрес: <sf:input path="address" /><br/>

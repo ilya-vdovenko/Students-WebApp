@@ -7,19 +7,28 @@
     <title>CathedraProfile</title>
 </head>
 <body>
-<h1><b>Информация о кафедре</b></h1>
+<h1><b>Кафедра <c:out value="${cathedra.title}"/></b></h1>
 <table>
-    <tr>
-        <th>Название</th>
-        <td><b><c:out value="${сathedra.title}"/></b></td>
-    </tr>
     <tr>
         <th>Информация</th>
         <td><c:out value="${сathedra.information}"/>/td>
     </tr>
     <tr>
         <th>Декан</th>
-        <td><c:out value="${сathedra.boss}"/></td>
+        <td>
+            <spring:url value="employees/{employeId}" var="empUrl">
+                <spring:param name="employeId" value="${сathedra.boss.id}"/>
+            </spring:url>
+            <a href="${empUrl}"> <c:out value="${сathedra.boss.fio}"/> </a>
+        </td>
+    </tr>
+    <tr>
+        <th>Факультет</th>
+        <td>
+            <spring:url value="faculties/{facultyId}" var="facUrl">
+                <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+            </spring:url>
+            <a href="${facUrl}"> <c:out value="${cathedra.faculty.title}"/> </a>
     </tr>
     <tr>
         <th>Контактная инф.</th>
@@ -29,6 +38,8 @@
         <th>Программы обучения</th>
         <td><c:out value="${сathedra.programs}"/></td>
     </tr>
+
+    <!--TODO: set of information and value = "..." -->
     <tr>
         <th>Преподаватели</th>
         <td><c:out value="${сathedra.lecturers}"/></td>
@@ -36,10 +47,6 @@
     <tr>
         <th>Студенты</th>
         <td><c:out value="${сathedra.students}"/></td>
-    </tr>
-    <tr>
-        <th>Факультет</th>
-        <td><c:out value="${сathedra.faculty}"/></td>
     </tr>
     <tr>
         <th>Группы</th>

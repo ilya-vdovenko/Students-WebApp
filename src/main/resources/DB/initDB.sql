@@ -8,7 +8,7 @@ CREATE TABLE faculties (
     id          INTEGER IDENTITY PRIMARY KEY,
     title       VARCHAR(120),
     information VARCHAR(400),
-    boss        VARCHAR(45),
+    boss        INTEGER,
     contact_inf VARCHAR(350)
 );
 
@@ -16,7 +16,7 @@ CREATE TABLE cathedras (
     id          INTEGER IDENTITY PRIMARY KEY,
     title       VARCHAR(120),
     information VARCHAR(400),
-    boss        VARCHAR(45),
+    boss        INTEGER,
     contact_inf VARCHAR(350),
     programs    VARCHAR(550),
     faculty_id  INTEGER NOT NULL
@@ -37,9 +37,9 @@ CREATE TABLE students (
     id             INTEGER IDENTITY PRIMARY KEY,
     fio            VARCHAR(30),
     birthday       DATE,
-    sex            VARCHAR(1),
-    fact_address   VARCHAR(30),
-    address        VARCHAR(30),
+    sex            VARCHAR(3),
+    fact_address   VARCHAR(100),
+    address        VARCHAR(100),
     telephone      VARCHAR(11),
     group_class_id INTEGER NOT NULL,
     cathedra_id    INTEGER NOT NULL,
@@ -54,8 +54,10 @@ CREATE TABLE employees (
     fio            VARCHAR(60),
     position       VARCHAR(30),
     degree         VARCHAR(40),
-    cathedra_id    INTEGER NOT NULL,
+    cathedra_id    INTEGER,
     faculty_id     INTEGER NOT NULL
 );
+ALTER TABLE faculties ADD CONSTRAINT fk_faculties_employees FOREIGN KEY (boss) REFERENCES employees (id);
+ALTER TABLE cathedras ADD CONSTRAINT fk_cathedras_employees FOREIGN KEY (boss) REFERENCES employees (id);
 ALTER TABLE employees ADD CONSTRAINT fk_employees_cathedras FOREIGN KEY (cathedra_id) REFERENCES cathedras (id);
 ALTER TABLE employees ADD CONSTRAINT fk_employees_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);

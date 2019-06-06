@@ -1,7 +1,6 @@
 package org.spring.samples.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @MappedSuperclass
@@ -16,8 +15,9 @@ public class UnitEntity extends BaseEntity {
     private String information;
 
     @NotEmpty
-    @Column(name = "boss")
-    private String boss;
+    @OneToOne
+    @JoinColumn(name = "boss")
+    private Employee boss;
 
     @NotEmpty
     @Column(name = "contact_inf")
@@ -31,11 +31,11 @@ public class UnitEntity extends BaseEntity {
         this.information = information;
     }
 
-    public String getBoss() {
+    public Employee getBoss() {
         return boss;
     }
 
-    public void setBoss(String boss) {
+    public void setBoss(Employee boss) {
         this.boss = boss;
     }
 

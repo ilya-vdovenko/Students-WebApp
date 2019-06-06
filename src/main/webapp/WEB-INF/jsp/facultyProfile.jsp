@@ -19,36 +19,40 @@
     </tr>
     <tr>
         <th>Декан</th>
-        <td><c:out value="${faculty.boss}"/></td>
+        <td>
+            <spring:url value="employees/{employeId}" var="empUrl">
+                <spring:param name="employeId" value="${faculty.boss.id}"/>
+            </spring:url>
+            <a href="${empUrl}"> <c:out value="${faculty.boss.fio}"/> </a>
+        </td>
     </tr>
     <tr>
         <th>Контактная инф.</th>
         <td><c:out value="${faculty.contact_inf}"/></td>
     </tr>
-    <tr>
-        <th>Совет</th>
-        <td><c:out value="${faculty.soviet}"/></td>
-    </tr>
+
     <tr>
         <th>Кафедры</th>
         <td>
             <spring:url value="/{facultyId}/cathedras" var="catUrl">
                 <spring:param name="facultyId" value="${faculty.id}"/>
             </spring:url>
-            <a href="${catUrl}"> <c:out value="${faculty.cathedras}"/></a>
+            <a href="${catUrl}"> <c:out value="..."/></a>
         </td>
     </tr>
-    <tr>v
+
+    <!--TODO: set of information and value = "..."-->
+    <tr>
+        <th>Совет</th>
+        <td><c:out value="${faculty.soviet}"/></td>
+    </tr>
+    <tr>
         <th>Студенты</th>
         <td><c:out value="${faculty.students}"/></td>
     </tr>
     <tr>
         <th>Сотрудники</th>
         <td><c:out value="${faculty.employees}"/></td>
-    </tr>
-    <tr>
-        <th>Группы</th>
-        <td><c:out value="${faculty.group_classes}"/></td>
     </tr>
 </table>
 </body>

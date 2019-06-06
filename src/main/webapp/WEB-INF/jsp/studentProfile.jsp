@@ -8,12 +8,8 @@
     <title>StudentProfile</title>
 </head>
 <body>
-<h1><b>Информация о студенте</b></h1>
+<h1><b><c:out value="${student.fio}"/></b></h1>
 <table>
-    <tr>
-        <th>ФИО</th>
-        <td><b><c:out value="${student.fio}"/></b></td>
-    </tr>
     <tr>
         <th>Дата рождения</th>
         <td><c:out value="${student.birthday}"/></td>
@@ -35,12 +31,13 @@
         <td><c:out value="${student.telephone}"/></td>
     </tr>
     <tr>
-        <th>Факультет</th>
+        <th>Группа</th>
         <td>
-            <spring:url value="/faculties/{facultyId}" var="facUrl">
-                <spring:param name="facultyId" value="${student.faculty.id}"/>
+            <!-- TODO: ref to groupProfile -->
+            <spring:url value="/" var="gcUrl">
+                <spring:param name="group_classId" value="${student.group_class.id}"/>
             </spring:url>
-            <a href="${facUrl}"> <c:out value="${student.faculty.title}"/></a>
+            <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
         </td>
     </tr>
     <tr>
@@ -54,12 +51,12 @@
         </td>
     </tr>
     <tr>
-        <th>Группа</th>
+        <th>Факультет</th>
         <td>
-            <spring:url value="/" var="gcUrl">
-                <spring:param name="group_classId" value="${student.group_class.id}"/>
+            <spring:url value="/faculties/{facultyId}" var="facUrl">
+                <spring:param name="facultyId" value="${student.faculty.id}"/>
             </spring:url>
-            <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
+            <a href="${facUrl}"> <c:out value="${student.faculty.title}"/></a>
         </td>
     </tr>
 </table>
@@ -69,6 +66,5 @@
     </spring:url>
     <a href="${editUrl}">Редактировать профиль</a>
 </div>
-
 </body>
 </html>

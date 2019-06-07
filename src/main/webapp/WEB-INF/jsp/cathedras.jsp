@@ -42,7 +42,14 @@
 
             <!--TODO: set of information and value = "..." -->
             <td><c:out value="${cathedra.lecturers}"/></td>
-            <td><c:out value="${cathedra.group_classes}"/></td>
+            <td>
+            <td>
+                <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes" var="grclUrl">
+                    <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+                    <spring:param name="cathedraId" value="${cathedra.id}"/>
+                </spring:url>
+                <a href="${grclUrl}"> <c:out value="..."/></a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

@@ -4,14 +4,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-//TODO: this entity haven't mapped in controller and views
 @Entity
 @Table(name = "group_classes")
 public class Group_class extends BaseEntity {
 
     @NotEmpty
-    @Column(name = "name")
-    private String name;
+    @Column(name = "number")
+    private String number;
 
     @NotEmpty
     @ManyToOne(cascade = CascadeType.ALL)
@@ -30,12 +29,12 @@ public class Group_class extends BaseEntity {
     @Column(name = "fos")
     private String fos;
 
-    public String getName() {
-        return name;
+    public String getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public Cathedra getCathedra() {

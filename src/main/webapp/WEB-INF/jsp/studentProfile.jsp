@@ -33,11 +33,12 @@
     <tr>
         <th>Группа</th>
         <td>
-            <!-- TODO: ref to groupProfile -->
-            <spring:url value="/" var="gcUrl">
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}" var="grclUrl">
+                <spring:param name="facultyId" value="${student.faculty.id}"/>
+                <spring:param name="cathedraId" value="${student.cathedra.id}"/>
                 <spring:param name="group_classId" value="${student.group_class.id}"/>
             </spring:url>
-            <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
+            <a href="${grclUrl}"> <c:out value="${student.group_class.number}"/></a>
         </td>
     </tr>
     <tr>

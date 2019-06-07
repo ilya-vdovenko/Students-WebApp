@@ -1,9 +1,6 @@
 package org.spring.samples.service;
 
-import org.spring.samples.model.Cathedra;
-import org.spring.samples.model.Employee;
-import org.spring.samples.model.Faculty;
-import org.spring.samples.model.Student;
+import org.spring.samples.model.*;
 import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
@@ -14,7 +11,7 @@ public interface InstituteService {
 
     Collection<Faculty> getFaculties() throws DataAccessException;
 
-    Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException;
+    Cathedra findCathedraById(int cathedraId) throws DataAccessException;
 
     //Collection<Cathedra> getCathedras(int facultyId) throws DataAccessException;
 
@@ -27,4 +24,6 @@ public interface InstituteService {
     Employee findEmployeeById(int id) throws DataAccessException;
 
     Collection<Employee> getEmployees() throws DataAccessException;
+
+    Group_class findGroup_classById(int id) throws DataAccessException;
 }

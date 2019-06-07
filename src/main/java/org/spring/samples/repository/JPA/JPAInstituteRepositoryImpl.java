@@ -2,6 +2,7 @@ package org.spring.samples.repository.JPA;
 
 import org.spring.samples.model.Cathedra;
 import org.spring.samples.model.Faculty;
+import org.spring.samples.model.Group_class;
 import org.spring.samples.repository.InstituteRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -31,15 +32,20 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
         return query.getResultList();
     }
 
-    //TODO: check request
     @Override
-    public Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException {
+    public Cathedra findCathedraById(int cathedraId) throws DataAccessException {
         Query query = this.em.createQuery("from Cathedra as c where c.id =:id");
         query.setParameter("id", cathedraId);
         return (Cathedra) query.getSingleResult();
     }
 
-    //TODO: check request
+    @Override
+    public Group_class findGroup_classById(int id) throws DataAccessException {
+        Query query = this.em.createQuery("from Group_class as gc where gc.id =:id");
+        query.setParameter("id", id);
+        return (Group_class) query.getSingleResult();
+    }
+
     /*@Override
     @SuppressWarnings("unchecked")
     public Collection<Cathedra> getAllCathedras(int facultyId) throws DataAccessException {

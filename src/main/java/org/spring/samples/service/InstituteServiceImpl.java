@@ -1,9 +1,6 @@
 package org.spring.samples.service;
 
-import org.spring.samples.model.Cathedra;
-import org.spring.samples.model.Employee;
-import org.spring.samples.model.Faculty;
-import org.spring.samples.model.Student;
+import org.spring.samples.model.*;
 import org.spring.samples.repository.EmployeeRepository;
 import org.spring.samples.repository.InstituteRepository;
 import org.spring.samples.repository.StudentRepository;
@@ -43,8 +40,8 @@ public class InstituteServiceImpl implements InstituteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException {
-        return instituteRepository.findCathedraById(facultyId, cathedraId);
+    public Cathedra findCathedraById(int cathedraId) throws DataAccessException {
+        return instituteRepository.findCathedraById(cathedraId);
     }
 
     /*@Override
@@ -81,5 +78,11 @@ public class InstituteServiceImpl implements InstituteService {
     @Transactional(readOnly = true)
     public Collection<Employee> getEmployees() throws DataAccessException {
         return employeeRepository.getAllEmployees();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Group_class findGroup_classById(int id) throws DataAccessException {
+        return instituteRepository.findGroup_classById(id);
     }
 }

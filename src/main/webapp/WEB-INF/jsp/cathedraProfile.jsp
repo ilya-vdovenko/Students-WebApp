@@ -29,6 +29,7 @@
                 <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
             </spring:url>
             <a href="${facUrl}"> <c:out value="${cathedra.faculty.title}"/> </a>
+        </td>
     </tr>
     <tr>
         <th>Контактная инф.</th>
@@ -46,7 +47,13 @@
     </tr>
     <tr>
         <th>Группы</th>
-        <td><c:out value="${cathedra.group_classes}"/></td>
+        <td>
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes" var="grclUrl">
+                <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+                <spring:param name="cathedraId" value="${cathedra.id}"/>
+            </spring:url>
+            <a href="${grclUrl}"> <c:out value="..."/></a>
+        </td>
     </tr>
 </table>
 </body>

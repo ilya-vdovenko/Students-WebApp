@@ -8,7 +8,7 @@
     <title>Cathedras</title>
 </head>
 <body>
-<h1><spring:url value="faculties/{facultyId}" var="facUrl">
+<h1><spring:url value="/faculties/{facultyId}" var="facUrl">
         <spring:param name="facultyId" value="${faculty.id}"/>
     </spring:url>
     <a href="${facUrl}"><c:out value="${faculty.title}"/></a>. Список кафедр:
@@ -19,7 +19,6 @@
         <th>Название</th>
         <th>Декан</th>
         <th>Преподаватели</th>
-        <th>Студенты</th>
         <th>Группы</th>
     </tr>
     </thead>
@@ -27,18 +26,23 @@
     <%--suppress ELValidationInJSP --%>
     <c:forEach items="${cathedra_list}" var="cathedra">
         <tr>
-            <td><c:out value="${cathedra.title}"/></td>
             <td>
-                <spring:url value="employees/{employeId}" var="empUrl">
-                    <spring:param name="employeId" value="${сathedra.boss.id}"/>
+                <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                    <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+                    <spring:param name="cathedraId" value="${cathedra.id}"/>
                 </spring:url>
-                <a href="${empUrl}"> <c:out value="${сathedra.boss.fio}"/> </a>
+                <a href="${catUrl}"> <c:out value="${cathedra.title}"/></a>
+            </td>
+            <td>
+                <spring:url value="/employees/{employeId}" var="empUrl">
+                    <spring:param name="employeId" value="${cathedra.boss.id}"/>
+                </spring:url>
+                <a href="${empUrl}"> <c:out value="${cathedra.boss.fio}"/> </a>
             </td>
 
             <!--TODO: set of information and value = "..." -->
-            <td><c:out value="${сathedra.lecturers}"/></td>
-            <td><c:out value="${сathedra.students}"/></td>
-            <td><c:out value="${сathedra.group_classes}"/></td>
+            <td><c:out value="${cathedra.lecturers}"/></td>
+            <td><c:out value="${cathedra.group_classes}"/></td>
         </tr>
     </c:forEach>
     </tbody>

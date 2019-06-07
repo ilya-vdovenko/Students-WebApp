@@ -21,7 +21,7 @@
     <tr>
         <th>Кафедра</th>
         <td>
-            <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                 <spring:param name="facultyId" value="${employee.faculty.id}"/>
                 <spring:param name="cathedraId" value="${employee.cathedra.id}"/>
             </spring:url>

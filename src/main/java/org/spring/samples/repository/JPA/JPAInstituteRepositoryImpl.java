@@ -34,17 +34,17 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
     //TODO: check request
     @Override
     public Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException {
-        Query query = this.em.createQuery("SELECT f FROM Faculty f left join fetch f.cathedras WHERE Faculty.id =:fid and Cathedra.id =:cid");
-        query.setParameter("fid", facultyId).setParameter("cid", cathedraId);
+        Query query = this.em.createQuery("from Cathedra as c where c.id =:id");
+        query.setParameter("id", cathedraId);
         return (Cathedra) query.getSingleResult();
     }
 
     //TODO: check request
-    @Override
+    /*@Override
     @SuppressWarnings("unchecked")
     public Collection<Cathedra> getAllCathedras(int facultyId) throws DataAccessException {
         Query query = this.em.createQuery("SELECT f FROM Faculty f left join fetch f.cathedras WHERE Faculty.id =:id");
         query.setParameter("id", facultyId);
         return query.getResultList();
-    }
+    }*/
 }

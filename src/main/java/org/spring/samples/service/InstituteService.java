@@ -16,7 +16,7 @@ public interface InstituteService {
 
     Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException;
 
-    Collection<Cathedra> getCathedras(int facultyId) throws DataAccessException;
+    //Collection<Cathedra> getCathedras(int facultyId) throws DataAccessException;
 
     void saveStudent(Student student) throws DataAccessException;
 

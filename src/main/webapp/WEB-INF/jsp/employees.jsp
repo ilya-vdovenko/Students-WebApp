@@ -23,14 +23,14 @@
     <c:forEach items="${employee_list}" var="employee">
         <tr>
             <td>
-                <spring:url value="employees/{employeId}" var="empUrl">
+                <spring:url value="/employees/{employeId}" var="empUrl">
                     <spring:param name="employeId" value="${employee.id}"/>
                 </spring:url>
                 <a href="${empUrl}"> <c:out value="${employee.fio}"/> </a>
             </td>
             <td> <c:out value="${employee.position}"/> </td>
             <td>
-                <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                     <spring:param name="facultyId" value="${employee.faculty.id}"/>
                     <spring:param name="cathedraId" value="${employee.cathedra.id}"/>
                 </spring:url>

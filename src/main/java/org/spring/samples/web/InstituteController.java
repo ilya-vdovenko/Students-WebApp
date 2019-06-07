@@ -1,5 +1,6 @@
 package org.spring.samples.web;
 
+import org.spring.samples.model.Faculty;
 import org.spring.samples.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ public class InstituteController {
     public InstituteController(InstituteService is) {
         this.service = is;
     }
+
 
     @RequestMapping(value = "/{facultyId}", method = GET)
     public String showFacultyProfile(@PathVariable int facultyId, Model model) {
@@ -40,8 +42,9 @@ public class InstituteController {
 
     @RequestMapping(value = "/{facultyId}/cathedras", method = GET)
     public String showAllCathedras(@PathVariable int facultyId, Model model) {
-        model.addAttribute("faculty", service.findFacultyById(facultyId));
-        model.addAttribute("cathedra_list", service.getCathedras(facultyId));
+        Faculty faculty = service.findFacultyById(facultyId);
+        model.addAttribute(faculty);
+        model.addAttribute("cathedra_list", faculty.getCathedras());
         return "cathedras";
     }
 }

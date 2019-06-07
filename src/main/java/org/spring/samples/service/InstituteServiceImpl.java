@@ -47,11 +47,11 @@ public class InstituteServiceImpl implements InstituteService {
         return instituteRepository.findCathedraById(facultyId, cathedraId);
     }
 
-    @Override
+    /*@Override
     @Transactional(readOnly = true)
     public Collection<Cathedra> getCathedras(int facultyId) throws DataAccessException {
         return instituteRepository.getAllCathedras(facultyId);
-    }
+    }*/
 
     @Override
     @Transactional

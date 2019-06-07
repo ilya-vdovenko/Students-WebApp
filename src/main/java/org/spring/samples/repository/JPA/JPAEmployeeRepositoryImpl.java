@@ -18,7 +18,7 @@ public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Employee findById(int id) throws DataAccessException {
-        Query query = this.em.createQuery("FROM Employee WHERE Employee.id =:id");
+        Query query = this.em.createQuery("from Employee as e where e.id =:id");
         query.setParameter("id", id);
         return (Employee) query.getSingleResult();
     }
@@ -26,7 +26,7 @@ public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Employee> getAllEmployees() throws DataAccessException {
-        Query query = this.em.createQuery("FROM Employee");
+        Query query = this.em.createQuery("from Employee");
         return query.getResultList();
     }
 }

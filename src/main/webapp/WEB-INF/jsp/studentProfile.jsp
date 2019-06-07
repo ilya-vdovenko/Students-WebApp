@@ -43,7 +43,7 @@
     <tr>
         <th>Кафедра</th>
         <td>
-            <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                 <spring:param name="facultyId" value="${student.faculty.id}"/>
                 <spring:param name="cathedraId" value="${student.cathedra.id}"/>
             </spring:url>
@@ -61,7 +61,7 @@
     </tr>
 </table>
 <div>
-    <spring:url value="{studentId}/edit" var="editUrl">
+    <spring:url value="/{studentId}/edit" var="editUrl">
         <spring:param name="studentId" value="${student.id}"/>
     </spring:url>
     <a href="${editUrl}">Редактировать профиль</a>

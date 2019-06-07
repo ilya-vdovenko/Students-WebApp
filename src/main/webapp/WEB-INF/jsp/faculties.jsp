@@ -16,7 +16,6 @@
         <th>Декан</th>
         <th>Совет</th>
         <th>Кафедры</th>
-        <th>Студенты</th>
         <th>Сотрудники</th>
     </tr>
     </thead>
@@ -25,14 +24,14 @@
     <c:forEach items="${faculty_list}" var="faculty">
         <tr>
             <td>
-                <spring:url value="faculties/{facultyId}" var="facUrl">
+                <spring:url value="/faculties/{facultyId}" var="facUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
                 <a href="${facUrl}"> <c:out value="${faculty.title}"/> </a>
             </td>
 
             <td>
-                <spring:url value="employees/{employeId}" var="empUrl">
+                <spring:url value="/employees/{employeId}" var="empUrl">
                     <spring:param name="employeId" value="${faculty.boss.id}"/>
                 </spring:url>
                 <a href="${empUrl}"> <c:out value="${faculty.boss.fio}"/> </a>
@@ -40,7 +39,12 @@
 
             <!--TODO: set of information and value = "..."-->
             <td> <c:out value="${faculty.soviet}"/> </td>
-            <td> <c:out value="${faculty.cathedras}"/> </td>
+            <td>
+                <spring:url value="/faculties/{facultyId}/cathedras" var="catUrl">
+                    <spring:param name="facultyId" value="${faculty.id}"/>
+                </spring:url>
+                <a href="${catUrl}"> <c:out value="..."/></a>
+            </td>
             <td> <c:out value="${faculty.employees}"/> </td>
         </tr>
     </c:forEach>

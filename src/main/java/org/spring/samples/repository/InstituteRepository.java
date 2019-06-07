@@ -14,5 +14,5 @@ public interface InstituteRepository {
 
     Cathedra findCathedraById(int facultyId, int cathedraId) throws DataAccessException;
 
-    Collection<Cathedra> getAllCathedras(int facultyId) throws DataAccessException;
+    //Collection<Cathedra> getAllCathedras(int facultyId) throws DataAccessException;
 }

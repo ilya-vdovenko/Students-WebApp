@@ -27,7 +27,7 @@
     <c:forEach items="${student_list}" var="student">
         <tr>
             <td>
-                <spring:url value="students/{studentId}" var="studUrl">
+                <spring:url value="/students/{studentId}" var="studUrl">
                     <spring:param name="studentId" value="${student.id}"/>
                 </spring:url>
                 <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
@@ -44,7 +44,7 @@
                 <a href="${gcUrl}"> <c:out value="${student.group_class.name}"/></a>
             </td>
             <td>
-                <spring:url value="/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                     <spring:param name="facultyId" value="${student.faculty.id}"/>
                     <spring:param name="cathedraId" value="${student.cathedra.id}"/>
                 </spring:url>
@@ -61,7 +61,7 @@
     </tbody>
 </table>
 <div>
-    <spring:url value="students/new" var="newUrl"/>
+    <spring:url value="/students/new" var="newUrl"/>
     <a href="${newUrl}">Добавить студента</a>
 </div>
 </body>

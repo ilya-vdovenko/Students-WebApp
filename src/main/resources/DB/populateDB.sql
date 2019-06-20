@@ -43,6 +43,41 @@ UPDATE cathedras SET boss = 1 WHERE id = 1;
 UPDATE cathedras SET boss = 11 WHERE id = 2;
 UPDATE cathedras SET boss = 21 WHERE id = 3;
 
+INSERT INTO facultyWorker VALUES(1, 4);
+INSERT INTO facultyWorker VALUES(1, 5);
+INSERT INTO facultyWorker VALUES(1, 6);
+INSERT INTO facultyWorker VALUES(2, 18);
+INSERT INTO facultyWorker VALUES(2, 19);
+INSERT INTO facultyWorker VALUES(2, 20);
+
+INSERT INTO facultySoviet VALUES(1, 4);
+INSERT INTO facultySoviet VALUES(1, 5);
+INSERT INTO facultySoviet VALUES(1, 2);
+INSERT INTO facultySoviet VALUES(1, 3);
+INSERT INTO facultySoviet VALUES(1, 17);
+INSERT INTO facultySoviet VALUES(2, 18);
+INSERT INTO facultySoviet VALUES(2, 19);
+INSERT INTO facultySoviet VALUES(2, 20);
+INSERT INTO facultySoviet VALUES(2, 21);
+
+INSERT INTO cathedraLectures VALUES(1, 1);
+INSERT INTO cathedraLectures VALUES(1, 2);
+INSERT INTO cathedraLectures VALUES(1, 3);
+INSERT INTO cathedraLectures VALUES(1, 4);
+INSERT INTO cathedraLectures VALUES(1, 7);
+INSERT INTO cathedraLectures VALUES(1, 9);
+INSERT INTO cathedraLectures VALUES(1, 10);
+INSERT INTO cathedraLectures VALUES(1, 14);
+INSERT INTO cathedraLectures VALUES(2, 11);
+INSERT INTO cathedraLectures VALUES(2, 13);
+INSERT INTO cathedraLectures VALUES(2, 15);
+INSERT INTO cathedraLectures VALUES(2, 16);
+INSERT INTO cathedraLectures VALUES(2, 17);
+INSERT INTO cathedraLectures VALUES(3, 21);
+INSERT INTO cathedraLectures VALUES(3, 23);
+INSERT INTO cathedraLectures VALUES(3, 25);
+INSERT INTO cathedraLectures VALUES(3, 26);
+
 INSERT INTO students VALUES (1, 'Вдоенко Илья Сергеевич', '1994-09-26', 'муж', 'г.Воронеж, Московский пр-кт 141', '-', '89518719254', 1, 1, 1);
 INSERT INTO students VALUES (2, 'Валько Мария Сергеевна', '1994-11-15', 'жен', 'г.Воронеж, ул. Владимира Невского 56', '-', '83248764354', 1, 1, 1);
 INSERT INTO students VALUES (4, 'Кудрявцев Авраам Федорович', '1994-10-10', 'муж', 'г.Воронеж, Ленинский Пр., дом 114, кв. 46', 'г. Яблоновка, ул. Воронцовский Переулок, дом 46, квартира 243', '89515555515', 1, 1, 1);

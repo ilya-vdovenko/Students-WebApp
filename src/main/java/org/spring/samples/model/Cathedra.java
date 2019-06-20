@@ -12,13 +12,25 @@ public class Cathedra extends UnitEntity {
     @Column(name = "programs")
     private String programs;
 
+    /*@OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
+    private Set<Employee> lecturers;*/
+
+    @NotEmpty
     @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
-    private Set<Employee> lecturers;
+    private Set<Employee> employees;
 
     @NotEmpty
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
 
     @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
     private Set<Group_class> group_classes;
@@ -31,13 +43,13 @@ public class Cathedra extends UnitEntity {
         this.programs = programs;
     }
 
-    public Set<Employee> getLecturers() {
+    /*public Set<Employee> getLecturers() {
         return lecturers;
     }
 
     public void setLecturers(Set<Employee> lecturers) {
         this.lecturers = lecturers;
-    }
+    }*/
 
     public Faculty getFaculty() {
         return faculty;

@@ -36,16 +36,23 @@
                 </spring:url>
                 <a href="${empUrl}"> <c:out value="${faculty.boss.fio}"/> </a>
             </td>
-
-            <!--TODO: set of information and value = "..."-->
-            <td> <c:out value="${faculty.soviet}"/> </td>
+            <td>
+                <spring:url value="/faculties/{facultyId}/soviet" var="sovUrl">
+                    <spring:param name="facultyId" value="${faculty.id}"/>
+                </spring:url>
+                <a href="${sovUrl}"> <c:out value="..."/></a>
             <td>
                 <spring:url value="/faculties/{facultyId}/cathedras" var="catUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
                 <a href="${catUrl}"> <c:out value="..."/></a>
             </td>
-            <td> <c:out value="${faculty.employees}"/> </td>
+            <td>
+                <spring:url value="/faculties/{facultyId}/employees" var="emplUrl">
+                    <spring:param name="facultyId" value="${faculty.id}"/>
+                </spring:url>
+                <a href="${emplUrl}"> <c:out value="..."/></a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

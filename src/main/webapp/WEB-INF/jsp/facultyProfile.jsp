@@ -27,10 +27,13 @@
         <td><c:out value="${faculty.contact_inf}"/></td>
     </tr>
 
-    <!--TODO: set of information and value = "..."-->
     <tr>
         <th>Совет</th>
-        <td><c:out value="${faculty.soviet}"/></td>
+        <td>
+            <spring:url value="/faculties/{facultyId}/soviet" var="sovUrl">
+                <spring:param name="facultyId" value="${faculty.id}"/>
+            </spring:url>
+            <a href="${sovUrl}"> <c:out value="..."/></a>
     </tr>
     <tr>
         <th>Кафедры</th>
@@ -43,7 +46,12 @@
     </tr>
     <tr>
         <th>Сотрудники</th>
-        <td><c:out value="${faculty.employees}"/></td>
+        <td>
+            <spring:url value="/faculties/{facultyId}/employees" var="emplUrl">
+                <spring:param name="facultyId" value="${faculty.id}"/>
+            </spring:url>
+            <a href="${emplUrl}"> <c:out value="..."/></a>
+        </td>
     </tr>
 </table>
 </body>

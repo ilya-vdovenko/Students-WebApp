@@ -11,8 +11,8 @@ import java.util.Set;
 @Table(name = "faculties")
 public class Faculty extends UnitEntity {
 
-    @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
-    private Set<Employee> soviet;
+//    @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
+//    private Set<Employee> soviet;
 
     @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
     private Set<Cathedra> cathedras;
@@ -27,13 +27,13 @@ public class Faculty extends UnitEntity {
     @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
     private Set<Group_class> group_classes;
 
-    public Set<Employee> getSoviet() {
-        return soviet;
-    }
-
-    public void setSoviet(Set<Employee> soviet) {
-        this.soviet = soviet;
-    }
+//    public Set<Employee> getSoviet() {
+//        return soviet;
+//    }
+//
+//    public void setSoviet(Set<Employee> soviet) {
+//        this.soviet = soviet;
+//    }
 
     public Set<Cathedra> getCathedras() {
         return cathedras;

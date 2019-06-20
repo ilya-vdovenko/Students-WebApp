@@ -16,7 +16,13 @@
 </h1>
 <%--suppress ELValidationInJSP --%>
 <c:forEach items="${group_class_list}" var="group_class">
-    <p>гр. <c:out value="${group_class.number}"/> (<c:out value="${group_class.fos}"/> форма обучения)</p>
+    <p>гр.
+        <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}" var="grclUrl">
+            <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+            <spring:param name="cathedraId" value="${cathedra.id}"/>
+            <spring:param name="group_classId" value="${group_class.id}"/>
+        </spring:url>
+        <a href="${grclUrl}"> <c:out value="${group_class.number}"/></a> (<c:out value="${group_class.fos}"/> форма обучения)</p>
     <p>Студенты группы:</p>
     <table>
         <thead>

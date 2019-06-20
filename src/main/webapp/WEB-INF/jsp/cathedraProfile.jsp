@@ -14,7 +14,7 @@
         <td><c:out value="${cathedra.information}"/><td>
     </tr>
     <tr>
-        <th>Декан</th>
+        <th>Заведующий кафедрой</th>
         <td>
             <spring:url value="/employees/{employeId}" var="empUrl">
                 <spring:param name="employeId" value="${cathedra.boss.id}"/>
@@ -39,11 +39,14 @@
         <th>Программы обучения</th>
         <td><c:out value="${cathedra.programs}"/></td>
     </tr>
-
-    <!--TODO: set of information and value = "..." -->
     <tr>
         <th>Преподаватели</th>
-        <td><c:out value="${cathedra.lecturers}"/></td>
+        <td><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers" var="lecUrl">
+                <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+                <spring:param name="cathedraId" value="${cathedra.id}"/>
+            </spring:url>
+            <a href="${lecUrl}"> <c:out value="..."/></a>
+        </td>
     </tr>
     <tr>
         <th>Группы</th>

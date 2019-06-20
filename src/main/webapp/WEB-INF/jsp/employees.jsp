@@ -8,7 +8,33 @@
     <title>Employees</title>
 </head>
 <body>
-<h1>Список всех сотрудников института</h1>
+<h1>
+    <spring:url value="/faculties/{facultyId}" var="facUrl">
+        <spring:param name="facultyId" value="${faculty.id}"/>
+    </spring:url>
+    <c:choose>
+        <c:when test="${faculty!=null && soviet==false}">
+            <a href="${facUrl}"><c:out value="${faculty.title}"/></a>. Список сотрудников</c:when>
+        <c:otherwise>
+            <c:choose>
+                <c:when test="${soviet==true}">
+                    <a href="${facUrl}"><c:out value="${faculty.title}"/></a>. Список сотрудников входящих в совет</c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${cathedra!=null}">
+                            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                                <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+                                <spring:param name="cathedraId" value="${cathedra.id}"/>
+                            </spring:url>
+                            <a href="${catUrl}"> <c:out value="${cathedra.title}"/></a>. Список преподавателей
+                        </c:when>
+                        <c:otherwise>Список всех сотрудников института</c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
+        </c:otherwise>
+    </c:choose>
+    </h1>
 <table>
     <thead>
     <tr>

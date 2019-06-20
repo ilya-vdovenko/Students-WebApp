@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
@@ -28,5 +30,37 @@ public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
     public Collection<Employee> getAllEmployees() throws DataAccessException {
         Query query = this.em.createQuery("from Employee");
         return query.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Collection<Employee> getList(Query query, int Id) throws DataAccessException {
+        query.setParameter(1, Id);
+        Collection<Employee> list_of_employeers = new ArrayList<>();
+        List<Integer> list_of_employeersId= query.getResultList();
+        for(int id: list_of_employeersId) {
+            query = this.em.createQuery("from Employee as e where e.id =:id");
+            query.setParameter("id", id);
+            list_of_employeers.add((Employee) query.getSingleResult());
+        }
+        return list_of_employeers;
+    }
+
+    //TODO: find more best solution
+    @Override
+    public Collection<Employee> getFacultyEmployees(int facultyId) {
+        Query query = this.em.createNativeQuery("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?");
+        return getList(query, facultyId);
+    }
+
+    @Override
+    public Collection<Employee> getFacultySoviet(int facultyId) {
+        Query query = this.em.createNativeQuery("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?");
+        return getList(query, facultyId);
+    }
+
+    @Override
+    public Collection<Employee> getCathedraLecturers(int cathedraId) {
+        Query query = this.em.createNativeQuery("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?");
+        return getList(query, cathedraId);
     }
 }

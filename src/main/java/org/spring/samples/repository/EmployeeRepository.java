@@ -10,4 +10,10 @@ public interface EmployeeRepository {
     Employee findById(int id) throws DataAccessException;
 
     Collection<Employee> getAllEmployees() throws DataAccessException;
+
+    Collection<Employee> getFacultyEmployees(int facultyId);
+
+    Collection<Employee> getFacultySoviet(int facultyId);
+
+    Collection<Employee> getCathedraLecturers(int cathedraId);
 }

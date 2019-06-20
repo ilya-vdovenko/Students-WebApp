@@ -50,6 +50,22 @@ public class InstituteController {
         return "cathedras";
     }
 
+    @RequestMapping(value = "/{facultyId}/employees", method = GET)
+    public String showAllEmployees(@PathVariable int facultyId, Model model) {
+        model.addAttribute(service.findFacultyById(facultyId));
+        model.addAttribute("employee_list", service.getFacultyEmployees(facultyId));
+        model.addAttribute("soviet", false);
+        return "employees";
+    }
+
+    @RequestMapping(value = "/{facultyId}/soviet", method = GET)
+    public String showFacultySoviet(@PathVariable int facultyId, Model model) {
+        model.addAttribute(service.findFacultyById(facultyId));
+        model.addAttribute("employee_list", service.getFacultySoviet(facultyId));
+        model.addAttribute("soviet", true);
+        return "employees";
+    }
+
     @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}", method = GET)
     public String showGroup_classProfile(@PathVariable int group_classId, Model model) {
         Group_class group_class = service.findGroup_classById(group_classId);
@@ -64,5 +80,13 @@ public class InstituteController {
         model.addAttribute(cathedra);
         model.addAttribute("group_class_list", cathedra.getGroup_classes());
         return "group_classes";
+    }
+
+    @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/lecturers", method = GET)
+    public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
+        Cathedra cathedra = service.findCathedraById(cathedraId);
+        model.addAttribute(cathedra);
+        model.addAttribute("employee_list", service.getCathedraLecturers(cathedraId));
+        return "employees";
     }
 }

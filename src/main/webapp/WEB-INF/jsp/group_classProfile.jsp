@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Group_classProfile</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${group_class.number}"/></b></h1>
@@ -30,11 +31,12 @@
                 <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
             </spring:url>
             <a href="${facUrl}"> <c:out value="${group_class.faculty.title}"/> </a>
+        </td>
     </tr>
 </table>
 <%--suppress ELValidationInJSP --%>
 <p>Студенты группы:</p>
-<table>
+<table class="list">
     <thead>
     <tr>
         <th>ФИО</th>
@@ -53,9 +55,9 @@
                 </spring:url>
                 <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
             </td>
-            <td> <c:out value="${student.sex}"/> </td>
-            <td> <c:out value="${student.birthday}"/> </td>
-            <td> <c:out value="${student.telephone}"/> </td>
+            <td class="center"> <c:out value="${student.sex}"/> </td>
+            <td class="center"> <c:out value="${student.birthday}"/> </td>
+            <td class="center"> <c:out value="${student.telephone}"/> </td>
         </tr>
     </c:forEach>
     </tbody>

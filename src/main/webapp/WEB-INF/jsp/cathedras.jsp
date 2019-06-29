@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Cathedras</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
 </head>
 <body>
 <h1><spring:url value="/faculties/{facultyId}" var="facUrl">
@@ -13,6 +14,7 @@
     </spring:url>
     <a href="${facUrl}"><c:out value="${faculty.title}"/></a>. Список кафедр:
 </h1>
+<div style="overflow-x:auto;">
 <table>
     <thead>
     <tr>
@@ -39,15 +41,14 @@
                 </spring:url>
                 <a href="${empUrl}"> <c:out value="${cathedra.boss.fio}"/> </a>
             </td>
-            <td>
+            <td class="center">
                 <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers" var="lecUrl">
                     <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                     <spring:param name="cathedraId" value="${cathedra.id}"/>
                 </spring:url>
                 <a href="${lecUrl}"> <c:out value="..."/></a>
             </td>
-            <td>
-            <td>
+            <td class="center">
                 <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes" var="grclUrl">
                     <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                     <spring:param name="cathedraId" value="${cathedra.id}"/>
@@ -58,5 +59,6 @@
     </c:forEach>
     </tbody>
 </table>
+</div>
 </body>
 </html>

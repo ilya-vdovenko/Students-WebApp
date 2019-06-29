@@ -6,9 +6,11 @@
 <html>
 <head>
     <title>Students</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
 </head>
 <body>
 <h1>Список всех студентов института</h1>
+<div style="overflow-x:auto;">
 <table>
     <thead>
     <tr>
@@ -18,7 +20,7 @@
         <th>Факт. адрес</th>
         <th>Контактный тел.</th>
         <th>Группа</th>
-        <th>Кафеда</th>
+        <th>Кафедра</th>
         <th>Факультет</th>
     </tr>
     </thead>
@@ -32,11 +34,11 @@
                 </spring:url>
                 <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
             </td>
-            <td> <c:out value="${student.sex}"/> </td>
-            <td> <c:out value="${student.birthday}"/> </td>
+            <td class="center"> <c:out value="${student.sex}"/> </td>
+            <td class="center"> <c:out value="${student.birthday}"/> </td>
             <td> <c:out value="${student.fact_address}"/> </td>
-            <td> <c:out value="${student.telephone}"/> </td>
-            <td>
+            <td class="center"> <c:out value="${student.telephone}"/> </td>
+            <td class="center">
                 <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}" var="grclUrl">
                     <spring:param name="facultyId" value="${student.faculty.id}"/>
                     <spring:param name="cathedraId" value="${student.cathedra.id}"/>
@@ -61,7 +63,8 @@
     </c:forEach>
     </tbody>
 </table>
-<div>
+</div>
+<div id="AddButton">
     <spring:url value="/students/new" var="newUrl"/>
     <a href="${newUrl}">Добавить студента</a>
 </div>

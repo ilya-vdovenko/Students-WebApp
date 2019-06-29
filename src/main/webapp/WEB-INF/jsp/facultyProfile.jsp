@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>FacultyProfile</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${faculty.title}"/></b></h1>

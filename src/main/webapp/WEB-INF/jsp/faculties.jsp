@@ -6,9 +6,11 @@
 <html>
 <head>
     <title>Faculties</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
 </head>
 <body>
 <h1>Список всех факультетов института</h1>
+<div style="overflow-x:auto;">
 <table>
     <thead>
     <tr>
@@ -36,18 +38,18 @@
                 </spring:url>
                 <a href="${empUrl}"> <c:out value="${faculty.boss.fio}"/> </a>
             </td>
-            <td>
+            <td class="center">
                 <spring:url value="/faculties/{facultyId}/soviet" var="sovUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
                 <a href="${sovUrl}"> <c:out value="..."/></a>
-            <td>
+            <td class="center">
                 <spring:url value="/faculties/{facultyId}/cathedras" var="catUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
                 <a href="${catUrl}"> <c:out value="..."/></a>
             </td>
-            <td>
+            <td class="center">
                 <spring:url value="/faculties/{facultyId}/employees" var="emplUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
@@ -57,5 +59,6 @@
     </c:forEach>
     </tbody>
 </table>
+</div>
 </body>
 </html>

@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Employees</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
 </head>
 <body>
 <h1>
@@ -35,12 +36,13 @@
         </c:otherwise>
     </c:choose>
     </h1>
+<div style="overflow-x:auto;">
 <table>
     <thead>
     <tr>
         <th>ФИО</th>
         <th>Должность</th>
-        <th>Кафеда</th>
+        <th>Кафедра</th>
         <th>Факультет</th>
     </tr>
     </thead>
@@ -72,5 +74,6 @@
     </c:forEach>
     </tbody>
 </table>
+</div>
 </body>
 </html>

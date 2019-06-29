@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Group_classes</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
 </head>
 <body>
 <h1><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
@@ -43,9 +44,9 @@
                     </spring:url>
                     <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
                 </td>
-                <td> <c:out value="${student.sex}"/> </td>
-                <td> <c:out value="${student.birthday}"/> </td>
-                <td> <c:out value="${student.telephone}"/> </td>
+                <td class="center"> <c:out value="${student.sex}"/> </td>
+                <td class="center"> <c:out value="${student.birthday}"/> </td>
+                <td class="center"> <c:out value="${student.telephone}"/> </td>
             </tr>
         </c:forEach>
         </tbody>

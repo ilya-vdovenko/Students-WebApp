@@ -4,9 +4,10 @@
 <html>
 <head>
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/home.css">
 </head>
-    <h1><b>Добро пожаловать на старотовую страницу Student WebApp</b></h1>
-    <h2>Список</h2>
+    <h1>Добро пожаловать на стартовую страницу Student WebApp</h1>
+    <h2>Списки</h2>
 <ul>
     <li><a href="students">Студентов</a></li>
     <li><a href="employees">Сотрудников</a></li>

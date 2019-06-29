@@ -18,7 +18,7 @@ public class Student extends Person {
     private LocalDate birthday;
 
     @Column(name = "sex")
-    private char sex;
+    private String sex;
 
     @Column(name = "fact_address")
     private String fact_address;
@@ -42,11 +42,11 @@ public class Student extends Person {
         this.birthday = birthday;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

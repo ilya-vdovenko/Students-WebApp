@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>StudentProfile</title>
+    <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${student.fio}"/></b></h1>
@@ -61,8 +62,8 @@
         </td>
     </tr>
 </table>
-<div>
-    <spring:url value="/{studentId}/edit" var="editUrl">
+<div id="UpdateButton">
+    <spring:url value="/students/{studentId}/edit" var="editUrl">
         <spring:param name="studentId" value="${student.id}"/>
     </spring:url>
     <a href="${editUrl}">Редактировать профиль</a>

@@ -5,6 +5,11 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
 
+/**
+ *Repository class for Student domain objects.
+ *
+ **/
+
 public interface StudentRepository {
 
     void save(Student student) throws DataAccessException;

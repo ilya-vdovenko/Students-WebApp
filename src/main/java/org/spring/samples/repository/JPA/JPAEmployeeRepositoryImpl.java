@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * JPA implementation of the {@link EmployeeRepository} interface.
+ *
+ **/
+
+
 @Repository
 public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
 

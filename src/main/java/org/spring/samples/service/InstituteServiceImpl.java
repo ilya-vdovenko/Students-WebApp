@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
+/**
+ * Mostly used as a facade for all controllers.
+ * Also a placeholder for @Transactional annotations.
+ *
+ **/
+
 @Service
 public class InstituteServiceImpl implements InstituteService {
 

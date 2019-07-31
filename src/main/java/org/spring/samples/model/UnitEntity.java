@@ -3,6 +3,12 @@ package org.spring.samples.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * Simple JavaBean domain object adds institute property to BaseEntity.
+ * Used as a base class for objects needing these properties.
+ *
+ **/
+
 @MappedSuperclass
 public class UnitEntity extends BaseEntity {
 

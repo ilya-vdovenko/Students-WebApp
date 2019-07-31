@@ -8,6 +8,11 @@ import javax.validation.constraints.NotEmpty;
 
 import java.time.LocalDate;
 
+/**
+ * Simple JavaBean domain object representing an student.
+ *
+ **/
+
 @Entity
 @NotEmpty
 @Table(name = "students")

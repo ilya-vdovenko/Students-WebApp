@@ -12,6 +12,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Collection;
 
+/**
+ * JPA implementation of the {@link InstituteRepository} interface.
+ *
+ **/
+
 @Repository
 public class JPAInstituteRepositoryImpl implements InstituteRepository {
 

@@ -10,6 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Collection;
 
+/**
+ * JPA implementation of the {@link StudentRepository} interface.
+ *
+ **/
+
 @Repository
 public class JPAStudentRepositoryImpl implements StudentRepository {
 

@@ -3,6 +3,12 @@ package org.spring.samples.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * Simple JavaBean domain object representing an person.
+ * Used as a base class for objects needing this property.
+ *
+ **/
+
 @MappedSuperclass
 public class Person extends BaseEntity {
 

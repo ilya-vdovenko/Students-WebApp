@@ -3,6 +3,11 @@ package org.spring.samples.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * Simple JavaBean domain object representing an Employee.
+ *
+ **/
+
 @Entity
 @Table(name = "employees")
 public class Employee extends Person {

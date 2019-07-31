@@ -5,6 +5,11 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
 
+/**
+ *Repository class for Employee domain objects.
+ *
+ **/
+
 public interface EmployeeRepository {
 
     Employee findById(int id) throws DataAccessException;

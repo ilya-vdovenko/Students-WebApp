@@ -5,6 +5,11 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
 
+/**
+ * Mostly used as a facade so all controllers have a single point of entry.
+ *
+ **/
+
 public interface InstituteService {
 
     Faculty findFacultyById(int id) throws DataAccessException;

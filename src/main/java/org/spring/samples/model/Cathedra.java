@@ -4,6 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an cathedra.
+ *
+ **/
+
 @Entity
 @Table(name = "cathedras")
 public class Cathedra extends UnitEntity {

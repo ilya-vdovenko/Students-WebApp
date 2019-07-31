@@ -7,6 +7,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an faculty.
+ *
+ **/
+
 @Entity
 @Table(name = "faculties")
 public class Faculty extends UnitEntity {

@@ -4,6 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an group_class.
+ *
+ **/
+
 @Entity
 @Table(name = "group_classes")
 public class Group_class extends BaseEntity {

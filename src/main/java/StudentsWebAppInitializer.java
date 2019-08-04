@@ -2,6 +2,12 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
+/**
+ * Create the Spring root application context.
+ * Register DispatcherServlet in the servlet context.
+ *
+ */
+
 public class StudentsWebAppInitializer extends AbstractDispatcherServletInitializer {
 
     @Override

@@ -29,7 +29,7 @@ and with a **3-layer architecture** (i.e. presentation --> service --> repositor
 ### With Maven command line
 
 ```
-git clone https://github.com/JonyN5/Students-WebApp.git
+git clone https://github.com/ilya-vdovenko/Students-WebApp.git
 cd Students-WebApp
 ./mvnw tomcat:run-war
 ```
@@ -53,7 +53,7 @@ The following items should be installed in your system:
 1) Import project and past url to the project. Or on the command line
 
 ```
-git clone https://github.com/spring-projects/spring-petclinic.git
+git clone https://github.com/ilya-vdovenko/Students-WebApp.git
 ```
 
 2) (If through CL) Inside IDE

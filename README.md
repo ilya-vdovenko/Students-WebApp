@@ -3,27 +3,6 @@
 This repo is a Pet-project of web application represent list of students from database (HSQLDB only. More soon), with a plain old **Spring Framework configuration**
 and with a **3-layer architecture** (i.e. presentation --> service --> repository). Created following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic),
 
-## Known issues:
-- [ ] New data are not added through the form
-- [ ] When selecting a faculty, the lists of departments and groups are not narrowed
-
-## Stage's of the project:
-- [x] Realisation models
-- [x] Realisation controllers
-- [x] Realisation repository's
-- [x] Realisation view
-- [x] Init DB script 
-- [x] CSS style  
-- [ ] Unit test's
-- [ ] Realisation jdbc
-- [ ] Redesign the layout of pages with footer and header
-- [ ] Validation of data
-- [ ] Sorting lists (default name alphabet)
-- [ ] Search page
-- [ ] Security
-- [ ] Cashe support
-- [ ] Internationalization support
-
 ## Running app locally
 
 ### With Maven command line

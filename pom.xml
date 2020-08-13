@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.springframework.app</groupId>
     <artifactId>spring-framework-students</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -16,38 +15,32 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Spring -->
-
         <spring-framework.version>5.2.3.RELEASE</spring-framework.version>
         <spring-data-jdbc.version>1.0.6.RELEASE</spring-data-jdbc.version>
 
         <!-- Persistence -->
-
-        <spring-data-jpa>2.1.6.RELEASE</spring-data-jpa>
+        <spring-data-jpa>2.1.8.RELEASE</spring-data-jpa>
         <hibernate.version>5.3.7.Final</hibernate.version>
         <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
         <hsqldb.version>2.4.1</hsqldb.version>
 
         <!-- Java EE -->
-
         <javax-jstl.version>1.2.2</javax-jstl.version>
         <taglibs-standard.version>1.2.5</taglibs-standard.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
 
         <!-- Logging -->
-
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
 
         <!-- Tomcat -->
-
         <tomcat.version>9.0.12</tomcat.version>
         <tomcat-maven-plugin.version>2.2</tomcat-maven-plugin.version>
 
     </properties>
 
     <dependencies>
-
 
         <!--Spring-->
 
@@ -133,7 +126,7 @@
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jasper-el</artifactId>
             <version>${tomcat.version}</version>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <dependency>
@@ -142,6 +135,7 @@
             <version>${tomcat.version}</version>
             <scope>runtime</scope>
         </dependency>
+
 
         <!-- Logging with SLF4J & LogBack -->
 
@@ -159,7 +153,6 @@
     </dependencies>
 
     <build>
-
        <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -169,7 +162,6 @@
                     <path>/</path>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -179,7 +171,6 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

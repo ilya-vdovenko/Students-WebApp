@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <html>
 <head>
@@ -12,7 +12,9 @@
 <table>
     <tr>
         <th>Форма обучения</th>
-        <td><c:out value="${group_class.fos}"/><td>
+        <td>
+        <c:out value="${group_class.fos}"/>
+        <td>
     </tr>
     <tr>
         <th>Кафедра</th>
@@ -55,9 +57,9 @@
                 </spring:url>
                 <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
             </td>
-            <td class="center"> <c:out value="${student.sex}"/> </td>
-            <td class="center"> <c:out value="${student.birthday}"/> </td>
-            <td class="center"> <c:out value="${student.telephone}"/> </td>
+            <td class="center"><c:out value="${student.sex}"/></td>
+            <td class="center"><c:out value="${student.birthday}"/></td>
+            <td class="center"><c:out value="${student.telephone}"/></td>
         </tr>
     </c:forEach>
     </tbody>

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <html>
 <head>
@@ -12,7 +12,9 @@
 <table>
     <tr>
         <th>Информация</th>
-        <td><c:out value="${cathedra.information}"/><td>
+        <td>
+        <c:out value="${cathedra.information}"/>
+        <td>
     </tr>
     <tr>
         <th>Заведующий кафедрой</th>
@@ -43,9 +45,9 @@
     <tr>
         <th>Преподаватели</th>
         <td><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers" var="lecUrl">
-                <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
-                <spring:param name="cathedraId" value="${cathedra.id}"/>
-            </spring:url>
+            <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+            <spring:param name="cathedraId" value="${cathedra.id}"/>
+        </spring:url>
             <a href="${lecUrl}"> <c:out value="..."/></a>
         </td>
     </tr>

@@ -14,59 +14,57 @@ import java.util.List;
 
 /**
  * JPA implementation of the {@link EmployeeRepository} interface.
- *
  **/
-
 
 @Repository
 public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+  @PersistenceContext
+  private EntityManager em;
 
-    @Override
-    public Employee findById(int id) throws DataAccessException {
-        Query query = this.em.createQuery("from Employee as e where e.id =:id");
-        query.setParameter("id", id);
-        return (Employee) query.getSingleResult();
-    }
+  @Override
+  public Employee findById(int id) throws DataAccessException {
+    Query query = this.em.createQuery("from Employee as e where e.id =:id");
+    query.setParameter("id", id);
+    return (Employee) query.getSingleResult();
+  }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Collection<Employee> getAllEmployees() throws DataAccessException {
-        Query query = this.em.createQuery("from Employee");
-        return query.getResultList();
-    }
+  @Override
+  @SuppressWarnings("unchecked")
+  public Collection<Employee> getAllEmployees() throws DataAccessException {
+    Query query = this.em.createQuery("from Employee");
+    return query.getResultList();
+  }
 
-    @SuppressWarnings("unchecked")
-    private Collection<Employee> getList(Query query, int Id) throws DataAccessException {
-        query.setParameter(1, Id);
-        Collection<Employee> list_of_employeers = new ArrayList<>();
-        List<Integer> list_of_employeersId= query.getResultList();
-        for(int id: list_of_employeersId) {
-            query = this.em.createQuery("from Employee as e where e.id =:id");
-            query.setParameter("id", id);
-            list_of_employeers.add((Employee) query.getSingleResult());
-        }
-        return list_of_employeers;
+  @SuppressWarnings("unchecked")
+  private Collection<Employee> getList(Query query, int Id) throws DataAccessException {
+    query.setParameter(1, Id);
+    Collection<Employee> list_of_employeers = new ArrayList<>();
+    List<Integer> list_of_employeersId = query.getResultList();
+    for (int id : list_of_employeersId) {
+      query = this.em.createQuery("from Employee as e where e.id =:id");
+      query.setParameter("id", id);
+      list_of_employeers.add((Employee) query.getSingleResult());
     }
+    return list_of_employeers;
+  }
 
-    //TODO: find more best solution
-    @Override
-    public Collection<Employee> getFacultyEmployees(int facultyId) {
-        Query query = this.em.createNativeQuery("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?");
-        return getList(query, facultyId);
-    }
+  //TODO: find more best solution
+  @Override
+  public Collection<Employee> getFacultyEmployees(int facultyId) {
+    Query query = this.em.createNativeQuery("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?");
+    return getList(query, facultyId);
+  }
 
-    @Override
-    public Collection<Employee> getFacultySoviet(int facultyId) {
-        Query query = this.em.createNativeQuery("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?");
-        return getList(query, facultyId);
-    }
+  @Override
+  public Collection<Employee> getFacultySoviet(int facultyId) {
+    Query query = this.em.createNativeQuery("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?");
+    return getList(query, facultyId);
+  }
 
-    @Override
-    public Collection<Employee> getCathedraLecturers(int cathedraId) {
-        Query query = this.em.createNativeQuery("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?");
-        return getList(query, cathedraId);
-    }
+  @Override
+  public Collection<Employee> getCathedraLecturers(int cathedraId) {
+    Query query = this.em.createNativeQuery("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?");
+    return getList(query, cathedraId);
+  }
 }

@@ -22,7 +22,7 @@ button {
 }
 
 button, a {
-    float:left;
+    float: left;
     margin: 8px;
     border-radius: 4px;
 }

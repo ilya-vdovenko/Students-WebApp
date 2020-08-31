@@ -12,7 +12,7 @@ public class Group_classSerializer extends JsonSerializer<Group_class> {
   public void serialize(Group_class group_class, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
     jsonGenerator.writeStartObject();
     jsonGenerator.writeNumberField("id", group_class.getId());
-    jsonGenerator.writeStringField("number", group_class.getNumber());
+    jsonGenerator.writeStringField("title", group_class.getTitle());
     jsonGenerator.writeEndObject();
   }
 }

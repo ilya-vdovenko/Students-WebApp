@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
 </head>
 <body>
-<h1><b><c:out value="${group_class.number}"/></b></h1>
+<h1><b><c:out value="${group_class.title}"/></b></h1>
 <table>
     <tr>
         <th>Форма обучения</th>

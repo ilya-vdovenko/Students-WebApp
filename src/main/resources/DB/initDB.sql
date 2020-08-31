@@ -28,7 +28,7 @@ ALTER TABLE cathedras ADD CONSTRAINT fk_cathedras_faculties FOREIGN KEY (faculty
 
 CREATE TABLE group_classes (
     id          INTEGER IDENTITY PRIMARY KEY,
-    number      VARCHAR(7),
+    title      VARCHAR(7),
     fos         VARCHAR(10),
     cathedra_id INTEGER NOT NULL,
     faculty_id  INTEGER NOT NULL

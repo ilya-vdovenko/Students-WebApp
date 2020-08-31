@@ -23,7 +23,7 @@
             <spring:param name="cathedraId" value="${cathedra.id}"/>
             <spring:param name="group_classId" value="${group_class.id}"/>
         </spring:url>
-        <a href="${grclUrl}"> <c:out value="${group_class.number}"/></a> (<c:out value="${group_class.fos}"/> форма
+        <a href="${grclUrl}"> <c:out value="${group_class.title}"/></a> (<c:out value="${group_class.fos}"/> форма
         обучения)</p>
     <p>Студенты группы:</p>
     <table>

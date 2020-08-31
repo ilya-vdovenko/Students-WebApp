@@ -45,7 +45,7 @@
                         <spring:param name="cathedraId" value="${student.cathedra.id}"/>
                         <spring:param name="group_classId" value="${student.group_class.id}"/>
                     </spring:url>
-                    <a href="${grclUrl}"> <c:out value="${student.group_class.number}"/></a>
+                    <a href="${grclUrl}"> <c:out value="${student.group_class.title}"/></a>
                 </td>
                 <td>
                     <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">

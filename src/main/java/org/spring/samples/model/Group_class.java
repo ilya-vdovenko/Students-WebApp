@@ -24,8 +24,8 @@ import java.util.Set;
 public class Group_class extends BaseEntity {
 
   @NotEmpty
-  @Column(name = "number")
-  private String number;
+  @Column(name = "title")
+  private String title;
 
   @NotEmpty
   @ManyToOne
@@ -46,12 +46,12 @@ public class Group_class extends BaseEntity {
   @Column(name = "fos")
   private String fos;
 
-  public String getNumber() {
-    return number;
+  public String getTitle() {
+    return title;
   }
 
-  public void setNumber(String number) {
-    this.number = number;
+  public void setTitle(String number) {
+    this.title = number;
   }
 
   public Cathedra getCathedra() {

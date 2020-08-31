@@ -48,7 +48,7 @@
         <sf:option value="${student.cathedra.id}">${student.cathedra.title}</sf:option>
     </sf:select><br/>
         Группа: <sf:select path="group_class" id="sel_grp">
-        <sf:option value="${student.group_class.id}">${student.group_class.number}</sf:option>
+        <sf:option value="${student.group_class.id}">${student.group_class.title}</sf:option>
     </sf:select><br/>
     </div>
     <div>

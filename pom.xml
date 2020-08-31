@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.springframework.app</groupId>
     <artifactId>spring-framework-students</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -16,38 +15,37 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Spring -->
-
-        <spring-framework.version>5.2.3.RELEASE</spring-framework.version>
-        <spring-data-jdbc.version>1.0.6.RELEASE</spring-data-jdbc.version>
+        <spring-framework.version>5.2.8.RELEASE</spring-framework.version>
+        <spring-data-jdbc.version>2.0.3.RELEASE</spring-data-jdbc.version>
 
         <!-- Persistence -->
-
-        <spring-data-jpa>2.1.6.RELEASE</spring-data-jpa>
+        <spring-data-jpa>2.3.3.RELEASE</spring-data-jpa>
         <hibernate.version>5.3.7.Final</hibernate.version>
-        <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
-        <hsqldb.version>2.4.1</hsqldb.version>
+        <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
+        <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- Java EE -->
-
-        <javax-jstl.version>1.2.2</javax-jstl.version>
-        <taglibs-standard.version>1.2.5</taglibs-standard.version>
-        <javax.el-api.version>3.0.0</javax.el-api.version>
+        <javax.jstl.version>1.2</javax.jstl.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
 
-        <!-- Logging -->
+        <!-- Front -->
+        <jquery.version>3.5.1</jquery.version>
 
-        <slf4j.version>1.7.25</slf4j.version>
+        <!-- Back -->
+        <jackson.version>2.9.8</jackson.version>
+        <jackson-annotations-version>2.9.5</jackson-annotations-version>
+
+        <!-- Logging -->
+        <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
 
         <!-- Tomcat -->
-
-        <tomcat.version>9.0.12</tomcat.version>
+        <tomcat.version>7.0.105</tomcat.version>
         <tomcat-maven-plugin.version>2.2</tomcat-maven-plugin.version>
 
     </properties>
 
     <dependencies>
-
 
         <!--Spring-->
 
@@ -85,32 +83,24 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>${hibernate-annotations.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
             <scope>runtime</scope>
         </dependency>
 
-
         <!-- Java EE -->
 
         <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-jstlel</artifactId>
-            <version>${taglibs-standard.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-            <version>${javax-jstl.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>${javax.el-api.version}</version>
-            <scope>provided</scope>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${javax.jstl.version}</version>
         </dependency>
 
         <dependency>
@@ -119,19 +109,11 @@
             <version>${javax.validation.version}</version>
         </dependency>
 
-
         <!-- Tomcat -->
 
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
-            <version>${tomcat.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jasper-el</artifactId>
             <version>${tomcat.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -150,17 +132,46 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Front -->
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+
+        <!-- Back -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-annotations-version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
-
-       <plugins>
+        <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -169,7 +180,6 @@
                     <path>/</path>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -179,7 +189,6 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

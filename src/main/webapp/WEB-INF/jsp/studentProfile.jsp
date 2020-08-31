@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!Doctype html>
 <html>
@@ -34,12 +34,13 @@
     <tr>
         <th>Группа</th>
         <td>
-            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}" var="grclUrl">
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}"
+                        var="grclUrl">
                 <spring:param name="facultyId" value="${student.faculty.id}"/>
                 <spring:param name="cathedraId" value="${student.cathedra.id}"/>
                 <spring:param name="group_classId" value="${student.group_class.id}"/>
             </spring:url>
-            <a href="${grclUrl}"> <c:out value="${student.group_class.number}"/></a>
+            <a href="${grclUrl}"> <c:out value="${student.group_class.title}"/></a>
         </td>
     </tr>
     <tr>

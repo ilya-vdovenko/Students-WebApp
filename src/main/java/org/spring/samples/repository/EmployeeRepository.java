@@ -6,19 +6,18 @@ import org.springframework.dao.DataAccessException;
 import java.util.Collection;
 
 /**
- *Repository class for Employee domain objects.
- *
+ * Repository class for Employee domain objects.
  **/
 
 public interface EmployeeRepository {
 
-    Employee findById(int id) throws DataAccessException;
+  Employee findById(int id) throws DataAccessException;
 
-    Collection<Employee> getAllEmployees() throws DataAccessException;
+  Collection<Employee> getAllEmployees() throws DataAccessException;
 
-    Collection<Employee> getFacultyEmployees(int facultyId);
+  Collection<Employee> getFacultyEmployees(int facultyId);
 
-    Collection<Employee> getFacultySoviet(int facultyId);
+  Collection<Employee> getFacultySoviet(int facultyId);
 
-    Collection<Employee> getCathedraLecturers(int cathedraId);
+  Collection<Employee> getCathedraLecturers(int cathedraId);
 }

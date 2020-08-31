@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!Doctype html>
 <html>
@@ -10,9 +10,9 @@
 </head>
 <body>
 <h1><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
-        <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
-        <spring:param name="cathedraId" value="${cathedra.id}"/>
-    </spring:url>
+    <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+    <spring:param name="cathedraId" value="${cathedra.id}"/>
+</spring:url>
     <a href="${catUrl}"> <c:out value="${cathedra.title}"/></a>. Список групп:
 </h1>
 <%--suppress ELValidationInJSP --%>
@@ -23,7 +23,8 @@
             <spring:param name="cathedraId" value="${cathedra.id}"/>
             <spring:param name="group_classId" value="${group_class.id}"/>
         </spring:url>
-        <a href="${grclUrl}"> <c:out value="${group_class.number}"/></a> (<c:out value="${group_class.fos}"/> форма обучения)</p>
+        <a href="${grclUrl}"> <c:out value="${group_class.title}"/></a> (<c:out value="${group_class.fos}"/> форма
+        обучения)</p>
     <p>Студенты группы:</p>
     <table>
         <thead>
@@ -44,13 +45,13 @@
                     </spring:url>
                     <a href="${studUrl}"> <c:out value="${student.fio}"/> </a>
                 </td>
-                <td class="center"> <c:out value="${student.sex}"/> </td>
-                <td class="center"> <c:out value="${student.birthday}"/> </td>
-                <td class="center"> <c:out value="${student.telephone}"/> </td>
+                <td class="center"><c:out value="${student.sex}"/></td>
+                <td class="center"><c:out value="${student.birthday}"/></td>
+                <td class="center"><c:out value="${student.telephone}"/></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    </c:forEach>
+</c:forEach>
 </body>
 </html>

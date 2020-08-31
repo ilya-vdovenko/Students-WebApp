@@ -16,36 +16,42 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-        <context:component-scan base-package="org.spring.samples.service"/>
+    <context:component-scan base-package="org.spring.samples.service"/>
 
-        <context:component-scan base-package="org.spring.samples.repository"/>
+    <context:component-scan base-package="org.spring.samples.repository"/>
 
-        <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
-              p:driverClassName="org.hsqldb.jdbcDriver"
-              p:url="jdbc:hsqldb:mem:students-app"
-              p:username="sa"
-              p:password=""/>
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+          p:driverClassName="org.hsqldb.jdbcDriver"
+          p:url="jdbc:hsqldb:mem:students-app"
+          p:username="sa"
+          p:password=""/>
 
-        <jdbc:initialize-database>
-                <jdbc:script location="classpath:DB/initDB.sql"/>
-                <jdbc:script location="classpath:DB/populateDB.sql"/>
-        </jdbc:initialize-database>
+    <jdbc:initialize-database>
+        <jdbc:script location="classpath:DB/initDB.sql"/>
+        <jdbc:script location="classpath:DB/populateDB.sql"/>
+    </jdbc:initialize-database>
 
-        <tx:annotation-driven/>
+    <tx:annotation-driven/>
 
-        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-              p:dataSource-ref="dataSource">
-                <property name="jpaVendorAdapter">
-                        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                              p:database="HSQL" p:showSql="true"/>
-                </property>
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorParameter" value="false"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="application/json"/>
+    </bean>
 
-                <property name="packagesToScan" value="org.spring.samples"/>
-        </bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource">
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                  p:database="HSQL" p:showSql="true"/>
+        </property>
 
-        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-              p:entityManagerFactory-ref="entityManagerFactory"/>
+        <property name="packagesToScan" value="org.spring.samples"/>
+    </bean>
 
-        <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
 </beans>

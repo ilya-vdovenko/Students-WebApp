@@ -8,17 +8,16 @@ import org.springframework.dao.DataAccessException;
 import java.util.Collection;
 
 /**
- *Repository class for Faculty, Cathedra, Group_class domain objects.
- *
+ * Repository class for Faculty, Cathedra, Group_class domain objects.
  **/
 
 public interface InstituteRepository {
 
-    Faculty findFacultyById(int id) throws DataAccessException;
+  Faculty findFacultyById(int id) throws DataAccessException;
 
-    Collection<Faculty> getAllFaculties() throws DataAccessException;
+  Collection<Faculty> getAllFaculties() throws DataAccessException;
 
-    Cathedra findCathedraById(int cathedraId) throws DataAccessException;
+  Cathedra findCathedraById(int cathedraId) throws DataAccessException;
 
-    Group_class findGroup_classById(int id) throws DataAccessException;
+  Group_class findGroup_classById(int id) throws DataAccessException;
 }

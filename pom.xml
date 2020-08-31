@@ -32,7 +32,7 @@
         <jquery.version>3.5.1</jquery.version>
 
         <!-- Back -->
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.11.2</jackson.version>
         <jackson-annotations-version>2.9.5</jackson-annotations-version>
 
         <!-- Logging -->

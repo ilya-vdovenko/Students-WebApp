@@ -1,5 +1,7 @@
 package org.spring.samples.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -13,10 +15,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "faculties")
+@JsonSerialize(using = UnitEntitySerializer.class)
 public class Faculty extends UnitEntity {
-
-//    @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
-//    private Set<Employee> soviet;
 
   @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
   private Set<Cathedra> cathedras;
@@ -30,14 +30,6 @@ public class Faculty extends UnitEntity {
 
   @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
   private Set<Group_class> group_classes;
-
-//    public Set<Employee> getSoviet() {
-//        return soviet;
-//    }
-//
-//    public void setSoviet(Set<Employee> soviet) {
-//        this.soviet = soviet;
-//    }
 
   public Set<Cathedra> getCathedras() {
     return cathedras;

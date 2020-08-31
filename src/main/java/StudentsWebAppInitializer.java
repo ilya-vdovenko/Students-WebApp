@@ -1,6 +1,9 @@
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 /**
  * Create the Spring root application context.
@@ -26,5 +29,11 @@ public class StudentsWebAppInitializer extends AbstractDispatcherServletInitiali
   @Override
   protected String[] getServletMappings() {
     return new String[] {"/"};
+  }
+
+  @Override
+  protected Filter[] getServletFilters() {
+    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter("UTF-8", true);
+    return new Filter[] {characterEncodingFilter};
   }
 }

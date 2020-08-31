@@ -1,8 +1,9 @@
 package org.spring.samples.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -22,7 +23,7 @@ import java.time.LocalDate;
 public class Student extends Person {
 
   @Column(name = "birthday")
-  @DateTimeFormat(pattern = "dd.MM.yyyy")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;
 
   @Column(name = "sex")
@@ -38,7 +39,8 @@ public class Student extends Person {
   @Digits(fraction = 0, integer = 10)
   private String telephone;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "group_class_id")
   private Group_class group_class;
 

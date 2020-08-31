@@ -23,7 +23,6 @@ public class InstituteController {
     this.service = is;
   }
 
-
   @RequestMapping(value = "/{facultyId}", method = GET)
   public String showFacultyProfile(@PathVariable int facultyId, Model model) {
     model.addAttribute(service.findFacultyById(facultyId));

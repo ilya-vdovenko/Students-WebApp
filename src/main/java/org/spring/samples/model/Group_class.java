@@ -1,6 +1,9 @@
 package org.spring.samples.model;
 
-import javax.persistence.CascadeType;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +20,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "group_classes")
+@JsonSerialize(using = Group_classSerializer.class)
 public class Group_class extends BaseEntity {
 
   @NotEmpty
@@ -24,12 +28,14 @@ public class Group_class extends BaseEntity {
   private String number;
 
   @NotEmpty
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 
   @NotEmpty
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "faculty_id")
   private Faculty faculty;
 

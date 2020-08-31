@@ -8,7 +8,12 @@
 <html>
 <head>
     <title>StudentForm</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/form.css">
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/static/StudentForm.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/form.css">
 </head>
 <body>
 <h2>
@@ -27,36 +32,24 @@
 </h2>
 <sf:form method="POST" modelAttribute="student">
     <div>
-        ФИО: <sf:input path="fio" cssStyle="width: 22%;"/>
-        <!--Дата рождения: <sf:input type="date" path="birthday" /><br/>-->
+        ФИО: <sf:input path="fio" cssStyle="width: 22%"/><br/>
+        Дата рождения: <sf:input type="date" path="birthday"/><br/>
         Пол: <sf:select path="sex">
         <sf:option value="муж">муж</sf:option>
         <sf:option value="жен">жен</sf:option>
     </sf:select><br/>
-        Факт. адрес: <sf:input path="fact_address" cssStyle="width: 28%;"/><br/>
-        Адрес: <sf:input path="address" cssStyle="width: 28%;:"/><br/>
-        Контактный тел.: <sf:input path="telephone" cssStyle="width: 10%;"/><br/>
-
-        <!--there must be selection from db
-    что если послылать сюда списки существующих факов, кафедр и т.д. без обновления из бд
-    HTML5 <datalist> Element use
-    Факультет:  <sf:select path="faculty" >
-                    <c:forEach items="${sqlresult_fac.rows}" var="faculty" >
-                        <sf:option value="${faculty}">${faculty.title}</sf:option>
-                    </c:forEach>
-                </sf:select>
-    Кафедра: <sf:select path="cathedra" >
-                <c:forEach items="${sqlresult_caf.rows}" var="cathedra" >
-                    <sf:option value="${cathedra}">${cathedra.title}</sf:option>
-                </c:forEach>
-            </sf:select>
-
-    Группа: <sf:select path="group_class" >
-                <c:forEach items="${sqlresult_gr.rows}" var="group" >
-                    <sf:option value="${group}">${group.name}</sf:option>
-                </c:forEach>
-            </sf:select>
-            -->
+        Факт. адрес: <sf:input path="fact_address" cssStyle="width: 28%"/><br/>
+        Адрес: <sf:input path="address" cssStyle="width: 28%"/><br/>
+        Контактный тел.: <sf:input path="telephone" cssStyle="width: 10%"/><br/>
+        Факультет: <sf:select path="faculty" id="sel_fac" >
+        <sf:option value="${student.faculty.id}">${student.faculty.title}</sf:option>
+    </sf:select><br/>
+        Кафедра: <sf:select path="cathedra" id="sel_cat">
+        <sf:option value="${student.cathedra.id}">${student.cathedra.title}</sf:option>
+    </sf:select><br/>
+        Группа: <sf:select path="group_class" id="sel_grp">
+        <sf:option value="${student.group_class.id}">${student.group_class.number}</sf:option>
+    </sf:select><br/>
     </div>
     <div>
         <button type="submit">

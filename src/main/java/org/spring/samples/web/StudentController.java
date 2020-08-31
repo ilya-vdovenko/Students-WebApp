@@ -1,11 +1,17 @@
 package org.spring.samples.web;
 
+import org.spring.samples.model.Cathedra;
+import org.spring.samples.model.Faculty;
+import org.spring.samples.model.Group_class;
 import org.spring.samples.model.Student;
 import org.spring.samples.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +30,13 @@ public class StudentController {
   @Autowired
   public StudentController(InstituteService is) {
     this.service = is;
+  }
+
+  @InitBinder("student")
+  public void facultyBinder(WebDataBinder binder) {
+    binder.registerCustomEditor(Faculty.class, "faculty", new FacultyEditor(service));
+    binder.registerCustomEditor(Cathedra.class, "cathedra", new CathedraEditor(service));
+    binder.registerCustomEditor(Group_class.class, "group_class", new GroupClassEditor(service));
   }
 
   @RequestMapping(value = "/{studentId}", method = GET)
@@ -45,8 +58,9 @@ public class StudentController {
   }
 
   @RequestMapping(value = "/new", method = POST)
-  public String processCreationForm(@Valid Student student, Errors errors) {
+  public String processCreationForm(@Valid Student student, Errors errors, Model model) {
     if (errors.hasErrors()) {
+      model.addAttribute(student);
       return Student_CREATE_OR_UPDATE_FORM;
     }
     service.saveStudent(student);
@@ -60,8 +74,10 @@ public class StudentController {
   }
 
   @RequestMapping(value = "/{studentId}/edit", method = POST)
-  public String processUpdateOwnerForm(@Valid Student student, Errors errors, @PathVariable int studentId) {
-    if (errors.hasErrors()) {
+  public String processUpdateOwnerForm(@Valid Student student, BindingResult result,
+                                       @PathVariable int studentId, Model model) {
+    if (result.hasErrors()) {
+      model.addAttribute(student);
       return Student_CREATE_OR_UPDATE_FORM;
     } else {
       student.setId(studentId);

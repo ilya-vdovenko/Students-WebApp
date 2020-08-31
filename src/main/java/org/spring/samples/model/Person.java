@@ -1,6 +1,8 @@
 package org.spring.samples.model;
 
-import javax.persistence.CascadeType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,11 +22,13 @@ public class Person extends BaseEntity {
   private String fio;
 
   @NotEmpty
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "faculty_id")
   private Faculty faculty;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 

@@ -20,19 +20,27 @@
 
         <!-- Persistence -->
         <spring-data-jpa>2.3.3.RELEASE</spring-data-jpa>
-        <hibernate.version>5.4.20.Final</hibernate.version>
+        <hibernate.version>5.3.7.Final</hibernate.version>
+        <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
         <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- Java EE -->
         <javax.jstl.version>1.2</javax.jstl.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
 
+        <!-- Front -->
+        <jquery.version>3.5.1</jquery.version>
+
+        <!-- Back -->
+        <jackson.version>2.9.8</jackson.version>
+        <jackson-annotations-version>2.9.5</jackson-annotations-version>
+
         <!-- Logging -->
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
 
         <!-- Tomcat -->
-        <tomcat.version>9.0.37</tomcat.version>
+        <tomcat.version>7.0.105</tomcat.version>
         <tomcat-maven-plugin.version>2.2</tomcat-maven-plugin.version>
 
     </properties>
@@ -72,6 +80,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>${hibernate-annotations.version}</version>
         </dependency>
 
         <dependency>
@@ -118,12 +132,42 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Front -->
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+
+        <!-- Back -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-annotations-version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -38,7 +38,7 @@ ALTER TABLE group_classes ADD CONSTRAINT fk_group_classes_faculties FOREIGN KEY 
 
 CREATE TABLE students (
     id             INTEGER IDENTITY PRIMARY KEY,
-    fio            VARCHAR(30),
+    fio            VARCHAR(40),
     birthday       DATE,
     sex            VARCHAR(3),
     fact_address   VARCHAR(100),

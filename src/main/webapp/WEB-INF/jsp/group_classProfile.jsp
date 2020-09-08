@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Group_classProfile</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${group_class.title}"/></b></h1>

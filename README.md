@@ -1,7 +1,7 @@
 # Students-WebApp
 
 This repo is a Pet-project of web application represent list of students from database (HSQLDB only. More soon), with a plain old **Spring Framework configuration**
-and with a **3-layer architecture** (i.e. presentation --> service --> repository). Created following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic),
+and with a **3-layer architecture** (i.e. presentation --> service --> repository). Created following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic)
 
 ## Running app locally
 

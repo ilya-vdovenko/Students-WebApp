@@ -15,14 +15,11 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
     <context:component-scan base-package="org.spring.samples.service"/>
-
-    <context:component-scan base-package="org.spring.samples.repository"/>
 
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
           p:driverClassName="org.hsqldb.jdbcDriver"
-          p:url="jdbc:hsqldb:mem:students-app"
+          p:url="jdbc:hsqldb:mem:students-webapp"
           p:username="sa"
           p:password=""/>
 
@@ -39,19 +36,35 @@
         <property name="defaultContentType" value="application/json"/>
     </bean>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:dataSource-ref="dataSource">
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                  p:database="HSQL" p:showSql="true"/>
-        </property>
+    <beans profile="jpa-hibernate">
+        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+              p:dataSource-ref="dataSource">
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                      p:database="HSQL" p:showSql="true"/>
+            </property>
 
-        <property name="packagesToScan" value="org.spring.samples"/>
-    </bean>
+            <property name="packagesToScan" value="org.spring.samples"/>
+        </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-          p:entityManagerFactory-ref="entityManagerFactory"/>
+        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+              p:entityManagerFactory-ref="entityManagerFactory"/>
 
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+        <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+        <context:component-scan base-package="org.spring.samples.repository.JPA"/>
+    </beans>
+
+    <beans profile="jdbc">
+
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+              p:dataSource-ref="dataSource"/>
+
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+
+        <context:component-scan base-package="org.spring.samples.repository.JDBC"/>
+    </beans>
 
 </beans>

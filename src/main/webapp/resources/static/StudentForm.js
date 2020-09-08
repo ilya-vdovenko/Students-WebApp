@@ -15,7 +15,7 @@ $(document).ready(function () {
     logId();
 
     sel_fac.click(function () {
-        loadClick(load_fac, sel_fac, "faculties", "/faculties/getFacList", fac_id);
+        loadClick(load_fac, sel_fac, "faculties", "/Students-WebApp/faculties/getFacList", fac_id);
     });
 
     sel_fac.change(function () {
@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 
     sel_cat.click(function () {
-        loadClick(load_cat, sel_cat, "cathedras", "/cathedras/getCatList?facultyId=" + fac_id, cat_id);
+        loadClick(load_cat, sel_cat, "cathedras", "/Students-WebApp/cathedras/getCatList?facultyId=" + fac_id, cat_id);
     });
 
     sel_cat.change(function () {
@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
     sel_grp.click(function () {
-        loadClick(load_grp, sel_grp, "groups", "/group_classes/getGroupList?cathedraId=" + cat_id, grp_id);
+        loadClick(load_grp, sel_grp, "groups", "/Students-WebApp/group_classes/getGroupList?cathedraId=" + cat_id, grp_id);
     })
 
     function logId() {

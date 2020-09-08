@@ -29,7 +29,6 @@ public class InstituteServiceImpl implements InstituteService {
 
   @Autowired
   public InstituteServiceImpl(StudentRepository sr, InstituteRepository is, EmployeeRepository er) {
-
     this.studentRepository = sr;
     this.instituteRepository = is;
     this.employeeRepository = er;

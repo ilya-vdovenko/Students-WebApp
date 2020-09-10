@@ -9,11 +9,11 @@ import org.spring.samples.repository.EmployeeRepository;
 import org.spring.samples.repository.InstituteRepository;
 import org.spring.samples.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Mostly used as a facade for all controllers.
@@ -36,73 +36,73 @@ public class InstituteServiceImpl implements InstituteService {
 
   @Override
   @Transactional(readOnly = true)
-  public Faculty findFacultyById(int id) throws DataAccessException {
+  public Faculty findFacultyById(int id) {
     return instituteRepository.findFacultyById(id);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Faculty> getFaculties() throws DataAccessException {
+  public Collection<Faculty> getFaculties() {
     return instituteRepository.getAllFaculties();
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Cathedra findCathedraById(int cathedraId) throws DataAccessException {
+  public Cathedra findCathedraById(int cathedraId) {
     return instituteRepository.findCathedraById(cathedraId);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Employee> getFacultyEmployees(int facultyId) throws DataAccessException {
-    return employeeRepository.getFacultyEmployees(facultyId);
+  public Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId) {
+    return employeeRepository.getFacultyEmployees(employees, facultyId);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Employee> getFacultySoviet(int facultyId) throws DataAccessException {
-    return employeeRepository.getFacultySoviet(facultyId);
+  public Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId) {
+    return employeeRepository.getFacultySoviet(employees, facultyId);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Employee> getCathedraLecturers(int cathedraId) throws DataAccessException {
-    return employeeRepository.getCathedraLecturers(cathedraId);
+  public Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId) {
+    return employeeRepository.getCathedraLecturers(employees, cathedraId);
   }
 
   @Override
   @Transactional
-  public void saveStudent(Student student) throws DataAccessException {
+  public void saveStudent(Student student) {
     studentRepository.save(student);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Student findStudentById(int id) throws DataAccessException {
+  public Student findStudentById(int id) {
     return studentRepository.findById(id);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Student> getStudents() throws DataAccessException {
+  public Collection<Student> getStudents() {
     return studentRepository.getAllStudents();
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Employee findEmployeeById(int id) throws DataAccessException {
+  public Employee findEmployeeById(int id) {
     return employeeRepository.findById(id);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Employee> getEmployees() throws DataAccessException {
+  public Collection<Employee> getEmployees() {
     return employeeRepository.getAllEmployees();
   }
 
   @Override
   @Transactional(readOnly = true)
-  public Group_class findGroup_classById(int id) throws DataAccessException {
+  public Group_class findGroup_classById(int id) {
     return instituteRepository.findGroup_classById(id);
   }
 }

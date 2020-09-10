@@ -2,7 +2,6 @@ package org.spring.samples.repository.JPA;
 
 import org.spring.samples.model.Employee;
 import org.spring.samples.repository.EmployeeRepository;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,6 +10,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * JPA implementation of the {@link EmployeeRepository} interface.
@@ -23,7 +23,7 @@ public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
   private EntityManager em;
 
   @Override
-  public Employee findById(int id) throws DataAccessException {
+  public Employee findById(int id) {
     Query query = this.em.createQuery("from Employee as e where e.id =:id");
     query.setParameter("id", id);
     return (Employee) query.getSingleResult();
@@ -31,40 +31,41 @@ public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Employee> getAllEmployees() throws DataAccessException {
+  public Collection<Employee> getAllEmployees() {
     Query query = this.em.createQuery("from Employee");
     return query.getResultList();
   }
 
+  @Override
+  public Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId) {
+    Query query = this.em.createNativeQuery("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?");
+    return getList(query, employees, facultyId);
+  }
+
+  @Override
+  public Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId) {
+    Query query = this.em.createNativeQuery("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?");
+    return getList(query, employees, facultyId);
+  }
+
+  @Override
+  public Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId) {
+    Query query = this.em.createNativeQuery("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?");
+    return getList(query, employees, cathedraId);
+  }
+
   @SuppressWarnings("unchecked")
-  private Collection<Employee> getList(Query query, int Id) throws DataAccessException {
+  private Collection<Employee> getList(Query query, Set<Employee> employees, int Id) {
     query.setParameter(1, Id);
     Collection<Employee> list_of_employeers = new ArrayList<>();
     List<Integer> list_of_employeersId = query.getResultList();
     for (int id : list_of_employeersId) {
-      query = this.em.createQuery("from Employee as e where e.id =:id");
-      query.setParameter("id", id);
-      list_of_employeers.add((Employee) query.getSingleResult());
+      for (Employee employee : employees) {
+        if (employee.getId().equals(id)) {
+          list_of_employeers.add(employee);
+        }
+      }
     }
     return list_of_employeers;
-  }
-
-  //TODO: find more best solution
-  @Override
-  public Collection<Employee> getFacultyEmployees(int facultyId) {
-    Query query = this.em.createNativeQuery("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?");
-    return getList(query, facultyId);
-  }
-
-  @Override
-  public Collection<Employee> getFacultySoviet(int facultyId) {
-    Query query = this.em.createNativeQuery("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?");
-    return getList(query, facultyId);
-  }
-
-  @Override
-  public Collection<Employee> getCathedraLecturers(int cathedraId) {
-    Query query = this.em.createNativeQuery("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?");
-    return getList(query, cathedraId);
   }
 }

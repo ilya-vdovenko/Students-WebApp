@@ -3,7 +3,6 @@ package org.spring.samples.repository.JDBC;
 import org.spring.samples.model.Student;
 import org.spring.samples.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -31,7 +30,7 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
   }
 
   @Override
-  public void save(Student student) throws DataAccessException {
+  public void save(Student student) {
 
     /*jdbc.update("Insert into students values (?,?,?,?,?,?,?,1,1,1)",
       student.getId(),
@@ -58,13 +57,13 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
   }
 
   @Override
-  public Collection<Student> getAllStudents() throws DataAccessException {
+  public Collection<Student> getAllStudents() {
     //return jdbc.query("Select * from students order by fio", new StudentRowMapper());
     return null;
   }
 
   @Override
-  public Student findById(int id) throws DataAccessException {
+  public Student findById(int id) {
     //return jdbc.queryForObject("Select * from students where id = ?", new StudentRowMapper(), id);
     return null;
   }

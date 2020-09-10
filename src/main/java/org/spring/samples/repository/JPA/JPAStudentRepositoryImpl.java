@@ -2,7 +2,6 @@ package org.spring.samples.repository.JPA;
 
 import org.spring.samples.model.Student;
 import org.spring.samples.repository.StudentRepository;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -22,13 +21,13 @@ public class JPAStudentRepositoryImpl implements StudentRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Student> getAllStudents() throws DataAccessException {
+  public Collection<Student> getAllStudents() {
     Query query = this.em.createQuery("from Student");
     return query.getResultList();
   }
 
   @Override
-  public void save(Student student) throws DataAccessException {
+  public void save(Student student) {
     if (student.getId() == null) {
       this.em.persist(student);
     } else {
@@ -37,7 +36,7 @@ public class JPAStudentRepositoryImpl implements StudentRepository {
   }
 
   @Override
-  public Student findById(int id) throws DataAccessException {
+  public Student findById(int id) {
     Query query = this.em.createQuery("from Student as s where s.id =:id");
     query.setParameter("id", id);
     return (Student) query.getSingleResult();

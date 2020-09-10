@@ -16,7 +16,7 @@ import java.util.Set;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@RequestMapping(value = "/Students-WebApp")
+//@RequestMapping(value = "/Students-WebApp")
 public class JsonInstituteController {
 
   private final InstituteService service;

@@ -18,17 +18,17 @@ public class JDBCInstituteRepositoryImpl implements InstituteRepository {
   }
 
   @Override
-  public Collection<Faculty> getAllFaculties() throws DataAccessException {
+  public Collection<Faculty> getAllFaculties(){
     return null;
   }
 
   @Override
-  public Cathedra findCathedraById(int cathedraId) throws DataAccessException {
+  public Cathedra findCathedraById(int cathedraId){
     return null;
   }
 
   @Override
-  public Group_class findGroup_classById(int id) throws DataAccessException {
+  public Group_class findGroup_classById(int id) {
     return null;
   }
 }

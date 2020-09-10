@@ -24,8 +24,8 @@ import java.util.Set;
 public class Cathedra extends UnitEntity {
 
   @NotEmpty
-  @Column(name = "programs")
-  private String programs;
+  @Column(name = "edu_programs")
+  private String eduPrograms;
 
   @NotEmpty
   @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
@@ -40,20 +40,20 @@ public class Cathedra extends UnitEntity {
   @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
   private Set<Group_class> group_classes;
 
+  public String getEduPrograms() {
+    return eduPrograms;
+  }
+
+  public void setEduPrograms(String programs) {
+    this.eduPrograms = programs;
+  }
+
   public Set<Employee> getEmployees() {
     return employees;
   }
 
   public void setEmployees(Set<Employee> employees) {
     this.employees = employees;
-  }
-
-  public String getPrograms() {
-    return programs;
-  }
-
-  public void setPrograms(String programs) {
-    this.programs = programs;
   }
 
   public Faculty getFaculty() {

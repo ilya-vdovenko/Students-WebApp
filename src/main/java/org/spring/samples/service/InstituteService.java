@@ -5,9 +5,9 @@ import org.spring.samples.model.Employee;
 import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
 import org.spring.samples.model.Student;
-import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Mostly used as a facade so all controllers have a single point of entry.
@@ -15,27 +15,27 @@ import java.util.Collection;
 
 public interface InstituteService {
 
-  Faculty findFacultyById(int id) throws DataAccessException;
+  Faculty findFacultyById(int id);
 
-  Collection<Faculty> getFaculties() throws DataAccessException;
+  Collection<Faculty> getFaculties();
 
-  Cathedra findCathedraById(int cathedraId) throws DataAccessException;
+  Cathedra findCathedraById(int cathedraId);
 
-  Collection<Employee> getFacultyEmployees(int facultyId) throws DataAccessException;
+  Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId);
 
-  Collection<Employee> getFacultySoviet(int facultyId) throws DataAccessException;
+  Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId);
 
-  Collection<Employee> getCathedraLecturers(int cathedraId) throws DataAccessException;
+  Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId);
 
-  void saveStudent(Student student) throws DataAccessException;
+  void saveStudent(Student student);
 
-  Student findStudentById(int id) throws DataAccessException;
+  Student findStudentById(int id);
 
-  Collection<Student> getStudents() throws DataAccessException;
+  Collection<Student> getStudents();
 
-  Employee findEmployeeById(int id) throws DataAccessException;
+  Employee findEmployeeById(int id);
 
-  Collection<Employee> getEmployees() throws DataAccessException;
+  Collection<Employee> getEmployees();
 
-  Group_class findGroup_classById(int id) throws DataAccessException;
+  Group_class findGroup_classById(int id);
 }

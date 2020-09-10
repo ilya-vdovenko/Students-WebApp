@@ -1,9 +1,9 @@
 package org.spring.samples.repository;
 
 import org.spring.samples.model.Employee;
-import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Repository class for Employee domain objects.
@@ -11,13 +11,13 @@ import java.util.Collection;
 
 public interface EmployeeRepository {
 
-  Employee findById(int id) throws DataAccessException;
+  Employee findById(int id);
 
-  Collection<Employee> getAllEmployees() throws DataAccessException;
+  Collection<Employee> getAllEmployees();
 
-  Collection<Employee> getFacultyEmployees(int facultyId);
+  Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId);
 
-  Collection<Employee> getFacultySoviet(int facultyId);
+  Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId);
 
-  Collection<Employee> getCathedraLecturers(int cathedraId);
+  Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId);
 }

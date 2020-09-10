@@ -13,14 +13,14 @@
     <tr>
         <th>Форма обучения</th>
         <td>
-        <c:out value="${group_class.fos}"/>
+        <c:out value="${group_class.eduForm}"/>
         <td>
     </tr>
     <tr>
         <th>Кафедра</th>
         <td>
             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
-                <spring:param name="facultyId" value="${group_class.faculty.id}"/>
+                <spring:param name="facultyId" value="${group_class.cathedra.faculty.id}"/>
                 <spring:param name="cathedraId" value="${group_class.cathedra.id}"/>
             </spring:url>
             <a href="${catUrl}"> <c:out value="${group_class.cathedra.title}"/></a>
@@ -30,9 +30,9 @@
         <th>Факультет</th>
         <td>
             <spring:url value="/faculties/{facultyId}" var="facUrl">
-                <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
+                <spring:param name="facultyId" value="${group_class.cathedra.faculty.id}"/>
             </spring:url>
-            <a href="${facUrl}"> <c:out value="${group_class.faculty.title}"/> </a>
+            <a href="${facUrl}"> <c:out value="${group_class.cathedra.faculty.title}"/> </a>
         </td>
     </tr>
 </table>

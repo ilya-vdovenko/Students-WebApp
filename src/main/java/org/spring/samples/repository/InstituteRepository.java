@@ -13,11 +13,11 @@ import java.util.Collection;
 
 public interface InstituteRepository {
 
-  Faculty findFacultyById(int id) throws DataAccessException;
+  Faculty findFacultyById(int id);
 
-  Collection<Faculty> getAllFaculties() throws DataAccessException;
+  Collection<Faculty> getAllFaculties();
 
-  Cathedra findCathedraById(int cathedraId) throws DataAccessException;
+  Cathedra findCathedraById(int cathedraId);
 
-  Group_class findGroup_classById(int id) throws DataAccessException;
+  Group_class findGroup_classById(int id);
 }

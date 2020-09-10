@@ -40,7 +40,7 @@
     </tr>
     <tr>
         <th>Программы обучения</th>
-        <td><c:out value="${cathedra.programs}"/></td>
+        <td><c:out value="${cathedra.eduPrograms}"/></td>
     </tr>
     <tr>
         <th>Преподаватели</th>

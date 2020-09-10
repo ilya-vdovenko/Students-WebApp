@@ -26,6 +26,7 @@ public class StudentController {
 
   private final InstituteService service;
   private final String Student_CREATE_OR_UPDATE_FORM = "StudentCreateOrUpdateForm";
+  private Student loadStud;
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -41,7 +42,7 @@ public class StudentController {
 
   @RequestMapping(value = "/{studentId}", method = GET)
   public String showStudentProfile(@PathVariable int studentId, Model model) {
-    model.addAttribute(service.findStudentById(studentId));
+    getStudentModal(studentId, model);
     return "studentProfile";
   }
 
@@ -69,8 +70,16 @@ public class StudentController {
 
   @RequestMapping(value = "/{studentId}/edit", method = GET)
   public String initUpdateOwnerForm(@PathVariable int studentId, Model model) {
-    model.addAttribute(service.findStudentById(studentId));
+    getStudentModal(studentId, model);
     return Student_CREATE_OR_UPDATE_FORM;
+  }
+
+  private void getStudentModal(int studentId, Model model) {
+    if (loadStud != null && loadStud.getId().equals(studentId)) {
+      model.addAttribute(loadStud);
+    } else {
+      model.addAttribute(service.findStudentById(studentId));
+    }
   }
 
   @RequestMapping(value = "/{studentId}/edit", method = POST)

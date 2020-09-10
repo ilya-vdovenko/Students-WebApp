@@ -2,37 +2,36 @@ package org.spring.samples.repository.JDBC;
 
 import org.spring.samples.model.Employee;
 import org.spring.samples.repository.EmployeeRepository;
-import org.springframework.context.annotation.Bean;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Repository
 public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
-  public Employee findById(int id) throws DataAccessException {
+  public Employee findById(int id) {
     return null;
   }
 
   @Override
-  public Collection<Employee> getAllEmployees() throws DataAccessException {
+  public Collection<Employee> getAllEmployees() {
     return null;
   }
 
   @Override
-  public Collection<Employee> getFacultyEmployees(int facultyId) {
+  public Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId) {
     return null;
   }
 
   @Override
-  public Collection<Employee> getFacultySoviet(int facultyId) {
+  public Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId) {
     return null;
   }
 
   @Override
-  public Collection<Employee> getCathedraLecturers(int cathedraId) {
+  public Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId) {
     return null;
   }
 }

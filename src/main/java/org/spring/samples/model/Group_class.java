@@ -28,23 +28,17 @@ public class Group_class extends BaseEntity {
   private String title;
 
   @NotEmpty
+  @Column(name = "edu_form")
+  private String eduForm;
+
+  @NotEmpty
   @ManyToOne
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 
-  @NotEmpty
-  @ManyToOne
-  @Cascade(CascadeType.SAVE_UPDATE)
-  @JoinColumn(name = "faculty_id")
-  private Faculty faculty;
-
   @OneToMany(mappedBy = "group_class", fetch = FetchType.EAGER)
   private Set<Student> group_students;
-
-  @NotEmpty
-  @Column(name = "fos")
-  private String fos;
 
   public String getTitle() {
     return title;
@@ -62,14 +56,6 @@ public class Group_class extends BaseEntity {
     this.cathedra = cathedra;
   }
 
-  public Faculty getFaculty() {
-    return faculty;
-  }
-
-  public void setFaculty(Faculty faculty) {
-    this.faculty = faculty;
-  }
-
   public Set<Student> getGroup_students() {
     return group_students;
   }
@@ -78,11 +64,11 @@ public class Group_class extends BaseEntity {
     this.group_students = group_students;
   }
 
-  public String getFos() {
-    return fos;
+  public String getEduForm() {
+    return eduForm;
   }
 
-  public void setFos(String fos) {
-    this.fos = fos;
+  public void setEduForm(String fos) {
+    this.eduForm = fos;
   }
 }

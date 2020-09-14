@@ -3,6 +3,7 @@ package org.spring.samples.repository.JDBC;
 import org.spring.samples.model.Student;
 import org.spring.samples.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,16 +18,17 @@ import java.util.Collection;
 public class JDBCStudentRepositoryImpl implements StudentRepository {
 
   private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+  private JdbcTemplate jdbcTemplate;
   private SimpleJdbcInsert insertStudent;
 
   @Autowired
-  public JDBCStudentRepositoryImpl(/*DataSource dataSource*/) {
-//    this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-//
-//    this.insertStudent = new SimpleJdbcInsert(dataSource)
-//      .withTableName("students")
-//      .usingGeneratedKeyColumns("id");
+  public JDBCStudentRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate,
+                                   NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    this.jdbcTemplate = jdbcTemplate;
+    this.insertStudent = new SimpleJdbcInsert(dataSource)
+      .withTableName("students")
+      .usingGeneratedKeyColumns("id");
   }
 
   @Override
@@ -54,12 +56,15 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
           "address=:address, telephone=:telephone, group_class_id=:group_class_id," +
           "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id", parameterSource);
     }
+    //TODO: сделать один метод получения всех студентов,
+    // настроить драйвер с источником,
+    // настроить базу данных MySQL,
+    // посмотреть как работает на embend и норм Tomcat.
   }
 
   @Override
   public Collection<Student> getAllStudents() {
-    //return jdbc.query("Select * from students order by fio", new StudentRowMapper());
-    return null;
+    return jdbcTemplate.query("Select * from students order by fio", BeanPropertyRowMapper.newInstance(Student.class));
   }
 
   @Override

@@ -16,7 +16,6 @@ public class StudentsWebAppInitializer extends AbstractDispatcherServletInitiali
   protected WebApplicationContext createRootApplicationContext() {
     XmlWebApplicationContext rootAppContext = new XmlWebApplicationContext();
     rootAppContext.setConfigLocations("classpath:SpringConfigs/root-config.xml");
-    rootAppContext.getEnvironment().setActiveProfiles("jpa-hibernate");
     return rootAppContext;
   }
 

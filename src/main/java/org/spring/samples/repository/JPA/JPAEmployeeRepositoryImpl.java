@@ -57,15 +57,15 @@ public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
   @SuppressWarnings("unchecked")
   private Collection<Employee> getList(Query query, Set<Employee> employees, int Id) {
     query.setParameter(1, Id);
-    Collection<Employee> list_of_employeers = new ArrayList<>();
-    List<Integer> list_of_employeersId = query.getResultList();
-    for (int id : list_of_employeersId) {
+    Collection<Employee> list_of_employers = new ArrayList<>();
+    List<Integer> list_of_employersId = query.getResultList();
+    for (int id : list_of_employersId) {
       for (Employee employee : employees) {
         if (employee.getId().equals(id)) {
-          list_of_employeers.add(employee);
+          list_of_employers.add(employee);
         }
       }
     }
-    return list_of_employeers;
+    return list_of_employers;
   }
 }

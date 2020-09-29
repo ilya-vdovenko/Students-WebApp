@@ -22,7 +22,7 @@ public class EmployeeController {
 
   @RequestMapping(value = "/{employeeId}", method = GET)
   public String showEmployeeProfile(@PathVariable int employeeId, Model model) {
-    model.addAttribute(service.findEmployeeById(employeeId));
+    model.addAttribute("employee", service.findEmployeeById(employeeId));
     return "employeeProfile";
   }
 

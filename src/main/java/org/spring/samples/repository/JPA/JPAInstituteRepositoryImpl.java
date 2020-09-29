@@ -36,9 +36,9 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
   }
 
   @Override
-  public Cathedra findCathedraById(int cathedraId) {
+  public Cathedra findCathedraById(int id) {
     Query query = this.em.createQuery("from Cathedra as c where c.id =:id");
-    query.setParameter("id", cathedraId);
+    query.setParameter("id", id);
     return (Cathedra) query.getSingleResult();
   }
 

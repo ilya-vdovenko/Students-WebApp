@@ -48,8 +48,8 @@ public class InstituteServiceImpl implements InstituteService {
 
   @Override
   @Transactional(readOnly = true)
-  public Cathedra findCathedraById(int cathedraId) {
-    return instituteRepository.findCathedraById(cathedraId);
+  public Cathedra findCathedraById(int id) {
+    return instituteRepository.findCathedraById(id);
   }
 
   @Override

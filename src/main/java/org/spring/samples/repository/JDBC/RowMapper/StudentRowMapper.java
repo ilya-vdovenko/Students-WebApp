@@ -1,9 +1,7 @@
-package org.spring.samples.repository.JDBC;
+package org.spring.samples.repository.JDBC.RowMapper;
 
-import org.spring.samples.model.Cathedra;
-import org.spring.samples.model.Faculty;
-import org.spring.samples.model.Group_class;
 import org.spring.samples.model.Student;
+import org.spring.samples.repository.InstituteRepository;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -12,7 +10,12 @@ import java.time.LocalDate;
 
 public class StudentRowMapper implements RowMapper<Student> {
 
-  @Override
+  private final InstituteRepository repository;
+
+  public StudentRowMapper(InstituteRepository instituteRepository) {
+    this.repository = instituteRepository;
+  }
+
   public Student mapRow(ResultSet rs, int num) throws SQLException {
     Student studObj = new Student();
     studObj.setId(rs.getInt("id"));
@@ -22,12 +25,9 @@ public class StudentRowMapper implements RowMapper<Student> {
     studObj.setFact_address(rs.getString("fact_address"));
     studObj.setAddress(rs.getString("address"));
     studObj.setTelephone(rs.getString("telephone"));
-//    studObj.setGroup_class(rs.getInt("group_class_id"));
-//    studObj.setCathedra(rs.getInt("cathedra_id"));
-//    studObj.setFaculty(rs.getInt("faculty_id"));
-    studObj.setGroup_class(new Group_class());
-    studObj.setCathedra(new Cathedra());
-    studObj.setFaculty(new Faculty());
+    studObj.setGroup_class(repository.findGroup_classById(rs.getInt("group_class_id")));
+    studObj.setCathedra(repository.findCathedraById(rs.getInt("cathedra_id")));
+    studObj.setFaculty(repository.findFacultyById(rs.getInt("faculty_id")));
     return studObj;
   }
 }

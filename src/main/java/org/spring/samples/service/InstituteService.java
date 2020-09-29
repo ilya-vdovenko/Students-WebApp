@@ -19,7 +19,7 @@ public interface InstituteService {
 
   Collection<Faculty> getFaculties();
 
-  Cathedra findCathedraById(int cathedraId);
+  Cathedra findCathedraById(int id);
 
   Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId);
 

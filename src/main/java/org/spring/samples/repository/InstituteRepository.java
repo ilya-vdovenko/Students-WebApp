@@ -3,7 +3,6 @@ package org.spring.samples.repository;
 import org.spring.samples.model.Cathedra;
 import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
-import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
 
@@ -17,7 +16,7 @@ public interface InstituteRepository {
 
   Collection<Faculty> getAllFaculties();
 
-  Cathedra findCathedraById(int cathedraId);
+  Cathedra findCathedraById(int id);
 
   Group_class findGroup_classById(int id);
 }

@@ -1,10 +1,10 @@
 package org.spring.samples.web;
 
-import org.spring.samples.model.BaseEntity;
 import org.spring.samples.model.Cathedra;
 import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
 import org.spring.samples.service.InstituteService;
+import org.spring.samples.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,7 +86,7 @@ public class InstituteController {
   @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}", method = GET)
   public String showGroup_classProfile(@PathVariable int cathedraId, @PathVariable int group_classId, Model model) {
     Group_class group_class = null;
-    if (equalsLoad(loadCat, cathedraId)) {
+    if (EntityUtils.equalsLoad(loadCat, cathedraId)) {
       for (Group_class grp : loadCat.getGroup_classes()) {
         if (grp.getId().equals(group_classId)) {
           group_class = grp;
@@ -104,20 +104,18 @@ public class InstituteController {
   }
 
   private void getFacModel(int facultyId, Model model) {
-    if (equalsLoad(loadFac, facultyId)) {
-      model.addAttribute(loadFac);
-    } else {
+    if (!EntityUtils.equalsLoad(loadFac, facultyId)) {
       loadFac = service.findFacultyById(facultyId);
-      model.addAttribute(service.findFacultyById(facultyId));
     }
+    model.addAttribute("faculty", loadFac);
   }
 
   private void getCatModal(int facultyId, int cathedraId, Model model) {
-    if (equalsLoad(loadCat, cathedraId)) {
+    if (EntityUtils.equalsLoad(loadCat, cathedraId)) {
       model.addAttribute(loadCat);
       return;
     }
-    if (equalsLoad(loadFac, facultyId)) {
+    if (EntityUtils.equalsLoad(loadFac, facultyId)) {
       for (Cathedra cat : loadFac.getCathedras()) {
         if (cat.getId().equals(cathedraId)) {
           loadCat = cat;
@@ -127,10 +125,7 @@ public class InstituteController {
     } else {
       loadCat = service.findCathedraById(cathedraId);
     }
-    model.addAttribute(loadCat);
+    model.addAttribute("cathedra", loadCat);
   }
 
-  private boolean equalsLoad(BaseEntity obj, int id) {
-    return obj != null && obj.getId().equals(id);
-  }
 }

@@ -13,7 +13,7 @@ public class EmployeeRowMapper implements RowMapper<JDBCEmployee> {
     employeeObj.setId(rs.getInt("id"));
     employeeObj.setFio(rs.getString("fio"));
     employeeObj.setPosition(rs.getString("position"));
-    employeeObj.setPosition(rs.getString("degree"));
+    employeeObj.setDegree(rs.getString("degree"));
     employeeObj.setCathedra_id(rs.getInt("cathedra_id"));
     employeeObj.setFaculty_id(rs.getInt("faculty_id"));
     return employeeObj;

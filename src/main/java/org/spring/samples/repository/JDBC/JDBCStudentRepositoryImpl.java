@@ -46,7 +46,7 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
       student.setId(newKey.intValue());
     } else {
       this.namedParameterJdbcTemplate.update(
-        "UPDATE students SET fio=:fio, birthday=:birthday, sex=:sex, fact_address=:fact_address" +
+        "UPDATE students SET fio=:fio, birthday=:birthday, sex=:sex, fact_address=:fact_address," +
           "address=:address, telephone=:telephone, group_class_id=:group_class_id," +
           "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id", createPetParameterSource(student));
     }

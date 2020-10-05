@@ -4,9 +4,9 @@ import org.spring.samples.model.Faculty;
 
 public class JDBCFaculty extends Faculty {
 
-  private int boss_id;
+  private Integer boss_id;
 
-  public int getBoss_id() {
+  public Integer getBoss_id() {
     return boss_id;
   }
 

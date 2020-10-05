@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collection;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -19,6 +21,7 @@ public class InstituteController {
 
   private Faculty loadFac;
   private Cathedra loadCat;
+  private Collection<Faculty> facultyList;
 
   private final InstituteService service;
 
@@ -35,7 +38,8 @@ public class InstituteController {
 
   @RequestMapping(method = GET)
   public String showAllFaculties(Model model) {
-    model.addAttribute("faculty_list", service.getFaculties());
+    facultyList = service.getFaculties();
+    model.addAttribute("faculty_list", facultyList);
     return "faculties";
   }
 
@@ -104,20 +108,33 @@ public class InstituteController {
   }
 
   private void getFacModel(int facultyId, Model model) {
-    if (!EntityUtils.equalsLoad(loadFac, facultyId)) {
-      loadFac = service.findFacultyById(facultyId);
+    if (EntityUtils.equalsLoad(loadFac, facultyId)) {
+      model.addAttribute("faculty", loadFac);
+      return;
+    } else {
+      if (facultyList != null && !facultyList.isEmpty()) {
+        for (Faculty facInList : facultyList) {
+          if (EntityUtils.equalsLoad(facInList, facultyId)) {
+            loadFac = facInList;
+            model.addAttribute("faculty", loadFac);
+            return;
+          }
+        }
+      } else {
+        loadFac = service.findFacultyById(facultyId);
+      }
     }
     model.addAttribute("faculty", loadFac);
   }
 
   private void getCatModal(int facultyId, int cathedraId, Model model) {
     if (EntityUtils.equalsLoad(loadCat, cathedraId)) {
-      model.addAttribute(loadCat);
+      model.addAttribute("cathedra", loadCat);
       return;
     }
     if (EntityUtils.equalsLoad(loadFac, facultyId)) {
       for (Cathedra cat : loadFac.getCathedras()) {
-        if (cat.getId().equals(cathedraId)) {
+        if (EntityUtils.equalsLoad(cat, cathedraId)) {
           loadCat = cat;
           break;
         }

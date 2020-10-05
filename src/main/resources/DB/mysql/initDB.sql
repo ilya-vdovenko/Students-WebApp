@@ -1,3 +1,6 @@
+/*only for dev*/
+DROP DATABASE IF EXISTS institute;
+/**/
 CREATE DATABASE IF NOT EXISTS institute;
 
 ALTER DATABASE institute

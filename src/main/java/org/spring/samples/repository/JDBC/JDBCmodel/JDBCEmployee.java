@@ -4,11 +4,11 @@ import org.spring.samples.model.Employee;
 
 public class JDBCEmployee extends Employee {
 
-  private int faculty_id;
+  private Integer faculty_id;
 
-  private int cathedra_id;
+  private Integer cathedra_id;
 
-  public int getFaculty_id() {
+  public Integer getFaculty_id() {
     return faculty_id;
   }
 
@@ -16,7 +16,7 @@ public class JDBCEmployee extends Employee {
     this.faculty_id = faculty_id;
   }
 
-  public int getCathedra_id() {
+  public Integer getCathedra_id() {
     return cathedra_id;
   }
 

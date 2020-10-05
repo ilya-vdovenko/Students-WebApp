@@ -1,5 +1,8 @@
 package org.spring.samples.repository.JDBC.RowMapper;
 
+import org.spring.samples.model.Cathedra;
+import org.spring.samples.model.Faculty;
+import org.spring.samples.model.Group_class;
 import org.spring.samples.model.Student;
 import org.spring.samples.repository.InstituteRepository;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,9 +28,20 @@ public class StudentRowMapper implements RowMapper<Student> {
     studObj.setFact_address(rs.getString("fact_address"));
     studObj.setAddress(rs.getString("address"));
     studObj.setTelephone(rs.getString("telephone"));
-    studObj.setGroup_class(repository.findGroup_classById(rs.getInt("group_class_id")));
-    studObj.setCathedra(repository.findCathedraById(rs.getInt("cathedra_id")));
-    studObj.setFaculty(repository.findFacultyById(rs.getInt("faculty_id")));
+    Faculty faculty = repository.findFacultyById(rs.getInt("faculty_id"));
+    studObj.setFaculty(faculty);
+    for (Cathedra cathedra : faculty.getCathedras()) {
+      if (cathedra.getId().equals(rs.getInt("cathedra_id"))) {
+        studObj.setCathedra(cathedra);
+        for (Group_class group_class : cathedra.getGroup_classes()) {
+          if (group_class.getId().equals(rs.getInt("group_class_id"))) {
+            studObj.setGroup_class(group_class);
+            break;
+          }
+        }
+        break;
+      }
+    }
     return studObj;
   }
 }

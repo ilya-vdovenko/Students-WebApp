@@ -1,4 +1,4 @@
-package org.spring.samples.web;
+package org.spring.samples.web.Editor;
 
 import org.spring.samples.service.InstituteService;
 

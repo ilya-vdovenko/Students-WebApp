@@ -5,6 +5,10 @@ import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
 import org.spring.samples.model.Student;
 import org.spring.samples.service.InstituteService;
+import org.spring.samples.util.EntityUtils;
+import org.spring.samples.web.Editor.CathedraEditor;
+import org.spring.samples.web.Editor.FacultyEditor;
+import org.spring.samples.web.Editor.GroupClassEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,6 +68,7 @@ public class StudentController {
       model.addAttribute(student);
       return Student_CREATE_OR_UPDATE_FORM;
     }
+    loadStud = student;
     service.saveStudent(student);
     return "redirect:/students";
   }
@@ -75,11 +80,10 @@ public class StudentController {
   }
 
   private void getStudentModal(int studentId, Model model) {
-    if (loadStud != null && loadStud.getId().equals(studentId)) {
-      model.addAttribute(loadStud);
-    } else {
-      model.addAttribute(service.findStudentById(studentId));
+    if (!EntityUtils.equalsLoad(loadStud, studentId)) {
+      loadStud = service.findStudentById(studentId);
     }
+    model.addAttribute(loadStud);
   }
 
   @RequestMapping(value = "/{studentId}/edit", method = POST)
@@ -89,6 +93,7 @@ public class StudentController {
       model.addAttribute(student);
       return Student_CREATE_OR_UPDATE_FORM;
     } else {
+      loadStud = student;
       student.setId(studentId);
       service.saveStudent(student);
       return "redirect:/students/{studentId}";

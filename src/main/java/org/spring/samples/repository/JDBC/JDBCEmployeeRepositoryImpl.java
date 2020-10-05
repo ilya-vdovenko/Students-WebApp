@@ -2,8 +2,11 @@ package org.spring.samples.repository.JDBC;
 
 import org.spring.samples.model.Employee;
 import org.spring.samples.repository.EmployeeRepository;
+import org.spring.samples.repository.InstituteRepository;
+import org.spring.samples.repository.JDBC.JDBCmodel.JDBCEmployee;
 import org.spring.samples.repository.JDBC.RowMapper.EmployeeRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,17 +25,20 @@ public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
 
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
+  private final InstituteRepository instituteRepository;
 
   @Autowired
   public JDBCEmployeeRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                                    JdbcTemplate jdbcTemplate) {
+                                    JdbcTemplate jdbcTemplate,
+                                    @Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepository) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     this.jdbcTemplate = jdbcTemplate;
+    this.instituteRepository = instituteRepository;
   }
 
   @Override
   public Employee findById(int id) {
-    Employee employee;
+    JDBCEmployee employee;
     try {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
@@ -44,13 +50,27 @@ public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Employee.class, id);
     }
+    if (employee != null) {
+      setCathedraAndFaculty(employee);
+    }
     return employee;
   }
 
   @Override
   public Collection<Employee> getAllEmployees() {
-    // return jdbcTemplate.query("SELECT * FROM employees ORDER BY fio", new EmployeeRowMapper());
-    return null;
+    final List<JDBCEmployee> jdbcEmployeeList = jdbcTemplate.query("SELECT * FROM employees ORDER BY fio", new EmployeeRowMapper());
+    for (JDBCEmployee employee : jdbcEmployeeList) {
+      setCathedraAndFaculty(employee);
+    }
+    return new ArrayList<>(jdbcEmployeeList);
+  }
+
+  private void setCathedraAndFaculty(JDBCEmployee employee) {
+    employee.setFaculty(instituteRepository.findFacultyById(employee.getFaculty_id()));
+    int catId = employee.getCathedra_id();
+    if (catId != 0) {
+      employee.setCathedra(instituteRepository.findCathedraById(catId));
+    }
   }
 
   @Override

@@ -19,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping(value = "/faculties")
 public class InstituteController {
 
+  //TODO убрать кэш реализацию
   private Faculty loadFac;
   private Cathedra loadCat;
   private Collection<Faculty> facultyList;

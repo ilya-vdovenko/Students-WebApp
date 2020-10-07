@@ -71,4 +71,15 @@ public class Group_class extends BaseEntity {
   public void setEduForm(String fos) {
     this.eduForm = fos;
   }
+
+  @Override
+  public String toString() {
+    return "Group_class{" +
+      ", id=" + id +
+      ", title='" + title + '\'' +
+      ", eduForm='" + eduForm + '\'' +
+      ", cathedra=" + cathedra +
+      ", group_students=" + group_students +
+      '}';
+  }
 }

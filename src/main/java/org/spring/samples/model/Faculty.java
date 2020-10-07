@@ -40,4 +40,13 @@ public class Faculty extends UnitEntity {
   public void setEmployees(Set<Employee> employees) {
     this.employees = employees;
   }
+
+  @Override
+  public String toString() {
+    return "Faculty{" +
+      "id=" + id +
+      ", cathedras=" + cathedras +
+      ", employees=" + employees +
+      '}';
+  }
 }

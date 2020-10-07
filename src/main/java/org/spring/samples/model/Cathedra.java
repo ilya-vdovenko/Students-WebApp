@@ -71,4 +71,15 @@ public class Cathedra extends UnitEntity {
   public void setGroup_classes(Set<Group_class> group_classes) {
     this.group_classes = group_classes;
   }
+
+  @Override
+  public String toString() {
+    return "Cathedra{" +
+      "id=" + id +
+      ", eduPrograms='" + eduPrograms + '\'' +
+      ", employees=" + employees +
+      ", faculty=" + faculty +
+      ", group_classes=" + group_classes +
+      '}';
+  }
 }

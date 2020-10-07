@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * JPA implementation of the {@link InstituteRepository} interface.
@@ -47,5 +48,21 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
     Query query = this.em.createQuery("from Group_class as gc where gc.id =:id");
     query.setParameter("id", id);
     return (Group_class) query.getSingleResult();
+  }
+
+  //TODO дописать
+  @Override
+  public Map<Integer, Faculty> getInternalFaculties() {
+    return null;
+  }
+
+  @Override
+  public Map<Integer, Cathedra> getInternalCathedras() {
+    return null;
+  }
+
+  @Override
+  public Map<Integer, Group_class> getInternalGroup_classes() {
+    return null;
   }
 }

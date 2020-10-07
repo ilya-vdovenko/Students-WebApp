@@ -28,6 +28,7 @@ public class InstituteServiceImpl implements InstituteService {
   private final EmployeeRepository employeeRepository;
 
   @Autowired
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   public InstituteServiceImpl(StudentRepository sr, InstituteRepository is, EmployeeRepository er) {
     this.studentRepository = sr;
     this.instituteRepository = is;

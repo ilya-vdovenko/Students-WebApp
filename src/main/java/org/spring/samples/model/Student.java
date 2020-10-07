@@ -91,4 +91,18 @@ public class Student extends Person {
   public void setGroup_class(Group_class group_class) {
     this.group_class = group_class;
   }
+
+  @Override
+  public String toString() {
+    return "Student{" +
+      "id=" + id +
+      ", birthday=" + birthday +
+      ", sex='" + sex + '\'' +
+      ", fact_address='" + fact_address + '\'' +
+      ", address='" + address + '\'' +
+      ", telephone='" + telephone + '\'' +
+      ", group_class=" + group_class +
+      ", id=" + id +
+      '}';
+  }
 }

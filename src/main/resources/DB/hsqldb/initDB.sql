@@ -30,11 +30,9 @@ CREATE TABLE group_classes (
     id              INTEGER IDENTITY PRIMARY KEY,
     title           VARCHAR(7),
     edu_form        VARCHAR(10),
-    cathedra_id     INTEGER NOT NULL,
-    faculty_id      INTEGER NOT NULL
+    cathedra_id     INTEGER NOT NULL
 );
 ALTER TABLE group_classes ADD CONSTRAINT fk_group_classes_cathedras FOREIGN KEY (cathedra_id) REFERENCES cathedras (id);
-ALTER TABLE group_classes ADD CONSTRAINT fk_group_classes_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
 
 CREATE TABLE students (
     id             INTEGER IDENTITY PRIMARY KEY,

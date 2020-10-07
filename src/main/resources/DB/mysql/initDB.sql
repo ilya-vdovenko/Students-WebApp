@@ -1,4 +1,5 @@
 /*only for dev*/
+/*TODO replace*/
 DROP DATABASE IF EXISTS institute;
 /**/
 CREATE DATABASE IF NOT EXISTS institute;
@@ -51,9 +52,7 @@ CREATE TABLE IF NOT EXISTS institute.group_classes
     title       VARCHAR(7),
     edu_form    VARCHAR(10),
     cathedra_id INT(4) UNSIGNED NOT NULL,
-    faculty_id  INT(4) UNSIGNED NOT NULL,
-    FOREIGN KEY (cathedra_id) REFERENCES cathedras (id),
-    FOREIGN KEY (faculty_id) REFERENCES faculties (id)
+    FOREIGN KEY (cathedra_id) REFERENCES cathedras (id)
 ) engine = InnoDB;
 
 CREATE TABLE IF NOT EXISTS institute.students

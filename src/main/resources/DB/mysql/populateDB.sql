@@ -7,10 +7,10 @@ INSERT IGNORE INTO cathedras VALUES(1, 'Электропривода, автом
 INSERT IGNORE INTO cathedras VALUES(2, 'Электромеханических систем и электроснабжения', 'Некоторая информация о кафедре...', null,'394066, г.Воронеж, Московский проспект, 179 3-й учебный корпус, каб. 232', 'Программы обучения...', 1);
 INSERT IGNORE INTO cathedras VALUES(3, 'Компьютерных интеллектуальных технологий проектирования','Некоторая информация о кафедре...', null,'394000 г.Воронеж, Плехановская 11','Программы обучения...', 2);
 
-INSERT IGNORE INTO group_classes VALUES(1, 'АТ-121', 'Очная', 1, 1);
-INSERT IGNORE INTO group_classes VALUES(2, 'АП-131', 'Заочная', 1, 1);
-INSERT IGNORE INTO group_classes VALUES(3, 'ПТ-111', 'Очная', 2, 1);
-INSERT IGNORE INTO group_classes VALUES(4, 'ЭМ-121', 'Очная', 3, 2);
+INSERT IGNORE INTO group_classes VALUES(1, 'АТ-121', 'Очная', 1);
+INSERT IGNORE INTO group_classes VALUES(2, 'АП-131', 'Заочная', 1);
+INSERT IGNORE INTO group_classes VALUES(3, 'ПТ-111', 'Очная', 2);
+INSERT IGNORE INTO group_classes VALUES(4, 'ЭМ-121', 'Очная', 3);
 
 INSERT IGNORE INTO employees VALUES(1, 'Бурковский Виктор Леонидович', 'Заведущий кафедрой', 'Доктор технических наук, профессор', 1, 1);
 INSERT IGNORE INTO employees VALUES(2, 'Гусев Константин Юрьевич', 'Доцент', 'Кандидат технических наук', 1, 1);

@@ -2,8 +2,9 @@ package org.spring.samples.repository.JDBC;
 
 import org.spring.samples.model.Student;
 import org.spring.samples.repository.InstituteRepository;
-import org.spring.samples.repository.JDBC.RowMapper.StudentRowMapper;
+import org.spring.samples.repository.JDBC.Extractor.StudentExtractor;
 import org.spring.samples.repository.StudentRepository;
+import org.spring.samples.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -25,18 +28,23 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
   private final SimpleJdbcInsert insertStudent;
-  private final InstituteRepository instituteRepository;
+  private final StudentExtractor studentExtractor;
+  private final InstituteRepository instituteRepo;
+  private Map<Integer, Student> studentsMap = new LinkedHashMap<>();
 
   @Autowired
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   public JDBCStudentRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate,
                                    NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                                   @Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepository) {
+                                   StudentExtractor studentExtractor,
+                                   @Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepo) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     this.jdbcTemplate = jdbcTemplate;
     this.insertStudent = new SimpleJdbcInsert(dataSource)
       .withTableName("students")
       .usingGeneratedKeyColumns("id");
-    this.instituteRepository = instituteRepository;
+    this.studentExtractor = studentExtractor;
+    this.instituteRepo = instituteRepo;
   }
 
   @Override
@@ -50,27 +58,48 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
           "address=:address, telephone=:telephone, group_class_id=:group_class_id," +
           "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id", createPetParameterSource(student));
     }
+    instituteRepo.getInternalGroup_classes().remove(student.getGroup_class().getId());
+    instituteRepo.getInternalCathedras().remove(student.getCathedra().getId());
+    instituteRepo.getInternalFaculties().remove(student.getFaculty().getId());
+    //studentsMap.replace(student.getId(), student);
   }
 
   @Override
   public Collection<Student> getAllStudents() {
-    return jdbcTemplate.query("SELECT * FROM students ORDER BY fio", new StudentRowMapper(instituteRepository));
+    List<Student> studentList = jdbcTemplate.query("SELECT * FROM students ORDER BY fio", studentExtractor);
+    studentsMap.clear();
+    if (EntityUtils.isValidCollection(studentList)) {
+      for (Student student : studentList) {
+        studentsMap.putIfAbsent(student.getId(), student);
+      }
+    }
+    return studentList;
   }
 
   @Override
   public Student findById(int id) {
+    if (EntityUtils.isValidCollection(studentsMap.values())) {
+      if (studentsMap.containsKey(id)) {
+        return studentsMap.get(id);
+      }
+    }
     Student student;
     try {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
-      student = this.namedParameterJdbcTemplate.queryForObject(
+      List<Student> studentList = this.namedParameterJdbcTemplate.query(
         "SELECT * FROM students WHERE id= :id",
         params,
-        new StudentRowMapper(instituteRepository)
-      );
+        studentExtractor);
+      if (EntityUtils.isValidCollection(studentList)) {
+        student = studentList.get(0);
+      } else {
+        throw new EmptyResultDataAccessException(1);
+      }
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Student.class, id);
     }
+    studentsMap.putIfAbsent(id, student);
     return student;
   }
 

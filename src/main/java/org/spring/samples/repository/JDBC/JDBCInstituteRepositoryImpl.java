@@ -1,187 +1,230 @@
 package org.spring.samples.repository.JDBC;
 
-import org.spring.samples.model.BaseEntity;
 import org.spring.samples.model.Cathedra;
+import org.spring.samples.model.Employee;
 import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
-import org.spring.samples.model.Student;
 import org.spring.samples.repository.InstituteRepository;
-import org.spring.samples.repository.JDBC.JDBCmodel.JDBCCathedra;
-import org.spring.samples.repository.JDBC.JDBCmodel.JDBCEmployee;
-import org.spring.samples.repository.JDBC.JDBCmodel.JDBCFaculty;
-import org.spring.samples.repository.JDBC.RowMapper.CathedraRowMapper;
-import org.spring.samples.repository.JDBC.RowMapper.EmployeeRowMapper;
-import org.spring.samples.repository.JDBC.RowMapper.FacultyRowMapper;
+import org.spring.samples.repository.JDBC.Extractor.CathedraExtractor;
+import org.spring.samples.repository.JDBC.Extractor.EmployeeExtractor;
+import org.spring.samples.repository.JDBC.Extractor.FacultyExtractor;
+import org.spring.samples.repository.JDBC.Extractor.Group_classExtractor;
+import org.spring.samples.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Repository
 public class JDBCInstituteRepositoryImpl implements InstituteRepository {
 
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
+  private final FacultyExtractor facultyExtractor;
+
+  @Autowired
+  private EmployeeExtractor employeeExtractor;
+
+  @Autowired
+  private CathedraExtractor cathedraExtractor;
+
+  @Autowired
+  private Group_classExtractor group_classExtractor;
+
+  private Map<Integer, Faculty> facultiesMap = new LinkedHashMap<>();
+  private Map<Integer, Cathedra> cathedrasMap = new LinkedHashMap<>();
+  private Map<Integer, Group_class> group_classesMap = new LinkedHashMap<>();
+
+  @Autowired
   public JDBCInstituteRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                                     FacultyExtractor facultyExtractor,
                                      JdbcTemplate jdbcTemplate) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    this.facultyExtractor = facultyExtractor;
     this.jdbcTemplate = jdbcTemplate;
-  }
-
-  //TODO: попробуй вместо этих громоздки вещей сделать ResultExtractor
-  private void loadCathedrasAndEmployees(JDBCFaculty faculty) {
-    final List<JDBCEmployee> employeeList = namedParameterQuery(OneToManyEnum.EMPLOYEE, faculty, "faculty_id");
-    final List<JDBCCathedra> cathedraList = namedParameterQuery(OneToManyEnum.CATHEDRA, faculty, "faculty_id");
-    for (JDBCEmployee employee : employeeList) {
-      employee.setFaculty(faculty);
-      if (employee.getId().equals(faculty.getBoss_id())) {
-        faculty.setBoss(employee);
-      }
-      for (JDBCCathedra cathedra : cathedraList) {
-        cathedra.setFaculty(faculty);
-        if (employee.getCathedra_id().equals(cathedra.getId())) {
-          employee.setCathedra(cathedra);
-        }
-        if (employee.getId().equals(cathedra.getBoss_id())) {
-          cathedra.setBoss(employee);
-        }
-        loadGroupClassAndEmployees(cathedra);
-      }
-    }
-    faculty.setEmployees(new HashSet<>(employeeList));
-    faculty.setCathedras(new HashSet<>(cathedraList));
-  }
-
-  private void loadGroupClassAndEmployees(Cathedra cathedra) {
-    final List<JDBCEmployee> employeeList = namedParameterQuery(OneToManyEnum.EMPLOYEE, cathedra, "cathedra_id");
-    final List<Group_class> groupClassList = namedParameterQuery(OneToManyEnum.GROUP, cathedra, "cathedra_id");
-    for (JDBCEmployee employee : employeeList) {
-      employee.setCathedra(cathedra);
-      employee.setFaculty(cathedra.getFaculty());
-    }
-    for (Group_class group_class : groupClassList) {
-      group_class.setCathedra(cathedra);
-      loadGroupStudents(group_class);
-    }
-    cathedra.setEmployees(new HashSet<>(employeeList));
-    cathedra.setGroup_classes(new HashSet<>(groupClassList));
-  }
-
-  private void loadGroupStudents(Group_class group_class) {
-    group_class.setGroup_students(new HashSet<>(namedParameterQuery(OneToManyEnum.STUDENT, group_class, "group_class_id")));
-  }
-
-  @SuppressWarnings("unchecked")
-  private <T> List<T> namedParameterQuery(OneToManyEnum oneToManyEnum, BaseEntity entity, String entity_id) {
-    Map<String, Object> params = new HashMap<>();
-    params.put("id", entity.getId());
-    RowMapper<T> rowMapper = null;
-    String tableName = "";
-    switch (oneToManyEnum) {
-      case EMPLOYEE:
-        rowMapper = (RowMapper<T>) new EmployeeRowMapper();
-        tableName = "employees";
-        break;
-      case CATHEDRA:
-        rowMapper = (RowMapper<T>) new CathedraRowMapper();
-        tableName = "cathedras";
-        break;
-      case GROUP:
-        rowMapper = (RowMapper<T>) BeanPropertyRowMapper.newInstance(Group_class.class);
-        tableName = "group_classes";
-        break;
-      case STUDENT:
-        rowMapper = (RowMapper<T>) BeanPropertyRowMapper.newInstance(Student.class);
-        tableName = "students";
-        break;
-    }
-    return this.namedParameterJdbcTemplate.query("SELECT * FROM " + tableName + " WHERE " + entity_id + " = :id", params, rowMapper);
   }
 
   @Override
   public Collection<Faculty> getAllFaculties() {
-    final List<JDBCFaculty> jdbcFacultyList = jdbcTemplate.query("SELECT * FROM faculties", new FacultyRowMapper());
-    for (JDBCFaculty faculty : jdbcFacultyList) {
-      loadCathedrasAndEmployees(faculty);
+    List<Faculty> facultyList = this.jdbcTemplate.query(
+      "SELECT f.id as facultyID, f.title as facultyTitle, f.information as facultyInfo,\n" +
+        "f.boss as facultyBossID, fb.fio as facultyBossFio, fb.position as facultyBossPosition,\n" +
+        "fb.degree as facultyBossDegree, f.contact_inf as facultyContInf, c.id as cathedraID,\n" +
+        "c.title as cathedraTitle, c.information as cathedraInfo, c.boss as cathedraBossID,\n" +
+        "cb.fio as cathedraBossFio, cb.position as cathedraBossPosition, cb.degree as cathedraBossDegree,\n" +
+        "c.contact_inf as cathedraContInf, edu_programs, g.id as groupID,\n" +
+        "g.title as groupTitle, edu_form, s.id as studentID, s.fio, birthday, sex,\n" +
+        "fact_address, address, telephone from faculties as f\n" +
+        "LEFT JOIN cathedras c on f.id = c.faculty_id\n" +
+        "LEFT JOIN employees fb on f.boss = fb.id\n" +
+        "LEFT JOIN employees cb on c.boss = cb.id\n" +
+        "LEFT JOIN group_classes as g on c.id = g.cathedra_id\n" +
+        "LEFT JOIN students as s on g.id = s.group_class_id ORDER BY f.title", facultyExtractor);
+
+    facultiesMap.clear();
+    cathedrasMap.clear();
+    group_classesMap.clear();
+
+    if (EntityUtils.isValidCollection(facultyList)) {
+      for (Faculty faculty : facultyList) {
+        facultiesMap.putIfAbsent(faculty.getId(), faculty);
+        for (Cathedra cathedra : faculty.getCathedras()) {
+          cathedrasMap.putIfAbsent(cathedra.getId(), cathedra);
+          for (Group_class group_class : cathedra.getGroup_classes()) {
+            group_classesMap.putIfAbsent(group_class.getId(), group_class);
+          }
+        }
+      }
+      for (Faculty faculty : facultyList) {
+        faculty.setEmployees(findEmployeesByEntity(faculty.getId(), "faculty_id"));
+        for (Cathedra cathedra : faculty.getCathedras()) {
+          cathedra.setEmployees(findEmployeesByEntity(cathedra.getId(), "cathedra_id"));
+        }
+      }
     }
-    return new ArrayList<>(jdbcFacultyList);
+    return facultyList;
   }
 
   @Override
   public Faculty findFacultyById(int id) {
-    JDBCFaculty faculty;
+    if (EntityUtils.isValidCollection(facultiesMap.values())) {
+      if (facultiesMap.containsKey(id)) {
+        return facultiesMap.get(id);
+      }
+    }
+    Faculty faculty;
     try {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
-      faculty = this.namedParameterJdbcTemplate.queryForObject(
-        "SELECT * FROM faculties WHERE id= :id",
+      List<Faculty> facultyList = this.namedParameterJdbcTemplate.query(
+        "SELECT f.id as facultyID, f.title as facultyTitle, f.information as facultyInfo,\n" +
+          "f.boss as facultyBossID, fb.fio as facultyBossFio, fb.position as facultyBossPosition,\n" +
+          "fb.degree as facultyBossDegree, f.contact_inf as facultyContInf, c.id as cathedraID,\n" +
+          "c.title as cathedraTitle, c.information as cathedraInfo, c.boss as cathedraBossID,\n" +
+          "cb.fio as cathedraBossFio, cb.position as cathedraBossPosition, cb.degree as cathedraBossDegree,\n" +
+          "c.contact_inf as cathedraContInf, edu_programs, g.id as groupID,\n" +
+          "g.title as groupTitle, edu_form, s.id as studentID, s.fio, birthday, sex,\n" +
+          "fact_address, address, telephone from faculties as f\n" +
+          "LEFT JOIN cathedras c on f.id = c.faculty_id\n" +
+          "LEFT JOIN employees fb on f.boss = fb.id\n" +
+          "LEFT JOIN employees cb on c.boss = cb.id\n" +
+          "LEFT JOIN group_classes as g on c.id = g.cathedra_id\n" +
+          "LEFT JOIN students as s on g.id = s.group_class_id WHERE f.id = :id",
         params,
-        new FacultyRowMapper()
-      );
+        facultyExtractor);
+      if (EntityUtils.isValidCollection(facultyList)) {
+        faculty = facultyList.get(0);
+      } else {
+        throw new EmptyResultDataAccessException(1);
+      }
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Faculty.class, id);
     }
-    if (faculty != null) {
-      loadCathedrasAndEmployees(faculty);
-    }
+    facultiesMap.putIfAbsent(id, faculty);
+    faculty.setEmployees(findEmployeesByEntity(faculty.getId(), "faculty_id"));
     return faculty;
   }
 
   @Override
   public Cathedra findCathedraById(int id) {
+    if (EntityUtils.isValidCollection(cathedrasMap.values())) {
+      if (cathedrasMap.containsKey(id)) {
+        return cathedrasMap.get(id);
+      }
+    }
     Cathedra cathedra;
     try {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
-      cathedra = this.namedParameterJdbcTemplate.queryForObject(
-        "SELECT * FROM cathedras WHERE id= :id",
+      cathedra = this.namedParameterJdbcTemplate.query(
+        "SELECT c.id as cathedraID, c.title as cathedraTitle, c.information as cathedraInfo, c.boss as cathedraBossID,\n" +
+          "cb.fio as cathedraBossFio, cb.position as cathedraBossPosition, cb.degree as cathedraBossDegree,\n" +
+          "c.contact_inf as cathedraContInf, edu_programs, c.faculty_id as catFac, g.id as groupID,\n" +
+          "g.title as groupTitle, edu_form, s.id as studentID, s.fio, birthday, sex,\n" +
+          "fact_address, address, telephone from cathedras as c\n" +
+          "LEFT JOIN employees as cb on c.boss = cb.id\n" +
+          "LEFT JOIN group_classes as g on c.id = g.cathedra_id\n" +
+          "LEFT JOIN students as s on g.id = s.group_class_id WHERE c.id = :id",
         params,
-        new CathedraRowMapper()
-      );
+        cathedraExtractor);
+      if (cathedra == null) {
+        throw new EmptyResultDataAccessException(1);
+      }
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Cathedra.class, id);
     }
-    if (cathedra != null) {
-      loadGroupClassAndEmployees(cathedra);
-    }
+    cathedrasMap.putIfAbsent(id, cathedra);
+    cathedra.setEmployees(findEmployeesByEntity(cathedra.getId(), "cathedra_id"));
     return cathedra;
   }
 
   @Override
   public Group_class findGroup_classById(int id) {
+    if (EntityUtils.isValidCollection(group_classesMap.values())) {
+      if (group_classesMap.containsKey(id)) {
+        return group_classesMap.get(id);
+      }
+    }
     Group_class group_class;
     try {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
-      group_class = this.namedParameterJdbcTemplate.queryForObject(
-        "SELECT * FROM group_classes WHERE id= :id",
+      group_class = this.namedParameterJdbcTemplate.query(
+        "SELECT g.id as groupID, g.title as groupTitle, edu_form, g.cathedra_id as grpCat,\n" +
+          "s.id as studentID, fio, birthday, sex, fact_address,\n" +
+          "address, telephone from group_classes as g\n" +
+          "LEFT JOIN students as s on g.id = s.group_class_id WHERE g.id = :id",
         params,
-        BeanPropertyRowMapper.newInstance(Group_class.class)
+        group_classExtractor
       );
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Group_class.class, id);
     }
-    if (group_class != null) {
-      loadGroupStudents(group_class);
-    }
+    group_classesMap.putIfAbsent(id, group_class);
     return group_class;
   }
 
-  private enum OneToManyEnum {
-    CATHEDRA,
-    EMPLOYEE,
-    GROUP,
-    STUDENT
+  private Set<Employee> findEmployeesByEntity(int id, String entity_id) {
+    List<Employee> employeeList;
+    try {
+      Map<String, Object> params = new HashMap<>();
+      params.put("id", id);
+      employeeList = this.namedParameterJdbcTemplate.query(
+        "SELECT * FROM employees WHERE " + entity_id + " = :id",
+        params,
+        employeeExtractor
+      );
+      if (!EntityUtils.isValidCollection(employeeList)) {
+        throw new EmptyResultDataAccessException(1);
+      }
+    } catch (EmptyResultDataAccessException ex) {
+      throw new ObjectRetrievalFailureException(Faculty.class, id);
+    }
+    return new HashSet<>(employeeList);
   }
 
+  @Override
+  public Map<Integer, Faculty> getInternalFaculties() {
+    return facultiesMap;
+  }
+
+  @Override
+  public Map<Integer, Cathedra> getInternalCathedras() {
+    return cathedrasMap;
+  }
+
+  @Override
+  public Map<Integer, Group_class> getInternalGroup_classes() {
+    return group_classesMap;
+  }
 }

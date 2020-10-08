@@ -4,25 +4,17 @@ import org.spring.samples.model.Cathedra;
 import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
 import org.spring.samples.service.InstituteService;
-import org.spring.samples.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collection;
-
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 @RequestMapping(value = "/faculties")
 public class InstituteController {
-
-  //TODO убрать кэш реализацию
-  private Faculty loadFac;
-  private Cathedra loadCat;
-  private Collection<Faculty> facultyList;
 
   private final InstituteService service;
 
@@ -33,117 +25,76 @@ public class InstituteController {
 
   @RequestMapping(value = "/{facultyId}", method = GET)
   public String showFacultyProfile(@PathVariable int facultyId, Model model) {
-    getFacModel(facultyId, model);
+    model.addAttribute(service.findFacultyById(facultyId));
     return "facultyProfile";
   }
 
   @RequestMapping(method = GET)
   public String showAllFaculties(Model model) {
-    facultyList = service.getFaculties();
-    model.addAttribute("faculty_list", facultyList);
+    model.addAttribute("faculty_list", service.getFaculties());
     return "faculties";
   }
 
   @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}", method = GET)
-  public String showCathedraProfile(@PathVariable int facultyId, @PathVariable int cathedraId, Model model) {
-    getCatModal(facultyId, cathedraId, model);
+  public String showCathedraProfile(@PathVariable int cathedraId, Model model) {
+    model.addAttribute(service.findCathedraById(cathedraId));
     return "cathedraProfile";
   }
 
   @RequestMapping(value = "/{facultyId}/cathedras", method = GET)
   public String showAllCathedras(@PathVariable int facultyId, Model model) {
-    getFacModel(facultyId, model);
-    model.addAttribute(loadFac);
-    model.addAttribute("cathedra_list", loadFac.getCathedras());
+    Faculty faculty = service.findFacultyById(facultyId);
+    model.addAttribute(faculty);
+    model.addAttribute("cathedra_list", faculty.getCathedras());
     return "cathedras";
   }
 
+  private void getEmployeesModel(Model model, int id, boolean isSoviet) {
+    Faculty faculty = service.findFacultyById(id);
+    model.addAttribute(faculty);
+    if (isSoviet) {
+      model.addAttribute("employee_list", service.getFacultySoviet(faculty.getEmployees(), id));
+      model.addAttribute("soviet", true);
+    } else {
+      model.addAttribute("employee_list", service.getFacultyEmployees(faculty.getEmployees(), id));
+      model.addAttribute("soviet", false);
+    }
+  }
+
   @RequestMapping(value = "/{facultyId}/employees", method = GET)
-  public String showFacultyEmployees(@PathVariable int facultyId, Model model) {
-    getFacModel(facultyId, model);
-    model.addAttribute("employee_list", service.getFacultyEmployees(loadFac.getEmployees(), facultyId));
-    model.addAttribute("soviet", false);
+  public String showFacultyAllEmployees(@PathVariable int facultyId, Model model) {
+    getEmployeesModel(model, facultyId, false);
     return "employees";
   }
 
   @RequestMapping(value = "/{facultyId}/soviet", method = GET)
   public String showFacultySoviet(@PathVariable int facultyId, Model model) {
-    getFacModel(facultyId, model);
-    model.addAttribute("employee_list", service.getFacultySoviet(loadFac.getEmployees(), facultyId));
-    model.addAttribute("soviet", true);
+    getEmployeesModel(model, facultyId, true);
     return "employees";
   }
 
   @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/lecturers", method = GET)
-  public String showCathedraLecturers(@PathVariable int facultyId, @PathVariable int cathedraId, Model model) {
-    getCatModal(facultyId, cathedraId, model);
-    model.addAttribute("employee_list", service.getCathedraLecturers(loadCat.getEmployees(), cathedraId));
+  public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
+    Cathedra cathedra = service.findCathedraById(cathedraId);
+    model.addAttribute(cathedra);
+    model.addAttribute("employee_list", service.getCathedraLecturers(cathedra.getEmployees(), cathedraId));
     return "employees";
   }
 
   @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/group_classes", method = GET)
-  public String showAllGroup_class(@PathVariable int facultyId, @PathVariable int cathedraId, Model model) {
-    getCatModal(facultyId, cathedraId, model);
-    model.addAttribute("group_class_list", loadCat.getGroup_classes());
+  public String showAllGroup_class(@PathVariable int cathedraId, Model model) {
+    Cathedra cathedra = service.findCathedraById(cathedraId);
+    model.addAttribute(cathedra);
+    model.addAttribute("group_class_list", cathedra.getGroup_classes());
     return "group_classes";
   }
 
   @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}", method = GET)
-  public String showGroup_classProfile(@PathVariable int cathedraId, @PathVariable int group_classId, Model model) {
-    Group_class group_class = null;
-    if (EntityUtils.equalsLoad(loadCat, cathedraId)) {
-      for (Group_class grp : loadCat.getGroup_classes()) {
-        if (grp.getId().equals(group_classId)) {
-          group_class = grp;
-          break;
-        }
-      }
-    } else {
-      group_class = service.findGroup_classById(group_classId);
-    }
-    if (group_class != null) {
-      model.addAttribute(group_class);
-      model.addAttribute("group_students_list", group_class.getGroup_students());
-    }
+  public String showGroup_classProfile(@PathVariable int group_classId, Model model) {
+    Group_class group_class = service.findGroup_classById(group_classId);
+    model.addAttribute(group_class);
+    model.addAttribute("group_students_list", group_class.getGroup_students());
     return "group_classProfile";
-  }
-
-  private void getFacModel(int facultyId, Model model) {
-    if (EntityUtils.equalsLoad(loadFac, facultyId)) {
-      model.addAttribute("faculty", loadFac);
-      return;
-    } else {
-      if (facultyList != null && !facultyList.isEmpty()) {
-        for (Faculty facInList : facultyList) {
-          if (EntityUtils.equalsLoad(facInList, facultyId)) {
-            loadFac = facInList;
-            model.addAttribute("faculty", loadFac);
-            return;
-          }
-        }
-      } else {
-        loadFac = service.findFacultyById(facultyId);
-      }
-    }
-    model.addAttribute("faculty", loadFac);
-  }
-
-  private void getCatModal(int facultyId, int cathedraId, Model model) {
-    if (EntityUtils.equalsLoad(loadCat, cathedraId)) {
-      model.addAttribute("cathedra", loadCat);
-      return;
-    }
-    if (EntityUtils.equalsLoad(loadFac, facultyId)) {
-      for (Cathedra cat : loadFac.getCathedras()) {
-        if (EntityUtils.equalsLoad(cat, cathedraId)) {
-          loadCat = cat;
-          break;
-        }
-      }
-    } else {
-      loadCat = service.findCathedraById(cathedraId);
-    }
-    model.addAttribute("cathedra", loadCat);
   }
 
 }

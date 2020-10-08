@@ -101,8 +101,9 @@ public class Student extends Person {
       ", fact_address='" + fact_address + '\'' +
       ", address='" + address + '\'' +
       ", telephone='" + telephone + '\'' +
-      ", group_class=" + group_class +
-      ", id=" + id +
+      ", group_class id=" + group_class.getId() +
+      ", cathedra id=" + getCathedra().getId() +
+      ", faculty id=" + getFaculty().getId() +
       '}';
   }
 }

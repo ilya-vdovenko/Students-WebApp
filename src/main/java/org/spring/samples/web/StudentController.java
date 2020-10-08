@@ -5,7 +5,6 @@ import org.spring.samples.model.Faculty;
 import org.spring.samples.model.Group_class;
 import org.spring.samples.model.Student;
 import org.spring.samples.service.InstituteService;
-import org.spring.samples.util.EntityUtils;
 import org.spring.samples.web.Editor.CathedraEditor;
 import org.spring.samples.web.Editor.FacultyEditor;
 import org.spring.samples.web.Editor.GroupClassEditor;
@@ -30,8 +29,6 @@ public class StudentController {
 
   private final InstituteService service;
   private final String Student_CREATE_OR_UPDATE_FORM = "StudentCreateOrUpdateForm";
-  //TODO убрать кэш реализацию
-  private Student loadStud;
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -47,7 +44,7 @@ public class StudentController {
 
   @RequestMapping(value = "/{studentId}", method = GET)
   public String showStudentProfile(@PathVariable int studentId, Model model) {
-    getStudentModal(studentId, model);
+    model.addAttribute(service.findStudentById(studentId));
     return "studentProfile";
   }
 
@@ -69,22 +66,14 @@ public class StudentController {
       model.addAttribute(student);
       return Student_CREATE_OR_UPDATE_FORM;
     }
-    loadStud = student;
     service.saveStudent(student);
     return "redirect:/students";
   }
 
   @RequestMapping(value = "/{studentId}/edit", method = GET)
   public String initUpdateOwnerForm(@PathVariable int studentId, Model model) {
-    getStudentModal(studentId, model);
+    model.addAttribute(service.findStudentById(studentId));
     return Student_CREATE_OR_UPDATE_FORM;
-  }
-
-  private void getStudentModal(int studentId, Model model) {
-    if (!EntityUtils.equalsLoad(loadStud, studentId)) {
-      loadStud = service.findStudentById(studentId);
-    }
-    model.addAttribute(loadStud);
   }
 
   @RequestMapping(value = "/{studentId}/edit", method = POST)
@@ -94,7 +83,6 @@ public class StudentController {
       model.addAttribute(student);
       return Student_CREATE_OR_UPDATE_FORM;
     } else {
-      loadStud = student;
       student.setId(studentId);
       service.saveStudent(student);
       return "redirect:/students/{studentId}";

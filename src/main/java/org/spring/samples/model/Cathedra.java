@@ -78,7 +78,7 @@ public class Cathedra extends UnitEntity {
       "id=" + id +
       ", eduPrograms='" + eduPrograms + '\'' +
       ", employees=" + employees +
-      ", faculty=" + faculty +
+      ", faculty id=" + faculty.getId() +
       ", group_classes=" + group_classes +
       '}';
   }

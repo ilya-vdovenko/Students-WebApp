@@ -35,4 +35,15 @@ public class Employee extends Person {
   public void setDegree(String degree) {
     this.degree = degree;
   }
+
+  @Override
+  public String toString() {
+    return "Employee{" +
+      "id=" + id +
+      ", position='" + position + '\'' +
+      ", degree='" + degree + '\'' +
+      ", faculty id=" + id +
+      ", cathedra id=" + id +
+      '}';
+  }
 }

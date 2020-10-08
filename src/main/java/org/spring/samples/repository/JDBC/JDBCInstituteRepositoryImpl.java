@@ -41,9 +41,9 @@ public class JDBCInstituteRepositoryImpl implements InstituteRepository {
   @Autowired
   private Group_classExtractor group_classExtractor;
 
-  private Map<Integer, Faculty> facultiesMap = new LinkedHashMap<>();
-  private Map<Integer, Cathedra> cathedrasMap = new LinkedHashMap<>();
-  private Map<Integer, Group_class> group_classesMap = new LinkedHashMap<>();
+  private final Map<Integer, Faculty> facultiesMap = new LinkedHashMap<>();
+  private final Map<Integer, Cathedra> cathedrasMap = new LinkedHashMap<>();
+  private final Map<Integer, Group_class> group_classesMap = new LinkedHashMap<>();
 
   @Autowired
   public JDBCInstituteRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
@@ -71,20 +71,8 @@ public class JDBCInstituteRepositoryImpl implements InstituteRepository {
         "LEFT JOIN group_classes as g on c.id = g.cathedra_id\n" +
         "LEFT JOIN students as s on g.id = s.group_class_id ORDER BY f.title", facultyExtractor);
 
-    facultiesMap.clear();
-    cathedrasMap.clear();
-    group_classesMap.clear();
-
     if (EntityUtils.isValidCollection(facultyList)) {
-      for (Faculty faculty : facultyList) {
-        facultiesMap.putIfAbsent(faculty.getId(), faculty);
-        for (Cathedra cathedra : faculty.getCathedras()) {
-          cathedrasMap.putIfAbsent(cathedra.getId(), cathedra);
-          for (Group_class group_class : cathedra.getGroup_classes()) {
-            group_classesMap.putIfAbsent(group_class.getId(), group_class);
-          }
-        }
-      }
+      EntityUtils.setEntityMaps(facultyList, facultiesMap, cathedrasMap, group_classesMap);
       for (Faculty faculty : facultyList) {
         faculty.setEmployees(findEmployeesByEntity(faculty.getId(), "faculty_id"));
         for (Cathedra cathedra : faculty.getCathedras()) {

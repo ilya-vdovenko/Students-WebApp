@@ -78,7 +78,7 @@ public class Group_class extends BaseEntity {
       ", id=" + id +
       ", title='" + title + '\'' +
       ", eduForm='" + eduForm + '\'' +
-      ", cathedra=" + cathedra +
+      ", cathedra id=" + cathedra.getId() +
       ", group_students=" + group_students +
       '}';
   }

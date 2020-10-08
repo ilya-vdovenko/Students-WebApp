@@ -30,7 +30,7 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
   private final SimpleJdbcInsert insertStudent;
   private final StudentExtractor studentExtractor;
   private final InstituteRepository instituteRepo;
-  private Map<Integer, Student> studentsMap = new LinkedHashMap<>();
+  private final Map<Integer, Student> studentsMap = new LinkedHashMap<>();
 
   @Autowired
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -58,10 +58,8 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
           "address=:address, telephone=:telephone, group_class_id=:group_class_id," +
           "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id", createPetParameterSource(student));
     }
-    instituteRepo.getInternalGroup_classes().remove(student.getGroup_class().getId());
-    instituteRepo.getInternalCathedras().remove(student.getCathedra().getId());
-    instituteRepo.getInternalFaculties().remove(student.getFaculty().getId());
-    //studentsMap.replace(student.getId(), student);
+    studentsMap.replace(student.getId(), student);
+    EntityUtils.clearAfterSetStudent(instituteRepo, student);
   }
 
   @Override

@@ -21,7 +21,7 @@ public interface InstituteRepository {
 
   Faculty findFacultyById(int id);
 
-  Collection<Faculty> getAllFaculties();
+  Collection<Faculty> findAllFaculties();
 
   Cathedra findCathedraById(int id);
 

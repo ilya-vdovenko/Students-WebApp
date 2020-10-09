@@ -63,7 +63,7 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
   }
 
   @Override
-  public Collection<Student> getAllStudents() {
+  public Collection<Student> findAll() {
     List<Student> studentList = jdbcTemplate.query("SELECT * FROM students ORDER BY fio", studentExtractor);
     studentsMap.clear();
     if (EntityUtils.isValidCollection(studentList)) {

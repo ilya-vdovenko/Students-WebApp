@@ -45,7 +45,7 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Faculty> getAllFaculties() {
+  public Collection<Faculty> findAllFaculties() {
     List<Faculty> facultyList = this.em.createQuery("from Faculty").getResultList();
     if (EntityUtils.isValidCollection(facultyList)) {
       EntityUtils.setEntityMaps(facultyList, facultiesMap, cathedrasMap, group_classesMap);

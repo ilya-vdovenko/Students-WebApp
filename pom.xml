@@ -22,7 +22,7 @@
         <spring-data-jdbc.version>2.0.3.RELEASE</spring-data-jdbc.version>
 
         <!-- Persistence -->
-        <spring-data-jpa>2.3.3.RELEASE</spring-data-jpa>
+        <spring-data-releasetrain.version>Moore-RELEASE</spring-data-releasetrain.version>
         <hibernate.version>5.3.7.Final</hibernate.version>
         <hibernate-annotations.version>5.1.0.Final</hibernate-annotations.version>
         <hsqldb.version>2.5.1</hsqldb.version>
@@ -57,6 +57,18 @@
 
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-releasetrain</artifactId>
+                <version>${spring-data-releasetrain.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
 
         <!--Spring-->
@@ -82,7 +94,6 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa}</version>
         </dependency>
 
         <!-- Persistence -->
@@ -231,7 +242,7 @@
 
     <profiles>
         <profile>
-            <id>HSQLDB</id>
+            <id>JPA_HSQLDB</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -254,7 +265,27 @@
             </dependencies>
         </profile>
         <profile>
-            <id>MySQL</id>
+            <id>SDJ_HSQLDB</id>
+            <properties>
+                <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
+                <maven.db.script>hsqldb</maven.db.script>
+                <maven.jpa.database>HSQL</maven.jpa.database>
+                <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
+                <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
+                <maven.jdbc.username>sa</maven.jdbc.username>
+                <maven.jdbc.password/>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>${hsqldb.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>JDBC_MySQL</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
                 <maven.db.script>mysql</maven.db.script>

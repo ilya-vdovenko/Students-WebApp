@@ -55,7 +55,7 @@ public class JDBCInstituteRepositoryImpl implements InstituteRepository {
   }
 
   @Override
-  public Collection<Faculty> getAllFaculties() {
+  public Collection<Faculty> findAllFaculties() {
     List<Faculty> facultyList = this.jdbcTemplate.query(
       "SELECT f.id as facultyID, f.title as facultyTitle, f.information as facultyInfo,\n" +
         "f.boss as facultyBossID, fb.fio as facultyBossFio, fb.position as facultyBossPosition,\n" +

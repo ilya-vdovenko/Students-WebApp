@@ -11,13 +11,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Repository
 public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
@@ -64,7 +62,7 @@ public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
   }
 
   @Override
-  public Collection<Employee> getAllEmployees() {
+  public Collection<Employee> findAll() {
     List<Employee> employeeList = jdbcTemplate.query("SELECT * FROM employees ORDER BY fio", employeeExtractor);
     employeesMap.clear();
     if (EntityUtils.isValidCollection(employeeList)) {
@@ -73,36 +71,6 @@ public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
       }
     }
     return employeeList;
-  }
-
-  @Override
-  public Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId) {
-    return getList(jdbcTemplate.queryForList("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?", Integer.class, facultyId), employees);
-  }
-
-  @Override
-  public Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId) {
-    return getList(jdbcTemplate.queryForList("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?", Integer.class, facultyId), employees);
-  }
-
-  @Override
-  public Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId) {
-    return getList(jdbcTemplate.queryForList("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?", Integer.class, cathedraId), employees);
-  }
-
-  private Collection<Employee> getList(List<Integer> list_of_employersId, Set<Employee> employees) {
-    Collection<Employee> list_of_employers = new ArrayList<>();
-    if (EntityUtils.isValidCollection(list_of_employersId) &
-      EntityUtils.isValidCollection(employees)) {
-      for (int id : list_of_employersId) {
-        for (Employee employee : employees) {
-          if (employee.getId().equals(id)) {
-            list_of_employers.add(employee);
-          }
-        }
-      }
-    }
-    return list_of_employers;
   }
 
 }

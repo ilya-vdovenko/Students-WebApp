@@ -4,13 +4,16 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/data/jpa
+       https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <import resource="datasource-config.xml"/>
 
@@ -28,6 +31,14 @@
     </bean>
 
     <beans profile="jpa">
+        <context:component-scan base-package="org.spring.samples.repository.JPA"/>
+    </beans>
+
+    <beans profile="spring-data-jpa">
+        <jpa:repositories base-package="org.spring.samples.repository.SpringDataJpa"/>
+    </beans>
+
+    <beans profile="jpa, spring-data-jpa">
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource">
             <property name="jpaVendorAdapter">
@@ -43,7 +54,6 @@
 
         <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-        <context:component-scan base-package="org.spring.samples.repository.JPA"/>
     </beans>
 
     <beans profile="jdbc">
@@ -61,5 +71,4 @@
 
         <context:component-scan base-package="org.spring.samples.repository.JDBC"/>
     </beans>
-
 </beans>

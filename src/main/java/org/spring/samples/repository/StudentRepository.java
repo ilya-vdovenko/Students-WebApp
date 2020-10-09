@@ -12,7 +12,7 @@ public interface StudentRepository {
 
   void save(Student student);
 
-  Collection<Student> getAllStudents();
+  Collection<Student> findAll();
 
   Student findById(int id);
 }

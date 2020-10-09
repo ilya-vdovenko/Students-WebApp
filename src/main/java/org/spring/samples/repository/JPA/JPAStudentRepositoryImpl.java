@@ -33,7 +33,7 @@ public class JPAStudentRepositoryImpl implements StudentRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Student> getAllStudents() {
+  public Collection<Student> findAll() {
     List<Student> studentList = this.em.createQuery("from Student").getResultList();
     studentsMap.clear();
     if (EntityUtils.isValidCollection(studentList)) {

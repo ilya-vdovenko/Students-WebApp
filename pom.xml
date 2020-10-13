@@ -4,9 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.springframework.app</groupId>
-    <artifactId>spring-framework-students</artifactId>
+    <artifactId>Students-WebApp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+    <description>A Spring Framework application based on JSP, Spring MVC, Spring Data JPA, Hibernate and JDBC
+    </description>
+    <url>https://github.com/ilya-vdovenko/Students-WebApp</url>
 
     <properties>
 
@@ -19,20 +22,21 @@
         <spring-data-jdbc.version>2.0.3.RELEASE</spring-data-jdbc.version>
 
         <!-- Persistence -->
-        <spring-data-jpa>2.3.3.RELEASE</spring-data-jpa>
+        <spring-data-releasetrain.version>Moore-RELEASE</spring-data-releasetrain.version>
         <hibernate.version>5.3.7.Final</hibernate.version>
-        <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
+        <hibernate-annotations.version>5.1.0.Final</hibernate-annotations.version>
         <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- Java EE -->
         <javax.jstl.version>1.2</javax.jstl.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
 
         <!-- Front -->
         <jquery.version>3.5.1</jquery.version>
 
         <!-- Back -->
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.9.10</jackson.version>
         <jackson-annotations-version>2.9.5</jackson-annotations-version>
 
         <!-- Logging -->
@@ -41,9 +45,29 @@
 
         <!-- Tomcat -->
         <tomcat.version>7.0.105</tomcat.version>
+
+        <!-- JDBC Drivers -->
+        <mysql-driver.version>8.0.21</mysql-driver.version>
+
+        <!-- Plugins -->
         <tomcat-maven-plugin.version>2.2</tomcat-maven-plugin.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-maven-war-plugin.version>3.2.2</maven-maven-war-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
 
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-releasetrain</artifactId>
+                <version>${spring-data-releasetrain.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -70,32 +94,30 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa}</version>
         </dependency>
-
 
         <!-- Persistence -->
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
+            <groupId>org.hibernate.common</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
             <version>${hibernate-annotations.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <!-- Java EE -->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -171,25 +193,117 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat-maven-plugin.version}</version>
                 <configuration>
-                    <path>/</path>
+                    <systemProperties>
+                        <spring.profiles.active>${maven.spring.profiles.active}</spring.profiles.active>
+                    </systemProperties>
+                    <path>/Students-WebApp</path>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-maven-war-plugin.version}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>JPA_HSQLDB</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
+                <maven.db.script>hsqldb</maven.db.script>
+                <maven.jpa.database>HSQL</maven.jpa.database>
+                <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
+                <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
+                <maven.jdbc.username>sa</maven.jdbc.username>
+                <maven.jdbc.password/>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>${hsqldb.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>SDJ_HSQLDB</id>
+            <properties>
+                <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
+                <maven.db.script>hsqldb</maven.db.script>
+                <maven.jpa.database>HSQL</maven.jpa.database>
+                <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
+                <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
+                <maven.jdbc.username>sa</maven.jdbc.username>
+                <maven.jdbc.password/>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>${hsqldb.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>JDBC_MySQL</id>
+            <properties>
+                <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+                <maven.db.script>mysql</maven.db.script>
+                <maven.jpa.database>MYSQL</maven.jpa.database>
+                <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
+                <maven.jdbc.url>jdbc:mysql://localhost:3306/?useUnicode=true</maven.jdbc.url>
+                <maven.jdbc.username>institute</maven.jdbc.username>
+                <maven.jdbc.password>institute</maven.jdbc.password>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>${mysql-driver.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>

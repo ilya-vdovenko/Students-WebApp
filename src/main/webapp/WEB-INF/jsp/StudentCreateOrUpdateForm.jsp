@@ -30,6 +30,7 @@
         </c:otherwise>
     </c:choose>
 </h2>
+<%--@elvariable id="student" type="StudentsWebAppInitializer"--%>
 <sf:form method="POST" modelAttribute="student">
     <div>
         ФИО: <sf:input path="fio" cssStyle="width: 22%"/><br/>

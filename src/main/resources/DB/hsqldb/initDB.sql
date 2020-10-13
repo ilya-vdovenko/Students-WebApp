@@ -1,40 +1,38 @@
 DROP TABLE students IF EXISTS;
 DROP TABLE faculties IF EXISTS;
 DROP TABLE cathedras IF EXISTS;
-DROP TABLE Group_classes IF EXISTS;
+DROP TABLE group_classes IF EXISTS;
 DROP TABLE employees IF EXISTS;
 DROP TABLE facultyWorker IF EXISTS;
 DROP TABLE facultySoviet IF EXISTS;
 DROP TABLE cathedraLectures IF EXISTS;
 
 CREATE TABLE faculties (
-    id          INTEGER IDENTITY PRIMARY KEY,
-    title       VARCHAR(120),
-    information VARCHAR(400),
-    boss        INTEGER,
-    contact_inf VARCHAR(350)
+    id              INTEGER IDENTITY PRIMARY KEY,
+    title           VARCHAR(120),
+    information     VARCHAR(400),
+    boss            INTEGER,
+    contact_inf     VARCHAR(350)
 );
 
 CREATE TABLE cathedras (
-    id          INTEGER IDENTITY PRIMARY KEY,
-    title       VARCHAR(120),
-    information VARCHAR(400),
-    boss        INTEGER,
-    contact_inf VARCHAR(350),
-    programs    VARCHAR(550),
-    faculty_id  INTEGER NOT NULL
+    id              INTEGER IDENTITY PRIMARY KEY,
+    title           VARCHAR(120),
+    information     VARCHAR(400),
+    boss            INTEGER,
+    contact_inf     VARCHAR(350),
+    edu_programs    VARCHAR(550),
+    faculty_id      INTEGER NOT NULL
 );
 ALTER TABLE cathedras ADD CONSTRAINT fk_cathedras_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
 
 CREATE TABLE group_classes (
-    id          INTEGER IDENTITY PRIMARY KEY,
-    title      VARCHAR(7),
-    fos         VARCHAR(10),
-    cathedra_id INTEGER NOT NULL,
-    faculty_id  INTEGER NOT NULL
+    id              INTEGER IDENTITY PRIMARY KEY,
+    title           VARCHAR(7),
+    edu_form        VARCHAR(10),
+    cathedra_id     INTEGER NOT NULL
 );
 ALTER TABLE group_classes ADD CONSTRAINT fk_group_classes_cathedras FOREIGN KEY (cathedra_id) REFERENCES cathedras (id);
-ALTER TABLE group_classes ADD CONSTRAINT fk_group_classes_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
 
 CREATE TABLE students (
     id             INTEGER IDENTITY PRIMARY KEY,
@@ -80,7 +78,7 @@ ALTER TABLE facultySoviet ADD CONSTRAINT fk_facultySoviet_faculties FOREIGN KEY 
 ALTER TABLE facultySoviet ADD CONSTRAINT fk_facultySoviet_employees FOREIGN KEY (employee_id) REFERENCES employees (id);
 
 CREATE TABLE cathedraLectures (
-    cathedra_id     INTEGER NOT NULL,
+    cathedra_id    INTEGER NOT NULL,
     employee_id    INTEGER NOT NULL
 );
 ALTER TABLE cathedraLectures ADD CONSTRAINT fk_cathedraLectures_cathedras FOREIGN KEY (cathedra_id) REFERENCES cathedras (id);

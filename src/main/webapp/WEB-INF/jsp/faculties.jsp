@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Faculties</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/list.css">
 </head>
 <body>
 <h1>Список всех факультетов института</h1>

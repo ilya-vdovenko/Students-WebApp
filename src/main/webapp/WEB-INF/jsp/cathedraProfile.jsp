@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>CathedraProfile</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${cathedra.title}"/></b></h1>
@@ -40,7 +40,7 @@
     </tr>
     <tr>
         <th>Программы обучения</th>
-        <td><c:out value="${cathedra.programs}"/></td>
+        <td><c:out value="${cathedra.eduPrograms}"/></td>
     </tr>
     <tr>
         <th>Преподаватели</th>

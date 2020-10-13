@@ -1,3 +1,18 @@
+/*
+ * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.spring.samples.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,8 +30,10 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 /**
- * Simple JavaBean domain object representing an group_class.
- **/
+ * Simple JavaBean domain object representing a group class.
+ *
+ * @author Ilya Vdovenko
+ */
 
 @Entity
 @Table(name = "group_classes")
@@ -28,23 +45,17 @@ public class Group_class extends BaseEntity {
   private String title;
 
   @NotEmpty
+  @Column(name = "edu_form")
+  private String eduForm;
+
+  @NotEmpty
   @ManyToOne
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 
-  @NotEmpty
-  @ManyToOne
-  @Cascade(CascadeType.SAVE_UPDATE)
-  @JoinColumn(name = "faculty_id")
-  private Faculty faculty;
-
   @OneToMany(mappedBy = "group_class", fetch = FetchType.EAGER)
   private Set<Student> group_students;
-
-  @NotEmpty
-  @Column(name = "fos")
-  private String fos;
 
   public String getTitle() {
     return title;
@@ -62,14 +73,6 @@ public class Group_class extends BaseEntity {
     this.cathedra = cathedra;
   }
 
-  public Faculty getFaculty() {
-    return faculty;
-  }
-
-  public void setFaculty(Faculty faculty) {
-    this.faculty = faculty;
-  }
-
   public Set<Student> getGroup_students() {
     return group_students;
   }
@@ -78,11 +81,22 @@ public class Group_class extends BaseEntity {
     this.group_students = group_students;
   }
 
-  public String getFos() {
-    return fos;
+  public String getEduForm() {
+    return eduForm;
   }
 
-  public void setFos(String fos) {
-    this.fos = fos;
+  public void setEduForm(String fos) {
+    this.eduForm = fos;
+  }
+
+  @Override
+  public String toString() {
+    return "Group_class{" +
+      ", id=" + id +
+      ", title='" + title + '\'' +
+      ", eduForm='" + eduForm + '\'' +
+      ", cathedra id=" + cathedra.getId() +
+      ", group_students=" + group_students +
+      '}';
   }
 }

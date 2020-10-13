@@ -2,10 +2,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<!Doctype html>
 <html>
 <head>
     <title>FacultyProfile</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/profile.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${faculty.title}"/></b></h1>

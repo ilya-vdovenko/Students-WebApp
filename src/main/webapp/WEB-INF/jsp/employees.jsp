@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Employees</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/list.css">
 </head>
 <body>
 <h1>

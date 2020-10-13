@@ -1,3 +1,18 @@
+/*
+ * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.spring.samples.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,8 +30,10 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 /**
- * Simple JavaBean domain object representing an cathedra.
- **/
+ * Simple JavaBean domain object representing a cathedra.
+ *
+ * @author Ilya Vdovenko
+ */
 
 @Entity
 @Table(name = "cathedras")
@@ -24,8 +41,8 @@ import java.util.Set;
 public class Cathedra extends UnitEntity {
 
   @NotEmpty
-  @Column(name = "programs")
-  private String programs;
+  @Column(name = "edu_programs")
+  private String eduPrograms;
 
   @NotEmpty
   @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
@@ -40,20 +57,20 @@ public class Cathedra extends UnitEntity {
   @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
   private Set<Group_class> group_classes;
 
+  public String getEduPrograms() {
+    return eduPrograms;
+  }
+
+  public void setEduPrograms(String programs) {
+    this.eduPrograms = programs;
+  }
+
   public Set<Employee> getEmployees() {
     return employees;
   }
 
   public void setEmployees(Set<Employee> employees) {
     this.employees = employees;
-  }
-
-  public String getPrograms() {
-    return programs;
-  }
-
-  public void setPrograms(String programs) {
-    this.programs = programs;
   }
 
   public Faculty getFaculty() {
@@ -70,5 +87,16 @@ public class Cathedra extends UnitEntity {
 
   public void setGroup_classes(Set<Group_class> group_classes) {
     this.group_classes = group_classes;
+  }
+
+  @Override
+  public String toString() {
+    return "Cathedra{" +
+      "id=" + id +
+      ", eduPrograms='" + eduPrograms + '\'' +
+      ", employees=" + employees +
+      ", faculty id=" + faculty.getId() +
+      ", group_classes=" + group_classes +
+      '}';
   }
 }

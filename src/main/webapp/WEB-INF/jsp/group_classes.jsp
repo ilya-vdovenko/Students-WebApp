@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Group_classes</title>
-    <link rel="stylesheet" type="text/css" href="/resources/style/list.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/list.css">
 </head>
 <body>
 <h1><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
@@ -23,7 +23,7 @@
             <spring:param name="cathedraId" value="${cathedra.id}"/>
             <spring:param name="group_classId" value="${group_class.id}"/>
         </spring:url>
-        <a href="${grclUrl}"> <c:out value="${group_class.title}"/></a> (<c:out value="${group_class.fos}"/> форма
+        <a href="${grclUrl}"> <c:out value="${group_class.title}"/></a> (<c:out value="${group_class.eduForm}"/> форма
         обучения)</p>
     <p>Студенты группы:</p>
     <table>

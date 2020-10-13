@@ -1,3 +1,18 @@
+/*
+ * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.spring.samples.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -10,8 +25,10 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 /**
- * Simple JavaBean domain object representing an faculty.
- **/
+ * Simple JavaBean domain object representing a faculty.
+ *
+ * @author Ilya Vdovenko
+ */
 
 @Entity
 @Table(name = "faculties")
@@ -21,15 +38,9 @@ public class Faculty extends UnitEntity {
   @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
   private Set<Cathedra> cathedras;
 
-  @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
-  private Set<Student> students;
-
   @NotEmpty
   @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
   private Set<Employee> employees;
-
-  @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
-  private Set<Group_class> group_classes;
 
   public Set<Cathedra> getCathedras() {
     return cathedras;
@@ -37,14 +48,6 @@ public class Faculty extends UnitEntity {
 
   public void setCathedras(Set<Cathedra> cathedras) {
     this.cathedras = cathedras;
-  }
-
-  public Set<Student> getStudents() {
-    return students;
-  }
-
-  public void setStudents(Set<Student> students) {
-    this.students = students;
   }
 
   public Set<Employee> getEmployees() {
@@ -55,11 +58,12 @@ public class Faculty extends UnitEntity {
     this.employees = employees;
   }
 
-  public Set<Group_class> getGroup_classes() {
-    return group_classes;
-  }
-
-  public void setGroup_classes(Set<Group_class> group_classes) {
-    this.group_classes = group_classes;
+  @Override
+  public String toString() {
+    return "Faculty{" +
+      "id=" + id +
+      ", cathedras=" + cathedras +
+      ", employees=" + employees +
+      '}';
   }
 }

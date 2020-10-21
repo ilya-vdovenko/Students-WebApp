@@ -7,7 +7,7 @@
     </layout>
   </appender>
   
-  <logger name="org.spring.samples" level="TRACE"/>
+  <logger name="org.spring.samples.swa" level="TRACE"/>
 
   <root level="info">
     <appender-ref ref="STDOUT" />

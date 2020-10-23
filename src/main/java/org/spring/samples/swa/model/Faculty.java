@@ -61,7 +61,8 @@ public class Faculty extends UnitEntity {
   @Override
   public String toString() {
     return "Faculty{" +
-      "id=" + id +
+      "id=" + id +", " +
+      ", title='" + super.getTitle() + '\'' +
       ", cathedras=" + cathedras +
       ", employees=" + employees +
       '}';

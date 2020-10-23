@@ -72,7 +72,7 @@ public class StudentController {
   @RequestMapping(method = GET)
   public String showAllStudents(Model model) {
     model.addAttribute("student_list", service.getStudents());
-    return "students";
+    return "studentList";
   }
 
   @RequestMapping(value = "/new", method = GET)

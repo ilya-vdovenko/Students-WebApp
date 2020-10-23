@@ -37,7 +37,7 @@ public class EmployeeController {
   private final InstituteService service;
 
   @Autowired
-  EmployeeController(InstituteService is) {
+  public EmployeeController(InstituteService is) {
     this.service = is;
   }
 
@@ -50,6 +50,6 @@ public class EmployeeController {
   @RequestMapping(method = GET)
   public String showAllEmployees(Model model) {
     model.addAttribute("employee_list", service.getEmployees());
-    return "employees";
+    return "employeeList";
   }
 }

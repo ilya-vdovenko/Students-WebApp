@@ -93,6 +93,7 @@ public class Cathedra extends UnitEntity {
   public String toString() {
     return "Cathedra{" +
       "id=" + id +
+      ", title='" + super.getTitle() + '\'' +
       ", eduPrograms='" + eduPrograms + '\'' +
       ", employees=" + employees +
       ", faculty id=" + faculty.getId() +

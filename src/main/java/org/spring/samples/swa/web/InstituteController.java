@@ -52,10 +52,10 @@ public class InstituteController {
   @RequestMapping(method = GET)
   public String showAllFaculties(Model model) {
     model.addAttribute("faculty_list", service.getFaculties());
-    return "faculties";
+    return "facultyList";
   }
 
-  @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}", method = GET)
+  @RequestMapping(value = "/*/cathedras/{cathedraId}", method = GET)
   public String showCathedraProfile(@PathVariable int cathedraId, Model model) {
     model.addAttribute(service.findCathedraById(cathedraId));
     return "cathedraProfile";
@@ -66,7 +66,7 @@ public class InstituteController {
     Faculty faculty = service.findFacultyById(facultyId);
     model.addAttribute(faculty);
     model.addAttribute("cathedra_list", faculty.getCathedras());
-    return "cathedras";
+    return "cathedraList";
   }
 
   private void getEmployeesModel(Model model, int id, boolean isSoviet) {
@@ -82,34 +82,34 @@ public class InstituteController {
   }
 
   @RequestMapping(value = "/{facultyId}/employees", method = GET)
-  public String showFacultyAllEmployees(@PathVariable int facultyId, Model model) {
+  public String showFacultyEmployees(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, false);
-    return "employees";
+    return "employeeList";
   }
 
   @RequestMapping(value = "/{facultyId}/soviet", method = GET)
   public String showFacultySoviet(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, true);
-    return "employees";
+    return "employeeList";
   }
 
-  @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/lecturers", method = GET)
+  @RequestMapping(value = "/*/cathedras/{cathedraId}/lecturers", method = GET)
   public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
     model.addAttribute("employee_list", service.getCathedraLecturers(cathedra.getEmployees(), cathedraId));
-    return "employees";
+    return "employeeList";
   }
 
-  @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/group_classes", method = GET)
+  @RequestMapping(value = "/*/cathedras/{cathedraId}/group_classes", method = GET)
   public String showAllGroup_class(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
     model.addAttribute("group_class_list", cathedra.getGroup_classes());
-    return "group_classes";
+    return "group_classList";
   }
 
-  @RequestMapping(value = "/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}", method = GET)
+  @RequestMapping(value = "/*/cathedras/*/group_classes/{group_classId}", method = GET)
   public String showGroup_classProfile(@PathVariable int group_classId, Model model) {
     Group_class group_class = service.findGroup_classById(group_classId);
     model.addAttribute(group_class);

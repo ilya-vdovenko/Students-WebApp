@@ -46,8 +46,8 @@
         <!-- Test -->
         <assertj.version>3.15.0</assertj.version>
         <jacoco.version>0.8.2</jacoco.version>
-        <json-path.version>2.4.0</json-path.version>
-        <mockito.version>3.1.0</mockito.version>
+        <jsonassert.version>1.5.0</jsonassert.version>
+        <mockito.version>2.22.0</mockito.version>
         <hamcrest.version>2.1</hamcrest.version>
         <junit-jupiter.version>5.3.2</junit-jupiter.version>
 
@@ -214,9 +214,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${json-path.version}</version>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>${jsonassert.version}</version>
             <scope>test</scope>
         </dependency>
 

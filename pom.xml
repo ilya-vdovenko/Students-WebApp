@@ -43,6 +43,14 @@
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
 
+        <!-- Test -->
+        <assertj.version>3.15.0</assertj.version>
+        <jacoco.version>0.8.2</jacoco.version>
+        <jsonassert.version>1.5.0</jsonassert.version>
+        <mockito.version>2.22.0</mockito.version>
+        <hamcrest.version>2.1</hamcrest.version>
+        <junit-jupiter.version>5.3.2</junit-jupiter.version>
+
         <!-- Tomcat -->
         <tomcat.version>7.0.105</tomcat.version>
 
@@ -54,6 +62,7 @@
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-maven-war-plugin.version>3.2.2</maven-maven-war-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 
     </properties>
 
@@ -162,6 +171,55 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Test -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-framework.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>${jsonassert.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Front -->
 
         <dependency>
@@ -200,14 +258,19 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>${basedir}/src/test/java</directory>
+            </testResource>
+            <testResource>
+                <directory>${basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${maven-resources-plugin.version}</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -237,6 +300,17 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Tests.java</include>
+                    </includes>
+                    <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -248,6 +322,26 @@
             </activation>
             <properties>
                 <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
+                <maven.db.script>hsqldb</maven.db.script>
+                <maven.jpa.database>HSQL</maven.jpa.database>
+                <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
+                <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
+                <maven.jdbc.username>sa</maven.jdbc.username>
+                <maven.jdbc.password/>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>${hsqldb.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>JDBC_HSQLDB</id>
+            <properties>
+                <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -291,7 +385,7 @@
                 <maven.db.script>mysql</maven.db.script>
                 <maven.jpa.database>MYSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
-                <maven.jdbc.url>jdbc:mysql://localhost:3306/?useUnicode=true</maven.jdbc.url>
+                <maven.jdbc.url>jdbc:mysql://localhost:3306</maven.jdbc.url>
                 <maven.jdbc.username>institute</maven.jdbc.username>
                 <maven.jdbc.password>institute</maven.jdbc.password>
             </properties>

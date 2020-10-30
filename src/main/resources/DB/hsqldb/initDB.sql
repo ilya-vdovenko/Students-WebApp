@@ -1,11 +1,4 @@
-DROP TABLE students IF EXISTS;
-DROP TABLE faculties IF EXISTS;
-DROP TABLE cathedras IF EXISTS;
-DROP TABLE group_classes IF EXISTS;
-DROP TABLE employees IF EXISTS;
-DROP TABLE facultyWorker IF EXISTS;
-DROP TABLE facultySoviet IF EXISTS;
-DROP TABLE cathedraLectures IF EXISTS;
+DROP SCHEMA PUBLIC CASCADE;
 
 CREATE TABLE faculties (
     id              INTEGER IDENTITY PRIMARY KEY,

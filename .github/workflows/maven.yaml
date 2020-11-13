@@ -32,4 +32,4 @@ jobs:
         run: mvn -B package -P SDJ_HSQLDB --file pom.xml
 
         # TODO добавить деплой в докер tomcat и mysql и проверка через curl, а также sonarcloud
-        # TODO Не забудь что надо сделать только на ветвь master и в Readme добавить бейдж
+        # TODO Не забудь что надо сделать только на ветвь master

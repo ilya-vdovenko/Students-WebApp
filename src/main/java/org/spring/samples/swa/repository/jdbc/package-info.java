@@ -13,17 +13,9 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.SpringDataJpa;
-
-import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.StudentRepository;
-import org.springframework.data.repository.Repository;
-
 /**
- * Spring Data JPA specialization of the {@link StudentRepository} interface
- *
- * @author Ilya Vdovenko
+ * The classes in this package represent the jdbc implementation of Students-WebApp's persistence
+ * layer.
  */
 
-public interface SpringDataStudentRepository extends StudentRepository, Repository<Student, Integer> {
-}
+package org.spring.samples.swa.repository.jdbc;

@@ -12,11 +12,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.spring.samples.swa.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +27,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 /**
- * A controller that return view's of UnitEntity's pages
+ * A controller that return view's of UnitEntity's pages.
  *
  * @author Ilya Vdovenko
  */
@@ -61,6 +62,13 @@ public class InstituteController {
     return "cathedraProfile";
   }
 
+  /**
+   * Request all cathedras of faculty.
+   *
+   * @param facultyId id of faculty.
+   * @param model     model with faculty and cathedra_list.
+   * @return name of view.
+   */
   @RequestMapping(value = "/{facultyId}/cathedras", method = GET)
   public String showAllCathedras(@PathVariable int facultyId, Model model) {
     Faculty faculty = service.findFacultyById(facultyId);
@@ -93,28 +101,50 @@ public class InstituteController {
     return "employeeList";
   }
 
+  /**
+   * Request cathedra lecturers.
+   *
+   * @param cathedraId id of cathedra.
+   * @param model      model with cathedra and employee_list.
+   * @return name of view.
+   */
   @RequestMapping(value = "/*/cathedras/{cathedraId}/lecturers", method = GET)
   public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
-    model.addAttribute("employee_list", service.getCathedraLecturers(cathedra.getEmployees(), cathedraId));
+    model.addAttribute("employee_list",
+        service.getCathedraLecturers(cathedra.getEmployees(), cathedraId));
     return "employeeList";
   }
 
-  @RequestMapping(value = "/*/cathedras/{cathedraId}/group_classes", method = GET)
-  public String showAllGroup_class(@PathVariable int cathedraId, Model model) {
+  /**
+   * Request cathedra groups.
+   *
+   * @param cathedraId id of cathedra.
+   * @param model      model with cathedra and group_class_list.
+   * @return name of view.
+   */
+  @RequestMapping(value = "/*/cathedras/{cathedraId}/groupClasses", method = GET)
+  public String showAllGroupClass(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
-    model.addAttribute("group_class_list", cathedra.getGroup_classes());
-    return "group_classList";
+    model.addAttribute("group_class_list", cathedra.getGroupClasses());
+    return "groupClassList";
   }
 
-  @RequestMapping(value = "/*/cathedras/*/group_classes/{group_classId}", method = GET)
-  public String showGroup_classProfile(@PathVariable int group_classId, Model model) {
-    Group_class group_class = service.findGroup_classById(group_classId);
-    model.addAttribute(group_class);
-    model.addAttribute("group_students_list", group_class.getGroup_students());
-    return "group_classProfile";
+  /**
+   * Request to show group class profile.
+   *
+   * @param groupClassId id of group class.
+   * @param model        model with groupClass and group_students_list.
+   * @return name of view.
+   */
+  @RequestMapping(value = "/*/cathedras/*/groupClasses/{groupClassId}", method = GET)
+  public String showGroupClassProfile(@PathVariable int groupClassId, Model model) {
+    GroupClass groupClass = service.findGroupClassById(groupClassId);
+    model.addAttribute(groupClass);
+    model.addAttribute("group_students_list", groupClass.getGroupStudents());
+    return "groupClassProfile";
   }
 
 }

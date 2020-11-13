@@ -1,60 +1,62 @@
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 tr:nth-child(even) {
-    background-color: #ebfaeb;
+  background-color: #ebfaeb;
 }
 
 th {
-    text-align: right;
-    font-weight: bold;
+  text-align: right;
+  font-weight: bold;
 }
 
 td {
-    text-align: left;
-    height: 30px;
-    border: 8px white;
-    border-style: none none none solid;
+  text-align: left;
+  height: 30px;
+  border: 8px white;
+  border-style: none none none solid;
 }
 
 table.list tr:nth-child(even) {
-    background-color: #e6ffff;
+  background-color: #e6ffff;
 }
 
 table.list th {
-    text-align: center;
-    font-weight: bold;
-    padding: 10px;
-    height: 30px;
-    background-color: #85e0e0;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  height: 30px;
+  background-color: #85e0e0;
 }
 
 table.list td {
-    padding: 4px;
-    border-bottom: 1px solid white;
+  padding: 4px;
+  border-bottom: 1px solid white;
 }
 
 td.center {
-    text-align: center;
+  text-align: center;
 }
 
 a {
-    text-decoration: none;
-    font-weight: bold;
-    color: black;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
 }
 
-#UpdateButton a:link, #UpdateButton a:visited {
-    margin: 15px;
-    background-color: #33cc33;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    border-radius: 4px;
-    display: inline-block;
+a:hover,
+a:active {
+  color: red;
 }
 
-a:hover, a:active {
-    color: red;
+#UpdateButton a:link,
+#UpdateButton a:visited {
+  margin: 15px;
+  background-color: #3c3;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  border-radius: 4px;
+  display: inline-block;
 }

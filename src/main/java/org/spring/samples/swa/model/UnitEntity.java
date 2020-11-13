@@ -22,8 +22,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * Simple JavaBean domain object adds a multiple property to {@link BaseEntity}.
- * Used as a base class for objects needing these properties.
+ * Simple JavaBean domain object adds a multiple property to {@link BaseEntity}. Used as a base
+ * class for objects needing these properties.
  *
  * @author Ilya Vdovenko
  */
@@ -46,7 +46,7 @@ public class UnitEntity extends BaseEntity {
 
   @NotEmpty
   @Column(name = "contact_inf")
-  private String contact_inf;
+  private String contactInf;
 
   public String getInformation() {
     return information;
@@ -64,12 +64,12 @@ public class UnitEntity extends BaseEntity {
     this.boss = boss;
   }
 
-  public String getContact_inf() {
-    return contact_inf;
+  public String getContactInf() {
+    return contactInf;
   }
 
-  public void setContact_inf(String contact_inf) {
-    this.contact_inf = contact_inf;
+  public void setContactInf(String contactInf) {
+    this.contactInf = contactInf;
   }
 
   public String getTitle() {

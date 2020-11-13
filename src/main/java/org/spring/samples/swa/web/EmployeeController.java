@@ -15,6 +15,8 @@
 
 package org.spring.samples.swa.web;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 /**
- * A controller that return view's of employee's pages
+ * A controller that return view's of employee's pages.
  *
  * @author Ilya Vdovenko
  */

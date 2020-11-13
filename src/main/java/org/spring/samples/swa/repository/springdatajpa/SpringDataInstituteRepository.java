@@ -13,26 +13,26 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.SpringDataJpa;
+package org.spring.samples.swa.repository.springdatajpa;
 
+import java.util.Collection;
+import java.util.Map;
 import org.spring.samples.swa.model.BaseEntity;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
-import java.util.Collection;
-import java.util.Map;
-
 /**
- * Spring Data JPA specialization of the {@link InstituteRepository} interface
+ * Spring Data jpa specialization of the {@link InstituteRepository} interface.
  *
  * @author Ilya Vdovenko
  */
 
-public interface SpringDataInstituteRepository extends InstituteRepository, Repository<BaseEntity, Integer> {
+public interface SpringDataInstituteRepository extends InstituteRepository,
+    Repository<BaseEntity, Integer> {
 
   @Override
   @Query("from Faculty")
@@ -47,7 +47,7 @@ public interface SpringDataInstituteRepository extends InstituteRepository, Repo
     return null;
   }
 
-  default Map<Integer, Group_class> getInternalGroup_classes() {
+  default Map<Integer, GroupClass> getInternalGroupClasses() {
     return null;
   }
 }

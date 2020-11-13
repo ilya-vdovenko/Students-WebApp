@@ -13,12 +13,18 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JDBC;
+package org.spring.samples.swa.repository.jdbc;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.sql.DataSource;
 import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.repository.InstituteRepository;
-import org.spring.samples.swa.repository.JDBC.Extractor.StudentExtractor;
 import org.spring.samples.swa.repository.StudentRepository;
+import org.spring.samples.swa.repository.jdbc.extractor.StudentExtractor;
 import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,21 +36,14 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * A JDBC-based implementation of the {@link StudentRepository} interface.
+ * A jdbc-based implementation of the {@link StudentRepository} interface.
  *
  * @author Ilya Vdovenko
  */
 
 @Repository
-public class JDBCStudentRepositoryImpl implements StudentRepository {
+public class JdbcStudentRepositoryImpl implements StudentRepository {
 
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
@@ -53,17 +52,27 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
   private final InstituteRepository instituteRepo;
   private final Map<Integer, Student> studentsMap = new LinkedHashMap<>();
 
+  /**
+   * Constructor of {@link JdbcStudentRepositoryImpl} class.
+   *
+   * @param dataSource                 injected {@link DataSource} class. Used for
+   *                                   SimpleJdbcInsert.
+   * @param jdbcTemplate               used for query.
+   * @param namedParameterJdbcTemplate used for named query.
+   * @param studentExtractor           used for extract data to {@link Student} model.
+   * @param instituteRepo              injected {@link InstituteRepository} class.
+   */
   @Autowired
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  public JDBCStudentRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate,
-                                   NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                                   StudentExtractor studentExtractor,
-                                   @Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepo) {
+  public JdbcStudentRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate,
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+      StudentExtractor studentExtractor,
+      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     this.jdbcTemplate = jdbcTemplate;
     this.insertStudent = new SimpleJdbcInsert(dataSource)
-      .withTableName("students")
-      .usingGeneratedKeyColumns("id");
+        .withTableName("students")
+        .usingGeneratedKeyColumns("id");
     this.studentExtractor = studentExtractor;
     this.instituteRepo = instituteRepo;
   }
@@ -75,9 +84,10 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
       student.setId(newKey.intValue());
     } else {
       this.namedParameterJdbcTemplate.update(
-        "UPDATE students SET fio=:fio, birthday=:birthday, sex=:sex, fact_address=:fact_address," +
-          "address=:address, telephone=:telephone, group_class_id=:group_class_id," +
-          "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id", createPetParameterSource(student));
+          "UPDATE students SET fio=:fio, birthday=:birthday, sex=:sex, fact_address=:fact_address,"
+              + "address=:address, telephone=:telephone, group_class_id=:group_class_id,"
+              + "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id",
+          createPetParameterSource(student));
     }
     studentsMap.replace(student.getId(), student);
     EntityUtils.clearAfterSetStudent(instituteRepo, student);
@@ -85,7 +95,8 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
 
   @Override
   public Collection<Student> findAll() {
-    List<Student> studentList = jdbcTemplate.query("SELECT * FROM students ORDER BY fio", studentExtractor);
+    List<Student> studentList = jdbcTemplate
+        .query("SELECT * FROM students ORDER BY fio", studentExtractor);
     studentsMap.clear();
     if (EntityUtils.isValidCollection(studentList)) {
       for (Student student : studentList) {
@@ -107,9 +118,9 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
       List<Student> studentList = this.namedParameterJdbcTemplate.query(
-        "SELECT * FROM students WHERE id= :id",
-        params,
-        studentExtractor);
+          "SELECT * FROM students WHERE id= :id",
+          params,
+          studentExtractor);
       if (EntityUtils.isValidCollection(studentList)) {
         student = studentList.get(0);
       } else {
@@ -124,16 +135,16 @@ public class JDBCStudentRepositoryImpl implements StudentRepository {
 
   private MapSqlParameterSource createPetParameterSource(Student student) {
     return new MapSqlParameterSource()
-      .addValue("id", student.getId())
-      .addValue("fio", student.getFio())
-      .addValue("birthday", student.getBirthday())
-      .addValue("sex", student.getSex())
-      .addValue("fact_address", student.getFact_address())
-      .addValue("address", student.getAddress())
-      .addValue("telephone", student.getTelephone())
-      .addValue("group_class_id", student.getGroup_class().getId())
-      .addValue("cathedra_id", student.getCathedra().getId())
-      .addValue("faculty_id", student.getFaculty().getId());
+        .addValue("id", student.getId())
+        .addValue("fio", student.getFio())
+        .addValue("birthday", student.getBirthday())
+        .addValue("sex", student.getSex())
+        .addValue("fact_address", student.getFactAddress())
+        .addValue("address", student.getAddress())
+        .addValue("telephone", student.getTelephone())
+        .addValue("group_class_id", student.getGroupClass().getId())
+        .addValue("cathedra_id", student.getCathedra().getId())
+        .addValue("faculty_id", student.getFaculty().getId());
   }
 
 }

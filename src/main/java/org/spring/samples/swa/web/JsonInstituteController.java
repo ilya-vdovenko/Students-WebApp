@@ -15,9 +15,13 @@
 
 package org.spring.samples.swa.web;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import java.util.Collection;
+import java.util.Set;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,13 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collection;
-import java.util.Set;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 /**
- * A controller that return data in json type
+ * A controller that return data in json type.
  *
  * @author Ilya Vdovenko
  */
@@ -59,10 +58,11 @@ public class JsonInstituteController {
     return faculty.getCathedras();
   }
 
-  @RequestMapping(value = "/group_classes/getGroupList", produces = "application/json", method = GET)
+  @RequestMapping(value = "/groupClasses/getGroupList", produces = "application/json",
+      method = GET)
   public @ResponseBody
-  Set<Group_class> getGroupList(@RequestParam int cathedraId) {
+  Set<GroupClass> getGroupList(@RequestParam int cathedraId) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
-    return cathedra.getGroup_classes();
+    return cathedra.getGroupClasses();
   }
 }

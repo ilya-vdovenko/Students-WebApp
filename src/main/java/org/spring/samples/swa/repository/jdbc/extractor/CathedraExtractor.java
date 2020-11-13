@@ -13,20 +13,7 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JDBC.Extractor;
-
-import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.model.Employee;
-import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
-import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
-import org.spring.samples.swa.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.stereotype.Component;
+package org.spring.samples.swa.repository.jdbc.extractor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,10 +24,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.spring.samples.swa.model.Cathedra;
+import org.spring.samples.swa.model.Employee;
+import org.spring.samples.swa.model.Faculty;
+import org.spring.samples.swa.model.GroupClass;
+import org.spring.samples.swa.model.Student;
+import org.spring.samples.swa.repository.InstituteRepository;
+import org.spring.samples.swa.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Component;
 
 /**
- * Implementation mapping data from a {@link ResultSetExtractor} to the
- * corresponding properties of the entity classes.
+ * Implementation mapping data from a {@link ResultSetExtractor} to the corresponding properties of
+ * the entity classes.
  *
  * @author Ilya Vdovenko
  */
@@ -51,7 +50,8 @@ public class CathedraExtractor implements ResultSetExtractor<Cathedra> {
   private final InstituteRepository instituteRepo;
 
   @Autowired
-  public CathedraExtractor(@Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepo) {
+  public CathedraExtractor(
+      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
     this.instituteRepo = instituteRepo;
   }
 
@@ -59,8 +59,8 @@ public class CathedraExtractor implements ResultSetExtractor<Cathedra> {
   public Cathedra extractData(ResultSet rs) throws SQLException, DataAccessException {
     rs.next();
     Map<Integer, List<Student>> groupData = new LinkedHashMap<>();
-    Set<Group_class> group_classSet = new HashSet<>();
-    Group_class group_class = null;
+    Set<GroupClass> groupClassSet = new HashSet<>();
+    GroupClass groupClass = null;
     Cathedra cathedra = new Cathedra();
     cathedra.setId(rs.getInt("cathedraID"));
     cathedra.setTitle(rs.getString("cathedraTitle"));
@@ -72,41 +72,41 @@ public class CathedraExtractor implements ResultSetExtractor<Cathedra> {
     cathedraBoss.setCathedra(cathedra);
     cathedra.setBoss(cathedraBoss);
     cathedra.setInformation(rs.getString("cathedraInfo"));
-    cathedra.setContact_inf(rs.getString("cathedraContInf"));
+    cathedra.setContactInf(rs.getString("cathedraContInf"));
     cathedra.setEduPrograms(rs.getString("edu_programs"));
     Faculty faculty = instituteRepo.findFacultyById(rs.getInt("catFac"));
     cathedra.setFaculty(faculty);
     cathedraBoss.setFaculty(faculty);
     do {
-      int grpID = rs.getInt("groupID");
-      if (!groupData.containsKey(grpID)) {
-        groupData.put(grpID, new ArrayList<>());
-        group_class = new Group_class();
-        group_class.setId(grpID);
-        group_class.setTitle(rs.getString("groupTitle"));
-        group_class.setEduForm(rs.getString("edu_form"));
-        group_class.setCathedra(cathedra);
-        group_classSet.add(group_class);
+      int groupId = rs.getInt("groupID");
+      if (!groupData.containsKey(groupId)) {
+        groupData.put(groupId, new ArrayList<>());
+        groupClass = new GroupClass();
+        groupClass.setId(groupId);
+        groupClass.setTitle(rs.getString("groupTitle"));
+        groupClass.setEduForm(rs.getString("edu_form"));
+        groupClass.setCathedra(cathedra);
+        groupClassSet.add(groupClass);
       }
       Student student = new Student();
       student.setId(rs.getInt("studentID"));
       student.setFio(rs.getString("fio"));
       student.setBirthday(rs.getObject("birthday", LocalDate.class));
       student.setSex(rs.getString("sex"));
-      student.setFact_address(rs.getString("fact_address"));
+      student.setFactAddress(rs.getString("fact_address"));
       student.setAddress(rs.getString("address"));
       student.setTelephone(rs.getString("telephone"));
-      student.setGroup_class(group_class);
+      student.setGroupClass(groupClass);
       student.setCathedra(cathedra);
       student.setFaculty(faculty);
-      groupData.get(grpID).add(student);
+      groupData.get(groupId).add(student);
     } while (rs.next());
-    if (EntityUtils.isValidCollection(group_classSet)) {
-      for (Group_class grp : group_classSet) {
-        grp.setGroup_students(new HashSet<>(groupData.get(grp.getId())));
+    if (EntityUtils.isValidCollection(groupClassSet)) {
+      for (GroupClass grp : groupClassSet) {
+        grp.setGroupStudents(new HashSet<>(groupData.get(grp.getId())));
       }
     }
-    cathedra.setGroup_classes(group_classSet);
+    cathedra.setGroupClasses(groupClassSet);
     return cathedra;
   }
 }

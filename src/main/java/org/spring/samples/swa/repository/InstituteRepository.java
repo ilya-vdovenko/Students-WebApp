@@ -15,13 +15,12 @@
 
 package org.spring.samples.swa.repository;
 
-import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
-import org.spring.samples.swa.model.UnitEntity;
-
 import java.util.Collection;
 import java.util.Map;
+import org.spring.samples.swa.model.Cathedra;
+import org.spring.samples.swa.model.Faculty;
+import org.spring.samples.swa.model.GroupClass;
+import org.spring.samples.swa.model.UnitEntity;
 
 /**
  * Repository class for {@link UnitEntity} domain objects.
@@ -35,7 +34,7 @@ public interface InstituteRepository {
 
   Map<Integer, Cathedra> getInternalCathedras();
 
-  Map<Integer, Group_class> getInternalGroup_classes();
+  Map<Integer, GroupClass> getInternalGroupClasses();
 
   Faculty findFacultyById(int id);
 
@@ -43,5 +42,5 @@ public interface InstituteRepository {
 
   Cathedra findCathedraById(int id);
 
-  Group_class findGroup_classById(int id);
+  GroupClass findGroupClassById(int id);
 }

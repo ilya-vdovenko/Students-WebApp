@@ -6,7 +6,8 @@
 <html>
 <head>
     <title>FacultyProfile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${faculty.title}"/></b></h1>
@@ -26,7 +27,7 @@
     </tr>
     <tr>
         <th>Контактная инф.</th>
-        <td><c:out value="${faculty.contact_inf}"/></td>
+        <td><c:out value="${faculty.contactInf}"/></td>
     </tr>
 
     <tr>

@@ -13,9 +13,28 @@
  * limitations under the License.
  */
 
+package org.spring.samples.swa.web.editor;
+
+import java.beans.PropertyEditorSupport;
+import org.spring.samples.swa.model.Cathedra;
+import org.spring.samples.swa.service.InstituteService;
+
 /**
- * The classes in this package represent the JDBC implementation
- * of Students-WebApp's persistence layer.
+ * Property editor for managing conversion between String id and Integer id of {@link Cathedra}.
+ *
+ * @author Ilya Vdovenko
  */
 
-package org.spring.samples.swa.repository.JDBC;
+public class CathedraEditor extends PropertyEditorSupport {
+
+  private final InstituteService service;
+
+  public CathedraEditor(InstituteService is) {
+    this.service = is;
+  }
+
+  @Override
+  public void setAsText(String text) throws IllegalArgumentException {
+    setValue(service.findCathedraById(Integer.parseInt(text)));
+  }
+}

@@ -310,6 +310,9 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>%regex[.*(${maven.test.exclude}).*Tests.*]</exclude>
+                    </excludes>
                     <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
                 </configuration>
             </plugin>
@@ -348,6 +351,7 @@
             </activation>
             <properties>
                 <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
+                <maven.test.exclude>Jdbc|SpringDataJpa</maven.test.exclude>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -368,6 +372,7 @@
             <id>JDBC_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -388,6 +393,7 @@
             <id>SDJ_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
+                <maven.test.exclude>Jdbc|ServiceJpa</maven.test.exclude>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -408,6 +414,7 @@
             <id>JDBC_MySQL</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>
                 <maven.db.script>mysql</maven.db.script>
                 <maven.jpa.database>MYSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>

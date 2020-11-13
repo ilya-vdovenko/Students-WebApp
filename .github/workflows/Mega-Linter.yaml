@@ -1,0 +1,43 @@
+name: Lint Code Base
+
+on:
+  push:
+    branches:
+      - develop
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  Mega-Linter:
+    name: Lint code through Mega-Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: start lint code through Mega-Linter
+        uses: nvuillam/mega-linter@v4
+        env:
+          ENABLE: SQL,CSS,JAVASCRIPT,XML,YAML,MARKDOWN
+          DISABLE: COPYPASTE,SPELL
+          DISABLE_LINTERS: JAVASCRIPT_ES
+          #TODO VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Checkstyle:
+    name: Lint Java through maven plugin checkstyle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: start lint code through Mega-Checkstyle
+        run: mvn -B checkstyle:check --file pom.xml

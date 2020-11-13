@@ -1,110 +1,111 @@
 $(document).ready(function () {
 
-    const sel_fac = $("#sel_fac");
-    const sel_cat = $("#sel_cat");
-    const sel_grp = $("#sel_grp");
+  const selFac = $('#selFac')
+  const selCat = $('#selCat')
+  const selGrp = $('#selGrp')
 
-    let fac_id = sel_fac.children("option:selected").val();
-    let cat_id = sel_cat.children("option:selected").val();
-    let grp_id = sel_grp.children("option:selected").val();
+  let facId = selFac.children('option:selected').val()
+  let catId = selCat.children('option:selected').val()
+  let grpId = selGrp.children('option:selected').val()
 
-    let load_fac = false;
-    let load_cat = false;
-    let load_grp = false;
+  let loadFac = false
+  let loadCat = false
+  let loadGrp = false
 
-    logId();
+  logId()
 
-    sel_fac.click(function () {
-        loadClick(load_fac, sel_fac, "faculties", "/Students-WebApp/faculties/getFacList", fac_id);
-    });
+  selFac.click(function () {
+    loadClick(loadFac, selFac, 'faculties', '/Students-WebApp/faculties/getFacList', facId)
+  })
 
-    sel_fac.change(function () {
-        whenItChanges(sel_fac, "faculties");
-    });
+  selFac.change(function () {
+    whenItChanges(selFac, 'faculties')
+  })
 
-    sel_cat.click(function () {
-        loadClick(load_cat, sel_cat, "cathedras", "/Students-WebApp/cathedras/getCatList?facultyId=" + fac_id, cat_id);
-    });
+  selCat.click(function () {
+    loadClick(loadCat, selCat, 'cathedras', '/Students-WebApp/cathedras/getCatList?facultyId=' + facId, catId)
+  })
 
-    sel_cat.change(function () {
-        whenItChanges(sel_cat, "cathedras");
-    });
+  selCat.change(function () {
+    whenItChanges(selCat, 'cathedras')
+  })
 
-    sel_grp.click(function () {
-        loadClick(load_grp, sel_grp, "groups", "/Students-WebApp/group_classes/getGroupList?cathedraId=" + cat_id, grp_id);
-    })
+  selGrp.click(function () {
+    loadClick(loadGrp, selGrp, 'groups', '/Students-WebApp/groupClasses/getGroupList?cathedraId=' + catId, grpId)
+  })
 
-    function logId() {
-        console.log("fac_id = " + fac_id + "; cat_id = " + cat_id + "; grp_id = " + grp_id);
-    }
+  function logId () {
+    console.log('facId = ' + facId + ' catId = ' + catId + ' grpId = ' + grpId)
+  }
 
-    function loadClick(load, selector, entity, url, id) {
-        if (load) {
-            console.log(entity + " already load");
-        } else {
-            selector.children().remove();
-            $.getJSON(url, function (response) {
-                $.each(response, function (index) {
-                    let option = $("<option>");
-                    console.log(response[index].id + "  " + response[index].title);
-                    option.val(response[index].id);
-                    option.text(response[index].title);
-                    selector.append(option);
-                });
-                if (id !== "") {
-                    let sel_id;
-                    switch (entity) {
-                        case 'faculties':
-                            sel_id = "sel_fac";
-                            break;
-                        case 'cathedras':
-                            sel_id = "sel_cat";
-                            break;
-                        case 'groups':
-                            sel_id = "sel_grp";
-                            break;
-                    }
-                    $("#" + sel_id + " option[value=" + id + "]").attr('selected', 'selected');
-                }
-                id = selector.children("option:selected").val();
-                switch (entity) {
-                    case 'faculties':
-                        fac_id = id;
-                        load_fac = true;
-                        break;
-                    case 'cathedras':
-                        cat_id = id;
-                        load_cat = true;
-                        break;
-                    case 'groups':
-                        grp_id = id;
-                        load_grp = true;
-                        break;
-                }
-                console.log("successfully load " + entity + ", selected Id = " + id);
-                logId();
-            });
-        }
-    }
-
-    function whenItChanges(selector, entity) {
-        switch (entity) {
+  function loadClick(load, selector, entity, url, id) {
+    if (load) {
+      console.log(entity + ' already load')
+    } else {
+      selector.children().remove()
+      $.getJSON(url, function (response) {
+        $.each(response, function (index) {
+          const option = $('<option>')
+          console.log(response[index].id + '  ' + response[index].title)
+          option.val(response[index].id)
+          option.text(response[index].title)
+          selector.append(option)
+        })
+        if (id !== '') {
+          let selId
+          switch (entity) {
             case 'faculties':
-                fac_id = selector.children("option:selected").val();
-                sel_cat.children().remove();
-                sel_grp.children().remove();
-                cat_id = null;
-                grp_id = null;
-                load_cat = false;
-                load_grp = false;
-                break;
+              selId = 'selFac'
+              break
             case 'cathedras':
-                cat_id = selector.children("option:selected").val();
-                sel_grp.children().remove();
-                grp_id = null;
-                load_grp = false;
-                break;
+              selId = 'selCat'
+              break
+            case 'groups':
+              selId = 'selGrp'
+              break
+          }
+          $('#' + selId + ' option[value=' + id + ']').attr('selected', 'selected')
         }
-        logId();
+        id = selector.children('option:selected').val()
+        switch (entity) {
+          case 'faculties':
+            facId = id
+            loadFac = true
+            break
+          case 'cathedras':
+            catId = id
+            loadCat = true
+            break
+          case 'groups':
+            grpId = id
+            loadGrp = true
+            break
+        }
+        console.log('successfully load ' + entity + ', selected Id = ' + id)
+        logId()
+      })
     }
-});
+  }
+
+  function whenItChanges (selector, entity) {
+    switch (entity) {
+      case 'faculties':
+        facId = selector.children('option:selected').val()
+        selCat.children().remove()
+        selGrp.children().remove()
+        catId = null
+        grpId = null
+        loadCat = false
+        loadGrp = false
+        break
+      case 'cathedras':
+        catId = selector.children('option:selected').val()
+        selGrp.children().remove()
+        grpId = null
+        loadGrp = false
+        break
+    }
+    logId()
+  }
+
+})

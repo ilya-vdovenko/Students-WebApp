@@ -13,8 +13,15 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JDBC.Extractor;
+package org.spring.samples.swa.repository.jdbc.extractor;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import org.spring.samples.swa.model.Cathedra;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,46 +30,49 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Implementation mapping data from a {@link ResultSetExtractor} to the
- * corresponding properties of the entity classes.
+ * Implementation mapping data from a {@link ResultSetExtractor} to the corresponding properties of
+ * the entity classes.
  *
  * @author Ilya Vdovenko
  */
 
 @Component
-public class StudentExtractor implements ResultSetExtractor<List<Student>> {
+public class GroupClassExtractor implements ResultSetExtractor<GroupClass> {
 
   private final InstituteRepository instituteRepo;
 
   @Autowired
-  public StudentExtractor(@Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepo) {
+  public GroupClassExtractor(
+      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
     this.instituteRepo = instituteRepo;
   }
 
   @Override
-  public List<Student> extractData(ResultSet rs) throws SQLException, DataAccessException {
-    List<Student> studentList = new ArrayList<>();
-    while (rs.next()) {
+  public GroupClass extractData(ResultSet rs) throws SQLException, DataAccessException {
+    rs.next();
+    GroupClass groupClass = new GroupClass();
+    groupClass.setId(rs.getInt("groupID"));
+    groupClass.setTitle(rs.getString("groupTitle"));
+    groupClass.setEduForm(rs.getString("edu_form"));
+    Cathedra cathedra = instituteRepo.findCathedraById(rs.getInt("grpCat"));
+    groupClass.setCathedra(cathedra);
+    Set<Student> studentSet = new HashSet<>();
+    do {
       Student student = new Student();
-      student.setId(rs.getInt("id"));
+      student.setId(rs.getInt("studentID"));
       student.setFio(rs.getString("fio"));
       student.setBirthday(rs.getObject("birthday", LocalDate.class));
       student.setSex(rs.getString("sex"));
-      student.setFact_address(rs.getString("fact_address"));
+      student.setFactAddress(rs.getString("fact_address"));
       student.setAddress(rs.getString("address"));
       student.setTelephone(rs.getString("telephone"));
-      student.setGroup_class(instituteRepo.findGroup_classById(rs.getInt("group_class_id")));
-      student.setCathedra(instituteRepo.findCathedraById(rs.getInt("cathedra_id")));
-      student.setFaculty(instituteRepo.findFacultyById(rs.getInt("faculty_id")));
-      studentList.add(student);
-    }
-    return studentList;
+      student.setGroupClass(groupClass);
+      student.setCathedra(cathedra);
+      student.setFaculty(cathedra.getFaculty());
+      studentSet.add(student);
+    } while (rs.next());
+    groupClass.setGroupStudents(studentSet);
+    return groupClass;
   }
 }

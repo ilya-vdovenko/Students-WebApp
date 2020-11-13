@@ -14,8 +14,8 @@
  */
 
 /**
- * The classes in this package represent the JPA implementation
- * of Students-WebApp's persistence layer.
+ * The classes in this package represent the JPA implementation of Students-WebApp's persistence
+ * layer.
  */
 
-package org.spring.samples.swa.repository.JPA;
+package org.spring.samples.swa.repository.jpa;

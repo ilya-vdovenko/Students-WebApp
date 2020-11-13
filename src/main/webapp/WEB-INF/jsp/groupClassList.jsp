@@ -5,8 +5,9 @@
 <!Doctype html>
 <html>
 <head>
-    <title>Group_classes</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/list.css">
+    <title>Group classes</title>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/list.css">
 </head>
 <body>
 <h1><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
@@ -16,14 +17,17 @@
     <a href="${catUrl}"> <c:out value="${cathedra.title}"/></a>. Список групп:
 </h1>
 <%--suppress ELValidationInJSP --%>
-<c:forEach items="${group_class_list}" var="group_class">
+<c:forEach items="${group_class_list}" var="groupClass">
     <p>гр.
-        <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}" var="grclUrl">
+        <spring:url
+                value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}"
+                var="grclUrl">
             <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
             <spring:param name="cathedraId" value="${cathedra.id}"/>
-            <spring:param name="group_classId" value="${group_class.id}"/>
+            <spring:param name="groupClassId" value="${groupClass.id}"/>
         </spring:url>
-        <a href="${grclUrl}"> <c:out value="${group_class.title}"/></a> (<c:out value="${group_class.eduForm}"/> форма
+        <a href="${grclUrl}"> <c:out value="${groupClass.title}"/></a> (<c:out
+                value="${groupClass.eduForm}"/> форма
         обучения)</p>
     <p>Студенты группы:</p>
     <table>
@@ -37,7 +41,7 @@
         </thead>
         <tbody>
             <%--suppress ELValidationInJSP --%>
-        <c:forEach items="${group_class.group_students}" var="student">
+        <c:forEach items="${groupClass.groupStudents}" var="student">
             <tr>
                 <td>
                     <spring:url value="/students/{studentId}" var="studUrl">

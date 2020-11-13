@@ -18,22 +18,22 @@ package org.spring.samples.swa.model;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
 import java.io.IOException;
 
 /**
- * Helper class used to serialize {@link Group_class} objects into json.
+ * Helper class used to serialize {@link GroupClass} objects into json.
  *
  * @author Ilya Vdovenko
  */
 
-public class Group_classSerializer extends JsonSerializer<Group_class> {
+public class GroupClassSerializer extends JsonSerializer<GroupClass> {
 
   @Override
-  public void serialize(Group_class group_class, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+  public void serialize(GroupClass groupClass, JsonGenerator jsonGenerator,
+      SerializerProvider serializerProvider) throws IOException {
     jsonGenerator.writeStartObject();
-    jsonGenerator.writeNumberField("id", group_class.getId());
-    jsonGenerator.writeStringField("title", group_class.getTitle());
+    jsonGenerator.writeNumberField("id", groupClass.getId());
+    jsonGenerator.writeStringField("title", groupClass.getTitle());
     jsonGenerator.writeEndObject();
   }
 }

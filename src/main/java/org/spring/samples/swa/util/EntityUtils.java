@@ -15,19 +15,17 @@
 
 package org.spring.samples.swa.util;
 
-import org.spring.samples.swa.model.BaseEntity;
-import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
-import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import org.spring.samples.swa.model.Cathedra;
+import org.spring.samples.swa.model.Faculty;
+import org.spring.samples.swa.model.GroupClass;
+import org.spring.samples.swa.model.Student;
+import org.spring.samples.swa.repository.InstituteRepository;
 
 /**
- * Class of useful methods for manipulating Entities
+ * Class of useful methods for manipulating Entities.
  *
  * @author Ilya Vdovenko
  */
@@ -38,37 +36,47 @@ public class EntityUtils {
     // Utility class
   }
 
-  public static boolean equalsLoad(BaseEntity obj, int id) {
-    return obj != null && obj.getId().equals(id);
-  }
-
   public static <E> boolean isValidCollection(Collection<E> collection) {
     return collection != null && !collection.isEmpty();
   }
 
+  /**
+   * Method for fill in Map variables.
+   *
+   * @param facultyList     contains all faculty
+   * @param facultiesMap    contains faculty as value and Id as key.
+   * @param cathedrasMap    contains cathedra as value and Id as key.
+   * @param groupClassesMap contains groupClass as value and Id as key.
+   */
   public static void setEntityMaps(List<Faculty> facultyList,
-                                   Map<Integer, Faculty> facultiesMap,
-                                   Map<Integer, Cathedra> cathedrasMap,
-                                   Map<Integer, Group_class> group_classesMap) {
+      Map<Integer, Faculty> facultiesMap,
+      Map<Integer, Cathedra> cathedrasMap,
+      Map<Integer, GroupClass> groupClassesMap) {
 
     facultiesMap.clear();
     cathedrasMap.clear();
-    group_classesMap.clear();
+    groupClassesMap.clear();
 
     for (Faculty faculty : facultyList) {
       facultiesMap.putIfAbsent(faculty.getId(), faculty);
       for (Cathedra cathedra : faculty.getCathedras()) {
         cathedrasMap.putIfAbsent(cathedra.getId(), cathedra);
-        for (Group_class group_class : cathedra.getGroup_classes()) {
-          group_classesMap.putIfAbsent(group_class.getId(), group_class);
+        for (GroupClass groupClass : cathedra.getGroupClasses()) {
+          groupClassesMap.putIfAbsent(groupClass.getId(), groupClass);
         }
       }
     }
   }
 
+  /**
+   * Method for cleaning internal variables when Student was saved.
+   *
+   * @param repo    {@link InstituteRepository} class.
+   * @param student saved Student.
+   */
   public static void clearAfterSetStudent(InstituteRepository repo,
-                                          Student student) {
-    repo.getInternalGroup_classes().remove(student.getGroup_class().getId());
+      Student student) {
+    repo.getInternalGroupClasses().remove(student.getGroupClass().getId());
     repo.getInternalCathedras().remove(student.getCathedra().getId());
     repo.getInternalFaculties().remove(student.getFaculty().getId());
   }

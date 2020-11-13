@@ -13,8 +13,15 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JPA;
+package org.spring.samples.swa.repository.jpa;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.spring.samples.swa.repository.StudentRepository;
@@ -22,29 +29,23 @@ import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * A JPA implementation of the {@link StudentRepository} interface.
+ * A jpa implementation of the {@link StudentRepository} interface.
  *
  * @author Ilya vdovenko
  **/
 
 @Repository
-public class JPAStudentRepositoryImpl implements StudentRepository {
+public class JpaStudentRepositoryImpl implements StudentRepository {
 
   private final InstituteRepository instituteRepo;
   private final Map<Integer, Student> studentsMap = new LinkedHashMap<>();
+
   @PersistenceContext
   private EntityManager em;
 
-  public JPAStudentRepositoryImpl(@Qualifier("JPAInstituteRepositoryImpl") InstituteRepository instituteRepo) {
+  public JpaStudentRepositoryImpl(
+      @Qualifier("jpaInstituteRepositoryImpl") InstituteRepository instituteRepo) {
     this.instituteRepo = instituteRepo;
   }
 

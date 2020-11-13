@@ -6,7 +6,8 @@
 <html>
 <head>
     <title>Employees</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/list.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/list.css">
 </head>
 <body>
 <h1>
@@ -24,11 +25,13 @@
                 <c:otherwise>
                     <c:choose>
                         <c:when test="${cathedra!=null}">
-                            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
+                            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}"
+                                        var="catUrl">
                                 <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                                 <spring:param name="cathedraId" value="${cathedra.id}"/>
                             </spring:url>
-                            <a href="${catUrl}"> <c:out value="${cathedra.title}"/></a>. Список преподавателей
+                            <a href="${catUrl}"> <c:out
+                                    value="${cathedra.title}"/></a>. Список преподавателей
                         </c:when>
                         <c:otherwise>Список всех сотрудников института</c:otherwise>
                     </c:choose>

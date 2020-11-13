@@ -15,13 +15,13 @@
 
 package org.spring.samples.swa.web;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 /**
- * A controller that return home page
+ * A controller that return home page.
  *
  * @author Ilya Vdovenko
  */

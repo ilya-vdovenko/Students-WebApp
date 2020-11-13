@@ -16,9 +16,7 @@
 package org.spring.samples.swa.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * Simple JavaBean domain object representing a group class.
@@ -37,8 +36,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "group_classes")
-@JsonSerialize(using = Group_classSerializer.class)
-public class Group_class extends BaseEntity {
+@JsonSerialize(using = GroupClassSerializer.class)
+public class GroupClass extends BaseEntity {
 
   @NotEmpty
   @Column(name = "title")
@@ -54,8 +53,8 @@ public class Group_class extends BaseEntity {
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 
-  @OneToMany(mappedBy = "group_class", fetch = FetchType.EAGER)
-  private Set<Student> group_students;
+  @OneToMany(mappedBy = "groupClass", fetch = FetchType.EAGER)
+  private Set<Student> groupStudents;
 
   public String getTitle() {
     return title;
@@ -73,12 +72,12 @@ public class Group_class extends BaseEntity {
     this.cathedra = cathedra;
   }
 
-  public Set<Student> getGroup_students() {
-    return group_students;
+  public Set<Student> getGroupStudents() {
+    return groupStudents;
   }
 
-  public void setGroup_students(Set<Student> group_students) {
-    this.group_students = group_students;
+  public void setGroupStudents(Set<Student> groupStudents) {
+    this.groupStudents = groupStudents;
   }
 
   public String getEduForm() {
@@ -91,12 +90,12 @@ public class Group_class extends BaseEntity {
 
   @Override
   public String toString() {
-    return "Group_class{" +
-      ", id=" + id +
-      ", title='" + title + '\'' +
-      ", eduForm='" + eduForm + '\'' +
-      ", cathedra id=" + cathedra.getId() +
-      ", group_students=" + group_students +
-      '}';
+    return "GroupClass{"
+        + ", id=" + id
+        + ", title='" + title + '\''
+        + ", eduForm='" + eduForm + '\''
+        + ", cathedra id=" + cathedra.getId()
+        + ", group students=" + groupStudents
+        + '}';
   }
 }

@@ -13,30 +13,19 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.web.Editor;
+package org.spring.samples.swa.repository.springdatajpa;
 
-import org.spring.samples.swa.service.InstituteService;
-import org.spring.samples.swa.model.Faculty;
-
-import java.beans.PropertyEditorSupport;
+import org.spring.samples.swa.model.Student;
+import org.spring.samples.swa.repository.StudentRepository;
+import org.springframework.data.repository.Repository;
 
 /**
- * Property editor for managing conversion
- * between String id and Integer id of {@link Faculty}
+ * Spring Data jpa specialization of the {@link StudentRepository} interface.
  *
  * @author Ilya Vdovenko
  */
 
-public class FacultyEditor extends PropertyEditorSupport {
+public interface SpringDataStudentRepository extends StudentRepository,
+    Repository<Student, Integer> {
 
-  private final InstituteService service;
-
-  public FacultyEditor(InstituteService is) {
-    this.service = is;
-  }
-
-  @Override
-  public void setAsText(String text) throws IllegalArgumentException {
-    setValue(service.findFacultyById(Integer.parseInt(text)));
-  }
 }

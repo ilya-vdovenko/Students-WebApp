@@ -38,7 +38,7 @@ $(document).ready(function () {
     console.log('facId = ' + facId + ' catId = ' + catId + ' grpId = ' + grpId)
   }
 
-  function loadClick(load, selector, entity, url, id) {
+  function loadClick (load, selector, entity, url, id) {
     if (load) {
       console.log(entity + ' already load')
     } else {

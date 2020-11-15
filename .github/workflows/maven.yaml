@@ -1,10 +1,6 @@
 name: Java Maven CI
 
 on:
-  push:
-    branches:
-      - develop
-
   pull_request:
     branches:
       - master
@@ -32,4 +28,3 @@ jobs:
         run: mvn -B package -P SDJ_HSQLDB --file pom.xml
 
         # TODO добавить деплой в докер tomcat и mysql и проверка через curl, а также sonarcloud
-        # TODO Не забудь что надо сделать только на ветвь master

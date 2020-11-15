@@ -1,0 +1,44 @@
+name: Deploy on Tomcat
+
+on:
+  push:
+    branches:
+      - develop
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  deploy:
+    name: Deploy on Tomcat
+    runs-on: ubuntu-latest
+    services:
+        tomcat:
+          image: tomcat:7.0.106-jdk8-adoptopenjdk-hotspot
+          ports:
+            - 8080:8282
+          env:
+            spring.profiles.active: jpa
+          volumes:
+            - /host/webapps:/usr/local/tomcat/webapps
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build with JDBC profile
+        run: mvn -B war:war -P JPA_HSQLDB --file pom.xml
+
+      - name: Copy to webapps folder
+        run: |
+          sudo cp -f /home/runner/work/Students-WebApp/Students-WebApp/target/Students-WebApp.war /host/webapps
+          seconds=40; date1=$((`date +%s` + $seconds));
+          while [ "$date1" -ge `date +%s` ]; do
+            echo -ne "$(date -u --date @$(($date1 - `date +%s` )) +%H:%M:%S)\r";
+          done
+
+      - name: Webapp deploy test
+        run: |
+          HTTP_CODE=$(curl http://localhost:8282/Students-WebApp/ -I -w "%{http_code}")
+          echo $HTTP_CODE

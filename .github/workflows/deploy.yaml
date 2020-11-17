@@ -18,7 +18,7 @@ jobs:
         tomcat:
           image: tomcat:7.0.106-jdk8-adoptopenjdk-hotspot
           ports:
-            - 8080:8282
+            - 8282:8080
           env:
             spring.profiles.active: jpa
           volumes:

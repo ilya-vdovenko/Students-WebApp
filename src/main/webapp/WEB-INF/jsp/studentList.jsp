@@ -36,16 +36,16 @@
                 </td>
                 <td class="center"><c:out value="${student.sex}"/></td>
                 <td class="center"><c:out value="${student.birthday}"/></td>
-                <td><c:out value="${student.fact_address}"/></td>
+                <td><c:out value="${student.factAddress}"/></td>
                 <td class="center"><c:out value="${student.telephone}"/></td>
                 <td class="center">
-                    <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}"
+                    <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}"
                                 var="grclUrl">
                         <spring:param name="facultyId" value="${student.faculty.id}"/>
                         <spring:param name="cathedraId" value="${student.cathedra.id}"/>
-                        <spring:param name="group_classId" value="${student.group_class.id}"/>
+                        <spring:param name="groupClassId" value="${student.groupClass.id}"/>
                     </spring:url>
-                    <a href="${grclUrl}"> <c:out value="${student.group_class.title}"/></a>
+                    <a href="${grclUrl}"> <c:out value="${student.groupClass.title}"/></a>
                 </td>
                 <td>
                     <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">

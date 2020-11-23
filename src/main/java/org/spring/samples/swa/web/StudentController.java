@@ -15,14 +15,18 @@
 
 package org.spring.samples.swa.web;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import javax.validation.Valid;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.service.InstituteService;
-import org.spring.samples.swa.web.Editor.CathedraEditor;
-import org.spring.samples.swa.web.Editor.FacultyEditor;
-import org.spring.samples.swa.web.Editor.GroupClassEditor;
+import org.spring.samples.swa.web.editor.CathedraEditor;
+import org.spring.samples.swa.web.editor.FacultyEditor;
+import org.spring.samples.swa.web.editor.GroupClassEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +37,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 /**
- * A controller that return view's of student's pages
+ * A controller that return view's of student's pages.
  *
  * @author Ilya Vdovenko
  */
@@ -49,18 +48,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class StudentController {
 
   private final InstituteService service;
-  private final String Student_CREATE_OR_UPDATE_FORM = "StudentCreateOrUpdateForm";
+  private final String studentCreateOrUpdateForm = "StudentCreateOrUpdateForm";
 
   @Autowired
   public StudentController(InstituteService is) {
     this.service = is;
   }
 
+  /**
+   * Use for proper binding model with id.
+   *
+   * @param binder {@link WebDataBinder}
+   */
   @InitBinder("student")
   public void facultyBinder(WebDataBinder binder) {
     binder.registerCustomEditor(Faculty.class, "faculty", new FacultyEditor(service));
     binder.registerCustomEditor(Cathedra.class, "cathedra", new CathedraEditor(service));
-    binder.registerCustomEditor(Group_class.class, "group_class", new GroupClassEditor(service));
+    binder.registerCustomEditor(GroupClass.class, "groupClass", new GroupClassEditor(service));
   }
 
   @RequestMapping(value = "/{studentId}", method = GET)
@@ -78,14 +82,22 @@ public class StudentController {
   @RequestMapping(value = "/new", method = GET)
   public String initCreationForm(Model model) {
     model.addAttribute(new Student());
-    return Student_CREATE_OR_UPDATE_FORM;
+    return studentCreateOrUpdateForm;
   }
 
+  /**
+   * Post new student to db.
+   *
+   * @param student model with data.
+   * @param errors errors that can be.
+   * @param model model with same student if errors happen.
+   * @return redirect.
+   */
   @RequestMapping(value = "/new", method = POST)
   public String processCreationForm(@Valid Student student, Errors errors, Model model) {
     if (errors.hasErrors()) {
       model.addAttribute(student);
-      return Student_CREATE_OR_UPDATE_FORM;
+      return studentCreateOrUpdateForm;
     }
     service.saveStudent(student);
     return "redirect:/students";
@@ -94,15 +106,24 @@ public class StudentController {
   @RequestMapping(value = "/{studentId}/edit", method = GET)
   public String initUpdateOwnerForm(@PathVariable int studentId, Model model) {
     model.addAttribute(service.findStudentById(studentId));
-    return Student_CREATE_OR_UPDATE_FORM;
+    return studentCreateOrUpdateForm;
   }
 
+  /**
+   * Post updated student to db.
+   *
+   * @param student model with data.
+   * @param result of editing.
+   * @param studentId id of student.
+   * @param model model with same student if errors happen.
+   * @return redirect.
+   */
   @RequestMapping(value = "/{studentId}/edit", method = POST)
   public String processUpdateOwnerForm(@Valid Student student, BindingResult result,
-                                       @PathVariable int studentId, Model model) {
+      @PathVariable int studentId, Model model) {
     if (result.hasErrors()) {
       model.addAttribute(student);
-      return Student_CREATE_OR_UPDATE_FORM;
+      return studentCreateOrUpdateForm;
     } else {
       student.setId(studentId);
       service.saveStudent(student);

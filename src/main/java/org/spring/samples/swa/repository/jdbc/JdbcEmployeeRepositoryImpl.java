@@ -13,11 +13,16 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JDBC;
+package org.spring.samples.swa.repository.jdbc;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.repository.EmployeeRepository;
-import org.spring.samples.swa.repository.JDBC.Extractor.EmployeeExtractor;
+import org.spring.samples.swa.repository.jdbc.extractor.EmployeeExtractor;
 import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -26,30 +31,31 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * A JDBC-based implementation of the {@link EmployeeRepository} interface.
+ * A jdbc-based implementation of the {@link EmployeeRepository} interface.
  *
  * @author Ilya Vdovenko
  */
 
 @Repository
-public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
+public class JdbcEmployeeRepositoryImpl implements EmployeeRepository {
 
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
   private final EmployeeExtractor employeeExtractor;
-  private Map<Integer, Employee> employeesMap = new LinkedHashMap<>();
+  private final Map<Integer, Employee> employeesMap = new LinkedHashMap<>();
 
+  /**
+   * Constructor of {@link JdbcEmployeeRepositoryImpl} class.
+   *
+   * @param namedParameterJdbcTemplate used for named query.
+   * @param jdbcTemplate               used for query.
+   * @param employeeExtractor          used for extract data to {@link Employee} model.
+   */
   @Autowired
-  public JDBCEmployeeRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-                                    JdbcTemplate jdbcTemplate,
-                                    EmployeeExtractor employeeExtractor) {
+  public JdbcEmployeeRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+      JdbcTemplate jdbcTemplate,
+      EmployeeExtractor employeeExtractor) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     this.jdbcTemplate = jdbcTemplate;
     this.employeeExtractor = employeeExtractor;
@@ -67,9 +73,9 @@ public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
       Map<String, Object> params = new HashMap<>();
       params.put("id", id);
       List<Employee> employeeList = this.namedParameterJdbcTemplate.query(
-        "SELECT * FROM employees WHERE id= :id",
-        params,
-        employeeExtractor);
+          "SELECT * FROM employees WHERE id= :id",
+          params,
+          employeeExtractor);
       if (EntityUtils.isValidCollection(employeeList)) {
         employee = employeeList.get(0);
       } else {
@@ -84,7 +90,8 @@ public class JDBCEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   public Collection<Employee> findAll() {
-    List<Employee> employeeList = jdbcTemplate.query("SELECT * FROM employees ORDER BY fio", employeeExtractor);
+    List<Employee> employeeList = jdbcTemplate
+        .query("SELECT * FROM employees ORDER BY fio", employeeExtractor);
     employeesMap.clear();
     if (EntityUtils.isValidCollection(employeeList)) {
       for (Employee employee : employeeList) {

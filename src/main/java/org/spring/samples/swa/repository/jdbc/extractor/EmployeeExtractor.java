@@ -13,8 +13,12 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JDBC.Extractor;
+package org.spring.samples.swa.repository.jdbc.extractor;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +27,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Implementation mapping data from a {@link ResultSetExtractor} to the
- * corresponding properties of the entity classes.
+ * Implementation mapping data from a {@link ResultSetExtractor} to the corresponding properties of
+ * the entity classes.
  *
  * @author Ilya Vdovenko
  */
@@ -41,7 +40,8 @@ public class EmployeeExtractor implements ResultSetExtractor<List<Employee>> {
   private final InstituteRepository instituteRepo;
 
   @Autowired
-  public EmployeeExtractor(@Qualifier("JDBCInstituteRepositoryImpl") InstituteRepository instituteRepo) {
+  public EmployeeExtractor(
+      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
     this.instituteRepo = instituteRepo;
   }
 

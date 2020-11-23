@@ -31,11 +31,11 @@
     </bean>
 
     <beans profile="jpa">
-        <context:component-scan base-package="org.spring.samples.swa.repository.JPA"/>
+        <context:component-scan base-package="org.spring.samples.swa.repository.jpa"/>
     </beans>
 
     <beans profile="spring-data-jpa">
-        <jpa:repositories base-package="org.spring.samples.swa.repository.SpringDataJpa"/>
+        <jpa:repositories base-package="org.spring.samples.swa.repository.springdatajpa"/>
     </beans>
 
     <beans profile="jpa, spring-data-jpa">
@@ -69,6 +69,6 @@
             <constructor-arg ref="dataSource"/>
         </bean>
 
-        <context:component-scan base-package="org.spring.samples.swa.repository.JDBC"/>
+        <context:component-scan base-package="org.spring.samples.swa.repository.jdbc"/>
     </beans>
 </beans>

@@ -13,16 +13,14 @@
  * limitations under the License.
  */
 
+import javax.servlet.Filter;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
-import javax.servlet.Filter;
-
 /**
- * Create the Spring root application context.
- * Register DispatcherServlet in the servlet context.
+ * Create the Spring root application context. Register DispatcherServlet in the servlet context.
  *
  * @author Ilya Vdovenko
  */
@@ -45,12 +43,12 @@ public class StudentsWebAppInitializer extends AbstractDispatcherServletInitiali
 
   @Override
   protected String[] getServletMappings() {
-    return new String[] {"/"};
+    return new String[]{"/"};
   }
 
   @Override
   protected Filter[] getServletFilters() {
     CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter("UTF-8", true);
-    return new Filter[] {characterEncodingFilter};
+    return new Filter[]{characterEncodingFilter};
   }
 }

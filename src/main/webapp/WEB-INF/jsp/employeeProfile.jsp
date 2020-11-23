@@ -6,7 +6,8 @@
 <html>
 <head>
     <title>EmployeeProfile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${employee.fio}"/></b></h1>

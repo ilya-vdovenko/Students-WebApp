@@ -6,7 +6,8 @@
 <html>
 <head>
     <title>Cathedras</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/list.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/list.css">
 </head>
 <body>
 <h1><spring:url value="/faculties/{facultyId}" var="facUrl">
@@ -42,14 +43,16 @@
                     <a href="${empUrl}"> <c:out value="${cathedra.boss.fio}"/> </a>
                 </td>
                 <td class="center">
-                    <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers" var="lecUrl">
+                    <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers"
+                                var="lecUrl">
                         <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                         <spring:param name="cathedraId" value="${cathedra.id}"/>
                     </spring:url>
                     <a href="${lecUrl}"> <c:out value="..."/></a>
                 </td>
                 <td class="center">
-                    <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes" var="grclUrl">
+                    <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses"
+                                var="grclUrl">
                         <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                         <spring:param name="cathedraId" value="${cathedra.id}"/>
                     </spring:url>

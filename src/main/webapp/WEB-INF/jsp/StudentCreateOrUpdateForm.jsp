@@ -39,17 +39,17 @@
         <sf:option value="муж">муж</sf:option>
         <sf:option value="жен">жен</sf:option>
     </sf:select><br/>
-        Факт. адрес: <sf:input path="fact_address" cssStyle="width: 28%"/><br/>
+        Факт. адрес: <sf:input path="factAddress" cssStyle="width: 28%"/><br/>
         Адрес: <sf:input path="address" cssStyle="width: 28%"/><br/>
         Контактный тел.: <sf:input path="telephone" cssStyle="width: 10%"/><br/>
-        Факультет: <sf:select path="faculty" id="sel_fac" >
+        Факультет: <sf:select path="faculty" id="selFac">
         <sf:option value="${student.faculty.id}">${student.faculty.title}</sf:option>
     </sf:select><br/>
-        Кафедра: <sf:select path="cathedra" id="sel_cat">
+        Кафедра: <sf:select path="cathedra" id="selCat">
         <sf:option value="${student.cathedra.id}">${student.cathedra.title}</sf:option>
     </sf:select><br/>
-        Группа: <sf:select path="group_class" id="sel_grp">
-        <sf:option value="${student.group_class.id}">${student.group_class.title}</sf:option>
+        Группа: <sf:select path="groupClass" id="selGrp">
+        <sf:option value="${student.groupClass.id}">${student.groupClass.title}</sf:option>
     </sf:select><br/>
     </div>
     <div>

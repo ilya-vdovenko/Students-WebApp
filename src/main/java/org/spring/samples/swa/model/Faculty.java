@@ -16,13 +16,12 @@
 package org.spring.samples.swa.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
 
 /**
  * Simple JavaBean domain object representing a faculty.
@@ -60,11 +59,11 @@ public class Faculty extends UnitEntity {
 
   @Override
   public String toString() {
-    return "Faculty{" +
-      "id=" + id +", " +
-      ", title='" + super.getTitle() + '\'' +
-      ", cathedras=" + cathedras +
-      ", employees=" + employees +
-      '}';
+    return "Faculty{"
+        + "id=" + id
+        + ", title='" + super.getTitle() + '\''
+        + ", cathedras=" + cathedras
+        + ", employees=" + employees
+        + '}';
   }
 }

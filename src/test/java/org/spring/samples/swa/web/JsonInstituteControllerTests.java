@@ -15,24 +15,23 @@
 
 package org.spring.samples.swa.web;
 
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.HashSet;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.HashSet;
-
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for {@link JsonInstituteController}
@@ -40,7 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Ilya Vdovenko
  */
 
-@SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml", "classpath:SpringConfigs/mvc-test-config.xml"})
+@SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml",
+    "classpath:SpringConfigs/mvc-test-config.xml"})
 public class JsonInstituteControllerTests {
 
   private final int TEST_FACULTY_ID = 1;
@@ -74,15 +74,15 @@ public class JsonInstituteControllerTests {
     cat2.setId(2);
     cat2.setTitle("Электромеханических систем и электроснабжения");
 
-    Group_class group1 = new Group_class();
+    GroupClass group1 = new GroupClass();
     group1.setId(1);
     group1.setTitle("АТ-121");
 
-    Group_class group2 = new Group_class();
+    GroupClass group2 = new GroupClass();
     group2.setId(2);
     group2.setTitle("АП-131");
 
-    cat1.setGroup_classes(new HashSet<>(Lists.newArrayList(group1, group2)));
+    cat1.setGroupClasses(new HashSet<>(Lists.newArrayList(group1, group2)));
     fac1.setCathedras(new HashSet<>(Lists.newArrayList(cat1, cat2)));
 
     given(this.service.getFaculties()).willReturn(Lists.newArrayList(fac1, fac2));
@@ -93,23 +93,24 @@ public class JsonInstituteControllerTests {
   @Test
   void testGetFacList() throws Exception {
     mockMvc.perform(get("/faculties/getFacList"))
-      .andExpect(status().isOk())
-      .andExpect(content().json("[{'id':1,'title':'Энергетики и систем управления'}," +
-        "{'id':2,'title':'Информационных технологий и компьютерной безопасности'}]"));
+        .andExpect(status().isOk())
+        .andExpect(content().json("[{'id':1,'title':'Энергетики и систем управления'}," +
+            "{'id':2,'title':'Информационных технологий и компьютерной безопасности'}]"));
   }
 
   @Test
   void testGetCatList() throws Exception {
     mockMvc.perform(get("/cathedras/getCatList?facultyId={id}", TEST_FACULTY_ID))
-      .andExpect(status().isOk())
-      .andExpect(content().json("[{'id':2,'title':'Электромеханических систем и электроснабжения'}," +
-        "{'id':1,'title':'Электропривода, автоматики и управления в технических системах'}]"));
+        .andExpect(status().isOk())
+        .andExpect(
+            content().json("[{'id':2,'title':'Электромеханических систем и электроснабжения'}," +
+                "{'id':1,'title':'Электропривода, автоматики и управления в технических системах'}]"));
   }
 
   @Test
   void testGetGroupList() throws Exception {
-    mockMvc.perform(get("/group_classes/getGroupList?cathedraId={id}", TEST_CATHEDRA_ID))
-      .andExpect(status().isOk())
-      .andExpect(content().json("[{'id':2,'title':'АП-131'},{'id':1,'title':'АТ-121'}]"));
+    mockMvc.perform(get("/groupClasses/getGroupList?cathedraId={id}", TEST_CATHEDRA_ID))
+        .andExpect(status().isOk())
+        .andExpect(content().json("[{'id':2,'title':'АП-131'},{'id':1,'title':'АТ-121'}]"));
   }
 }

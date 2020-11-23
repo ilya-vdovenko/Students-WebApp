@@ -15,19 +15,18 @@
 
 package org.spring.samples.swa.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.LocalDate;
+import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Base class for {@link InstituteService} integration tests.
@@ -59,7 +58,7 @@ abstract class AbstractInstituteServiceTests {
     assertThat(cathedra.getTitle()).isEqualTo("Электромеханических систем и электроснабжения");
     assertThat(cathedra.getFaculty().getTitle()).isEqualTo("Энергетики и систем управления");
     assertThat(cathedra.getEmployees().isEmpty()).isFalse();
-    assertThat(cathedra.getGroup_classes().isEmpty()).isFalse();
+    assertThat(cathedra.getGroupClasses().isEmpty()).isFalse();
   }
 
   @Test
@@ -93,12 +92,12 @@ abstract class AbstractInstituteServiceTests {
     student.setFio("Иванов Иван Иванович");
     student.setBirthday(LocalDate.parse("1994-06-23"));
     student.setSex("муж");
-    student.setFact_address("-");
+    student.setFactAddress("-");
     student.setAddress("-");
     student.setTelephone("89081355694");
     student.setFaculty(this.service.findFacultyById(1));
     student.setCathedra(this.service.findCathedraById(2));
-    student.setGroup_class(this.service.findGroup_classById(3));
+    student.setGroupClass(this.service.findGroupClassById(3));
 
     this.service.saveStudent(student);
     assertThat(student.getId().longValue()).isNotEqualTo(0);
@@ -122,7 +121,8 @@ abstract class AbstractInstituteServiceTests {
     Student student = this.service.findStudentById(1);
     assertThat(student.getFio()).isEqualTo("Вдовенко Илья Сергеевич");
     assertThat(student.getFaculty().getTitle()).isEqualTo("Энергетики и систем управления");
-    assertThat(student.getCathedra().getTitle()).isEqualTo("Электропривода, автоматики и управления в технических системах");
+    assertThat(student.getCathedra().getTitle())
+        .isEqualTo("Электропривода, автоматики и управления в технических системах");
   }
 
   @Test
@@ -145,9 +145,10 @@ abstract class AbstractInstituteServiceTests {
   }
 
   @Test
-  void shouldFindGroup_classById() {
-    Group_class group_class = this.service.findGroup_classById(3);
-    assertThat(group_class.getTitle()).isEqualTo("ПТ-111");
-    assertThat(group_class.getCathedra().getTitle()).isEqualTo("Электромеханических систем и электроснабжения");
+  void shouldFindGroupClassById() {
+    GroupClass groupClass = this.service.findGroupClassById(3);
+    assertThat(groupClass.getTitle()).isEqualTo("ПТ-111");
+    assertThat(groupClass.getCathedra().getTitle())
+        .isEqualTo("Электромеханических систем и электроснабжения");
   }
 }

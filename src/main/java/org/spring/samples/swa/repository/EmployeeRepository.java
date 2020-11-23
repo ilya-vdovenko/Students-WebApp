@@ -15,9 +15,8 @@
 
 package org.spring.samples.swa.repository;
 
-import org.spring.samples.swa.model.Employee;
-
 import java.util.Collection;
+import org.spring.samples.swa.model.Employee;
 
 /**
  * Repository class for {@link Employee} domain objects.

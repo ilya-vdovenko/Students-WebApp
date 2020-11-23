@@ -16,9 +16,7 @@
 package org.spring.samples.swa.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * Simple JavaBean domain object representing a cathedra.
@@ -55,7 +54,7 @@ public class Cathedra extends UnitEntity {
   private Faculty faculty;
 
   @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
-  private Set<Group_class> group_classes;
+  private Set<GroupClass> groupClasses;
 
   public String getEduPrograms() {
     return eduPrograms;
@@ -81,23 +80,23 @@ public class Cathedra extends UnitEntity {
     this.faculty = faculty;
   }
 
-  public Set<Group_class> getGroup_classes() {
-    return group_classes;
+  public Set<GroupClass> getGroupClasses() {
+    return groupClasses;
   }
 
-  public void setGroup_classes(Set<Group_class> group_classes) {
-    this.group_classes = group_classes;
+  public void setGroupClasses(Set<GroupClass> groupClasses) {
+    this.groupClasses = groupClasses;
   }
 
   @Override
   public String toString() {
-    return "Cathedra{" +
-      "id=" + id +
-      ", title='" + super.getTitle() + '\'' +
-      ", eduPrograms='" + eduPrograms + '\'' +
-      ", employees=" + employees +
-      ", faculty id=" + faculty.getId() +
-      ", group_classes=" + group_classes +
-      '}';
+    return "Cathedra{"
+        + "id=" + id
+        + ", title='" + super.getTitle() + '\''
+        + ", eduPrograms='" + eduPrograms + '\''
+        + ", employees=" + employees
+        + ", faculty id=" + faculty.getId()
+        + ", group_classes=" + groupClasses
+        + '}';
   }
 }

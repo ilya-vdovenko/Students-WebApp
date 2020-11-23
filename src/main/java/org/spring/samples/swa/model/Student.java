@@ -15,10 +15,7 @@
 
 package org.spring.samples.swa.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -26,7 +23,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Simple JavaBean domain object representing a student.
@@ -47,7 +46,7 @@ public class Student extends Person {
   private String sex;
 
   @Column(name = "fact_address")
-  private String fact_address;
+  private String factAddress;
 
   @Column(name = "address")
   private String address;
@@ -59,7 +58,7 @@ public class Student extends Person {
   @ManyToOne
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "group_class_id")
-  private Group_class group_class;
+  private GroupClass groupClass;
 
   public LocalDate getBirthday() {
     return birthday;
@@ -77,12 +76,12 @@ public class Student extends Person {
     this.sex = sex;
   }
 
-  public String getFact_address() {
-    return fact_address;
+  public String getFactAddress() {
+    return factAddress;
   }
 
-  public void setFact_address(String fact_address) {
-    this.fact_address = fact_address;
+  public void setFactAddress(String factAddress) {
+    this.factAddress = factAddress;
   }
 
   public String getAddress() {
@@ -101,26 +100,26 @@ public class Student extends Person {
     this.telephone = telephone;
   }
 
-  public Group_class getGroup_class() {
-    return group_class;
+  public GroupClass getGroupClass() {
+    return groupClass;
   }
 
-  public void setGroup_class(Group_class group_class) {
-    this.group_class = group_class;
+  public void setGroupClass(GroupClass groupClass) {
+    this.groupClass = groupClass;
   }
 
   @Override
   public String toString() {
-    return "Student{" +
-      "id=" + id +
-      ", birthday=" + birthday +
-      ", sex='" + sex + '\'' +
-      ", fact_address='" + fact_address + '\'' +
-      ", address='" + address + '\'' +
-      ", telephone='" + telephone + '\'' +
-      ", group_class id=" + group_class.getId() +
-      ", cathedra id=" + getCathedra().getId() +
-      ", faculty id=" + getFaculty().getId() +
-      '}';
+    return "Student{"
+        + "id=" + id
+        + ", birthday=" + birthday
+        + ", sex='" + sex + '\''
+        + ", factAddress='" + factAddress + '\''
+        + ", address='" + address + '\''
+        + ", telephone='" + telephone + '\''
+        + ", groupClass id=" + groupClass.getId()
+        + ", cathedra id=" + getCathedra().getId()
+        + ", faculty id=" + getFaculty().getId()
+        + '}';
   }
 }

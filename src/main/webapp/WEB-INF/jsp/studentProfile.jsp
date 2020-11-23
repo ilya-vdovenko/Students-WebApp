@@ -21,7 +21,7 @@
     </tr>
     <tr>
         <th>Факт. адрес</th>
-        <td><c:out value="${student.fact_address}"/></td>
+        <td><c:out value="${student.factAddress}"/></td>
     </tr>
     <tr>
         <th>Адрес</th>
@@ -34,13 +34,13 @@
     <tr>
         <th>Группа</th>
         <td>
-            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes/{group_classId}"
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}"
                         var="grclUrl">
                 <spring:param name="facultyId" value="${student.faculty.id}"/>
                 <spring:param name="cathedraId" value="${student.cathedra.id}"/>
-                <spring:param name="group_classId" value="${student.group_class.id}"/>
+                <spring:param name="groupClassId" value="${student.groupClass.id}"/>
             </spring:url>
-            <a href="${grclUrl}"> <c:out value="${student.group_class.title}"/></a>
+            <a href="${grclUrl}"> <c:out value="${student.groupClass.title}"/></a>
         </td>
     </tr>
     <tr>

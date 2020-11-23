@@ -13,30 +13,28 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.web.Editor;
-
-import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.service.InstituteService;
+package org.spring.samples.swa.web.editor;
 
 import java.beans.PropertyEditorSupport;
+import org.spring.samples.swa.model.Faculty;
+import org.spring.samples.swa.service.InstituteService;
 
 /**
- * Property editor for managing conversion
- * between String id and Integer id of {@link Cathedra}
+ * Property editor for managing conversion between String id and Integer id of {@link Faculty}.
  *
  * @author Ilya Vdovenko
  */
 
-public class CathedraEditor extends PropertyEditorSupport {
+public class FacultyEditor extends PropertyEditorSupport {
 
   private final InstituteService service;
 
-  public CathedraEditor(InstituteService is) {
+  public FacultyEditor(InstituteService is) {
     this.service = is;
   }
 
   @Override
   public void setAsText(String text) throws IllegalArgumentException {
-    setValue(service.findCathedraById(Integer.parseInt(text)));
+    setValue(service.findFacultyById(Integer.parseInt(text)));
   }
 }

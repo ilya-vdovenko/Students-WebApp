@@ -1,50 +1,77 @@
 # Students-WebApp
 
-This repo is a Pet-project of web application represent list of students from database (HSQLDB only. More soon), with a plain old **Spring Framework configuration**
-and with a **3-layer architecture** (i.e. presentation --> service --> repository). Created following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic)
+This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a plain old **Spring Framework configuration**
+and with a **3-layer architecture** (i.e. presentation --> service --> repository).
+Created by following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic).
 
-## Running app locally
+## Running web-app locally
 
 ### With Maven command line
 
-```
+```cmd
 git clone https://github.com/ilya-vdovenko/Students-WebApp.git
 cd Students-WebApp
 ./mvnw tomcat:run-war
+# For Windows : ./mvnw.cmd tomcat:run-war
 ```
 
-You can then access app here: [http://localhost:8080/](http://localhost:8080/)
-
+You can then access app here: localhost:8080
 
 ## Working with in your IDE
 
 ### Prerequisites
 The following items should be installed in your system:
 * Java 8 or newer.
-* git command line tool (https://help.github.com/articles/set-up-git)
-* Your preferred IDE 
-  * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in `Help -> About` dialog. If m2e is
-  not there, just follow the install process here: https://www.eclipse.org/m2e/
+* git command line tool (<https://help.github.com/articles/set-up-git>)
+* Your preferred IDE
+  * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in Help -> About dialog. If m2e is not there, just follow the install process [here](http://www.eclipse.org/m2e/)
+  * [Spring Tools Suite](https://spring.io/tools) (STS)
   * IntelliJ IDEA
 
-### Steps:
+### Steps
 
 1) Import project and past url to the project. Or on the command line
 
-```
+```cmd
 git clone https://github.com/ilya-vdovenko/Students-WebApp.git
 ```
 
 2) (If through CL) Inside IDE
 
-```
+```text
 File -> Import -> Maven -> Existing Maven project
 ```
 
 3) After import, click `tomcat:run` from maven window, or type in IDE command line `mvn tomcat:run`
 
-4) Visit [http://localhost:8080](http://localhost:8080) in your browser.
+4) Visit localhost:8080 in your browser.
 
+## Database configuration
+
+By default, Students-WebApp uses an in-memory database (HSQLDB) which gets populated at startup with data.
+A similar setups is provided for MySQL in case a persistent database configuration is needed.
+To run web-app locally using persistent database, it is needed to run with profile defined in main pom.xml file.
+
+For MySQL database, it is needed to run with 'MySQL' profile defined in main pom.xml file.
+
+```cmd
+./mvnw tomcat:run-war -P JDBC_MySQL
+```
+
+Before do this, would be good to check properties defined in MySQL profile inside pom.xml file.
+
+```xml
+<properties>
+      <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+      <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>
+      <maven.db.script>mysql</maven.db.script>
+      <maven.jpa.database>MYSQL</maven.jpa.database>
+      <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
+      <maven.jdbc.url>jdbc:mysql://localhost:3306</maven.jdbc.url>
+      <maven.jdbc.username>institute</maven.jdbc.username>
+      <maven.jdbc.password>institute</maven.jdbc.password>
+</properties>
+```
 
 ## License
 

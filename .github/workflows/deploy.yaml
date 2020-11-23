@@ -1,0 +1,68 @@
+name: Build and deploy tests
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  deploy:
+    name: Deploy on Tomcat
+    runs-on: ubuntu-latest
+    services:
+        tomcat:
+          image: tomcat:7.0.106-jdk8-adoptopenjdk-hotspot
+          ports:
+            - 8282:8080
+          env:
+            spring.profiles.active: jdbc
+          volumes:
+            - /host/webapps:/usr/local/tomcat/webapps
+
+        mysql:
+          image: mysql:8.0
+          ports:
+            - 3306:3306
+          env:
+            MYSQL_ROOT_PASSWORD: root2020
+            MYSQL_DATABASE: institute
+            MYSQL_USER: institute
+            MYSQL_PASSWORD: institute
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          architecture: x64
+
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and Test with default (JPA) profile
+        run: mvn -B package
+
+      - name: Copy to webapps folder
+        run: |
+          sudo cp -f /home/runner/work/Students-WebApp/Students-WebApp/target/Students-WebApp.war /host/webapps
+          echo "Timeout for 40 sec (app must deploy on Tomcat during this time)"
+          sleep 40
+
+      - name: Webapp deploy test
+        run: |
+          HTTP_CODE=$(curl http://localhost:8282/Students-WebApp/students -s -o /dev/null -I -w "%{http_code}")
+          if [[ $HTTP_CODE -eq 200 ]]
+          then
+            echo "Success"
+          else
+            echo "Fail"
+            exit 1
+          fi

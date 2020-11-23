@@ -13,30 +13,19 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.web.Editor;
+package org.spring.samples.swa.repository.springdatajpa;
 
-import org.spring.samples.swa.service.InstituteService;
-import org.spring.samples.swa.model.Group_class;
-
-import java.beans.PropertyEditorSupport;
+import org.spring.samples.swa.model.Employee;
+import org.spring.samples.swa.repository.EmployeeRepository;
+import org.springframework.data.repository.Repository;
 
 /**
- * Property editor for managing conversion
- * between String id and Integer id of {@link Group_class}
+ * Spring Data jpa specialization of the {@link EmployeeRepository} interface.
  *
  * @author Ilya Vdovenko
  */
 
-public class GroupClassEditor extends PropertyEditorSupport {
+public interface SpringDataEmployeeRepository extends EmployeeRepository,
+    Repository<Employee, Integer> {
 
-  private final InstituteService service;
-
-  public GroupClassEditor(InstituteService is) {
-    this.service = is;
-  }
-
-  @Override
-  public void setAsText(String text) throws IllegalArgumentException {
-    setValue(service.findGroup_classById(Integer.parseInt(text)));
-  }
 }

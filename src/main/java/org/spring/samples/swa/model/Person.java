@@ -15,18 +15,17 @@
 
 package org.spring.samples.swa.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
- * Simple JavaBean domain object adds a multiple property to {@link BaseEntity}.
- * Used as a base class for objects needing these properties.
+ * Simple JavaBean domain object adds a multiple property to {@link BaseEntity}. Used as a base
+ * class for objects needing these properties.
  *
  * @author Ilya Vdovenko
  */

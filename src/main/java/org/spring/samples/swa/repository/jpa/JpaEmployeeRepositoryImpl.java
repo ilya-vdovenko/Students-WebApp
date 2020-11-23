@@ -13,29 +13,28 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JPA;
+package org.spring.samples.swa.repository.jpa;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.repository.EmployeeRepository;
 import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * A JPA implementation of the {@link EmployeeRepository} interface.
+ * A jpa implementation of the {@link EmployeeRepository} interface.
  *
  * @author Ilya vdovenko
  **/
 
 @Repository
-public class JPAEmployeeRepositoryImpl implements EmployeeRepository {
+public class JpaEmployeeRepositoryImpl implements EmployeeRepository {
 
   private final Map<Integer, Employee> employeesMap = new LinkedHashMap<>();
 

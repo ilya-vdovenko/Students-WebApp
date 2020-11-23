@@ -15,14 +15,13 @@
 
 package org.spring.samples.swa.service;
 
+import java.util.Collection;
+import java.util.Set;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
-
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * Mostly used as a facade so all controllers have a single point of entry.
@@ -54,5 +53,5 @@ public interface InstituteService {
 
   Collection<Employee> getEmployees();
 
-  Group_class findGroup_classById(int id);
+  GroupClass findGroupClassById(int id);
 }

@@ -15,10 +15,15 @@
 
 package org.spring.samples.swa.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import javax.sql.DataSource;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
+import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.repository.EmployeeRepository;
 import org.spring.samples.swa.repository.InstituteRepository;
@@ -29,15 +34,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
 /**
- * Mostly used as a facade for all controllers.
- * Also a placeholder for @Transactional annotations.
+ * Mostly used as a facade for all controllers. Also a placeholder for @Transactional annotations.
  *
  * @author Ilya Vdovenko
  */
@@ -50,9 +48,18 @@ public class InstituteServiceImpl implements InstituteService {
   private final EmployeeRepository employeeRepository;
   private final JdbcTemplate jdbcTemplate;
 
+  /**
+   * Constructor of {@link InstituteServiceImpl} class.
+   *
+   * @param sr         injected {@link StudentRepository} class.
+   * @param is         injected {@link InstituteRepository} class.
+   * @param er         injected {@link EmployeeRepository} class.
+   * @param dataSource injected {@link DataSource} class. Used for JdbcTemplate.
+   */
   @Autowired
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  public InstituteServiceImpl(StudentRepository sr, InstituteRepository is, EmployeeRepository er, DataSource dataSource) {
+  public InstituteServiceImpl(StudentRepository sr, InstituteRepository is, EmployeeRepository er,
+      DataSource dataSource) {
     this.studentRepository = sr;
     this.instituteRepository = is;
     this.employeeRepository = er;
@@ -80,37 +87,40 @@ public class InstituteServiceImpl implements InstituteService {
   @Override
   @Transactional(readOnly = true)
   public Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId) {
-    return getList(jdbcTemplate.queryForList("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?",
-      Integer.class, facultyId), employees);
+    return getList(
+        jdbcTemplate.queryForList("SELECT employee_id FROM facultyWorker WHERE faculty_id = ?",
+            Integer.class, facultyId), employees);
   }
 
   @Override
   @Transactional(readOnly = true)
   public Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId) {
-    return getList(jdbcTemplate.queryForList("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?",
-      Integer.class, facultyId), employees);
+    return getList(
+        jdbcTemplate.queryForList("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?",
+            Integer.class, facultyId), employees);
   }
 
   @Override
   @Transactional(readOnly = true)
   public Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId) {
-    return getList(jdbcTemplate.queryForList("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?",
-      Integer.class, cathedraId), employees);
+    return getList(
+        jdbcTemplate.queryForList("SELECT employee_id FROM cathedraLectures WHERE cathedra_id = ?",
+            Integer.class, cathedraId), employees);
   }
 
-  private Collection<Employee> getList(List<Integer> list_of_employersId, Set<Employee> employees) {
-    Collection<Employee> list_of_employers = new ArrayList<>();
-    if (EntityUtils.isValidCollection(list_of_employersId) &
-      EntityUtils.isValidCollection(employees)) {
-      for (int id : list_of_employersId) {
+  private Collection<Employee> getList(List<Integer> listOfEmployersId, Set<Employee> employees) {
+    Collection<Employee> listOfEmployers = new ArrayList<>();
+    if (EntityUtils.isValidCollection(listOfEmployersId)
+        & EntityUtils.isValidCollection(employees)) {
+      for (int id : listOfEmployersId) {
         for (Employee employee : employees) {
           if (employee.getId().equals(id)) {
-            list_of_employers.add(employee);
+            listOfEmployers.add(employee);
           }
         }
       }
     }
-    return list_of_employers;
+    return listOfEmployers;
   }
 
   @Override
@@ -145,7 +155,7 @@ public class InstituteServiceImpl implements InstituteService {
 
   @Override
   @Transactional(readOnly = true)
-  public Group_class findGroup_classById(int id) {
-    return instituteRepository.findGroup_classById(id);
+  public GroupClass findGroupClassById(int id) {
+    return instituteRepository.findGroupClassById(id);
   }
 }

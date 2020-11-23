@@ -5,7 +5,8 @@
 <html>
 <head>
     <title>CathedraProfile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
 <h1><b><c:out value="${cathedra.title}"/></b></h1>
@@ -13,7 +14,7 @@
     <tr>
         <th>Информация</th>
         <td>
-        <c:out value="${cathedra.information}"/>
+            <c:out value="${cathedra.information}"/>
         <td>
     </tr>
     <tr>
@@ -36,7 +37,7 @@
     </tr>
     <tr>
         <th>Контактная инф.</th>
-        <td><c:out value="${cathedra.contact_inf}"/></td>
+        <td><c:out value="${cathedra.contactInf}"/></td>
     </tr>
     <tr>
         <th>Программы обучения</th>
@@ -44,7 +45,8 @@
     </tr>
     <tr>
         <th>Преподаватели</th>
-        <td><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers" var="lecUrl">
+        <td><spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/lecturers"
+                        var="lecUrl">
             <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
             <spring:param name="cathedraId" value="${cathedra.id}"/>
         </spring:url>
@@ -54,7 +56,8 @@
     <tr>
         <th>Группы</th>
         <td>
-            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/group_classes" var="grclUrl">
+            <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses"
+                        var="grclUrl">
                 <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                 <spring:param name="cathedraId" value="${cathedra.id}"/>
             </spring:url>

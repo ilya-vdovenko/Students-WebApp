@@ -13,35 +13,34 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository.JPA;
+package org.spring.samples.swa.repository.jpa;
 
-import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.Group_class;
-import org.spring.samples.swa.repository.InstituteRepository;
-import org.spring.samples.swa.util.EntityUtils;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.spring.samples.swa.model.Cathedra;
+import org.spring.samples.swa.model.Faculty;
+import org.spring.samples.swa.model.GroupClass;
+import org.spring.samples.swa.repository.InstituteRepository;
+import org.spring.samples.swa.util.EntityUtils;
+import org.springframework.stereotype.Repository;
 
 /**
- * A JPA implementation of the {@link InstituteRepository} interface.
+ * A jpa implementation of the {@link InstituteRepository} interface.
  *
  * @author Ilya vdovenko
  **/
 
 @Repository
-public class JPAInstituteRepositoryImpl implements InstituteRepository {
+public class JpaInstituteRepositoryImpl implements InstituteRepository {
 
   private final Map<Integer, Faculty> facultiesMap = new LinkedHashMap<>();
   private final Map<Integer, Cathedra> cathedrasMap = new LinkedHashMap<>();
-  private final Map<Integer, Group_class> group_classesMap = new LinkedHashMap<>();
+  private final Map<Integer, GroupClass> groupClassesMap = new LinkedHashMap<>();
 
   @PersistenceContext
   private EntityManager em;
@@ -65,7 +64,7 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
   public Collection<Faculty> findAllFaculties() {
     List<Faculty> facultyList = this.em.createQuery("from Faculty").getResultList();
     if (EntityUtils.isValidCollection(facultyList)) {
-      EntityUtils.setEntityMaps(facultyList, facultiesMap, cathedrasMap, group_classesMap);
+      EntityUtils.setEntityMaps(facultyList, facultiesMap, cathedrasMap, groupClassesMap);
     }
     return facultyList;
   }
@@ -85,17 +84,17 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
   }
 
   @Override
-  public Group_class findGroup_classById(int id) {
-    if (EntityUtils.isValidCollection(group_classesMap.values())) {
-      if (group_classesMap.containsKey(id)) {
-        return group_classesMap.get(id);
+  public GroupClass findGroupClassById(int id) {
+    if (EntityUtils.isValidCollection(groupClassesMap.values())) {
+      if (groupClassesMap.containsKey(id)) {
+        return groupClassesMap.get(id);
       }
     }
-    Query query = this.em.createQuery("from Group_class as gc where gc.id =:id");
+    Query query = this.em.createQuery("from GroupClass as gc where gc.id =:id");
     query.setParameter("id", id);
-    Group_class group_class = (Group_class) query.getSingleResult();
-    group_classesMap.putIfAbsent(id, group_class);
-    return group_class;
+    GroupClass groupClass = (GroupClass) query.getSingleResult();
+    groupClassesMap.putIfAbsent(id, groupClass);
+    return groupClass;
   }
 
   @Override
@@ -109,7 +108,7 @@ public class JPAInstituteRepositoryImpl implements InstituteRepository {
   }
 
   @Override
-  public Map<Integer, Group_class> getInternalGroup_classes() {
-    return group_classesMap;
+  public Map<Integer, GroupClass> getInternalGroupClasses() {
+    return groupClassesMap;
   }
 }

@@ -4,35 +4,36 @@
 
 <html>
 <head>
-    <title>Group_classProfile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style/profile.css">
+    <title>GroupClassProfile</title>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resources/style/profile.css">
 </head>
 <body>
-<h1><b><c:out value="${group_class.title}"/></b></h1>
+<h1><b><c:out value="${groupClass.title}"/></b></h1>
 <table>
     <tr>
         <th>Форма обучения</th>
         <td>
-        <c:out value="${group_class.eduForm}"/>
+            <c:out value="${groupClass.eduForm}"/>
         <td>
     </tr>
     <tr>
         <th>Кафедра</th>
         <td>
             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
-                <spring:param name="facultyId" value="${group_class.cathedra.faculty.id}"/>
-                <spring:param name="cathedraId" value="${group_class.cathedra.id}"/>
+                <spring:param name="facultyId" value="${groupClass.cathedra.faculty.id}"/>
+                <spring:param name="cathedraId" value="${groupClass.cathedra.id}"/>
             </spring:url>
-            <a href="${catUrl}"> <c:out value="${group_class.cathedra.title}"/></a>
+            <a href="${catUrl}"> <c:out value="${groupClass.cathedra.title}"/></a>
         </td>
     </tr>
     <tr>
         <th>Факультет</th>
         <td>
             <spring:url value="/faculties/{facultyId}" var="facUrl">
-                <spring:param name="facultyId" value="${group_class.cathedra.faculty.id}"/>
+                <spring:param name="facultyId" value="${groupClass.cathedra.faculty.id}"/>
             </spring:url>
-            <a href="${facUrl}"> <c:out value="${group_class.cathedra.faculty.title}"/> </a>
+            <a href="${facUrl}"> <c:out value="${groupClass.cathedra.faculty.title}"/> </a>
         </td>
     </tr>
 </table>

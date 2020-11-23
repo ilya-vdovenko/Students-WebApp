@@ -13,9 +13,19 @@
 
     <properties>
 
+        <!-- Project -->
+
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Sonar -->
+        <sonar.projectKey>Student-Webapp</sonar.projectKey>
+        <sonar.organization>ilya-vdovenko</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
+        <sonar.nodejs.executable>${project.basedir}/frontend/node/node.exe</sonar.nodejs.executable>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
         <!-- Spring -->
         <spring-framework.version>5.2.8.RELEASE</spring-framework.version>
@@ -34,6 +44,8 @@
 
         <!-- Front -->
         <jquery.version>3.5.1</jquery.version>
+        <node.version>v10.23.0</node.version>
+        <npm.version>6.14.8</npm.version>
 
         <!-- Back -->
         <jackson.version>2.9.10</jackson.version>
@@ -50,6 +62,7 @@
         <mockito.version>2.22.0</mockito.version>
         <hamcrest.version>2.1</hamcrest.version>
         <junit-jupiter.version>5.3.2</junit-jupiter.version>
+        <checkstyle.version>8.37</checkstyle.version>
 
         <!-- Tomcat -->
         <tomcat.version>7.0.105</tomcat.version>
@@ -63,6 +76,10 @@
         <maven-maven-war-plugin.version>3.2.2</maven-maven-war-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+        <maven-sonar-plugin>3.7.0.1746</maven-sonar-plugin>
+        <maven-frontend-plugin>1.10.3</maven-frontend-plugin>
+        <maven-jacoco-plugin>0.8.2</maven-jacoco-plugin>
 
     </properties>
 
@@ -301,15 +318,106 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${maven-jacoco-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <argLine>@{surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-                    <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+<!--                    <excludes>-->
+<!--                        <exclude>%regex[.*(${maven.test.exclude}).*Tests.*]</exclude>-->
+<!--                    </excludes>-->
+                    <skipTests>${maven.skipTests}</skipTests>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <consoleOutput>true</consoleOutput>
+                    <configLocation>google_checks.xml</configLocation>
+                    <violationSeverity>warning</violationSeverity>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${maven-sonar-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sonar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${maven-frontend-plugin}</version>
+
+                <configuration>
+                    <workingDirectory>frontend</workingDirectory>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -322,6 +430,8 @@
             </activation>
             <properties>
                 <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
+<!--                <maven.test.exclude>Jdbc|SpringDataJpa</maven.test.exclude>-->
+                <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -342,6 +452,8 @@
             <id>JDBC_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+<!--                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>-->
+                <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -362,6 +474,8 @@
             <id>SDJ_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
+<!--                <maven.test.exclude>Jdbc|ServiceJpa</maven.test.exclude>-->
+                <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -382,6 +496,8 @@
             <id>JDBC_MySQL</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+<!--                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>-->
+                <maven.skipTests>true</maven.skipTests>
                 <maven.db.script>mysql</maven.db.script>
                 <maven.jpa.database>MYSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>

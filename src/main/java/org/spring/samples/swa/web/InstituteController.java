@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/faculties")
 public class InstituteController {
 
+  private static final String employeeListView = "employeeList";
+  private static final String employeeList = "employee_list";
   private final InstituteService service;
 
   @Autowired
@@ -81,10 +83,10 @@ public class InstituteController {
     Faculty faculty = service.findFacultyById(id);
     model.addAttribute(faculty);
     if (isSoviet) {
-      model.addAttribute("employee_list", service.getFacultySoviet(faculty.getEmployees(), id));
+      model.addAttribute(employeeList, service.getFacultySoviet(faculty.getEmployees(), id));
       model.addAttribute("soviet", true);
     } else {
-      model.addAttribute("employee_list", service.getFacultyEmployees(faculty.getEmployees(), id));
+      model.addAttribute(employeeList, service.getFacultyEmployees(faculty.getEmployees(), id));
       model.addAttribute("soviet", false);
     }
   }
@@ -92,13 +94,13 @@ public class InstituteController {
   @RequestMapping(value = "/{facultyId}/employees", method = GET)
   public String showFacultyEmployees(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, false);
-    return "employeeList";
+    return employeeListView;
   }
 
   @RequestMapping(value = "/{facultyId}/soviet", method = GET)
   public String showFacultySoviet(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, true);
-    return "employeeList";
+    return employeeListView;
   }
 
   /**
@@ -112,9 +114,9 @@ public class InstituteController {
   public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
-    model.addAttribute("employee_list",
+    model.addAttribute(employeeList,
         service.getCathedraLecturers(cathedra.getEmployees(), cathedraId));
-    return "employeeList";
+    return employeeListView;
   }
 
   /**

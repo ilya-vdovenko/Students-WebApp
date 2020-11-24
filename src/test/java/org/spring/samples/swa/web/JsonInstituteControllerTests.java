@@ -41,7 +41,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml",
     "classpath:SpringConfigs/mvc-test-config.xml"})
-public class JsonInstituteControllerTests {
+class JsonInstituteControllerTests {
 
   private final int TEST_FACULTY_ID = 1;
   private final int TEST_CATHEDRA_ID = 1;

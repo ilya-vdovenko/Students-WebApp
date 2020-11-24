@@ -15,9 +15,10 @@
 
 package org.spring.samples.swa.repository.jdbc.extractor;
 
+import static org.spring.samples.swa.util.EntityUtils.fillInStudent;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import org.spring.samples.swa.model.Cathedra;
@@ -26,7 +27,6 @@ import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -49,7 +49,7 @@ public class GroupClassExtractor implements ResultSetExtractor<GroupClass> {
   }
 
   @Override
-  public GroupClass extractData(ResultSet rs) throws SQLException, DataAccessException {
+  public GroupClass extractData(ResultSet rs) throws SQLException {
     rs.next();
     GroupClass groupClass = new GroupClass();
     groupClass.setId(rs.getInt("groupID"));
@@ -59,16 +59,7 @@ public class GroupClassExtractor implements ResultSetExtractor<GroupClass> {
     groupClass.setCathedra(cathedra);
     Set<Student> studentSet = new HashSet<>();
     do {
-      Student student = new Student();
-      student.setId(rs.getInt("studentID"));
-      student.setFio(rs.getString("fio"));
-      student.setBirthday(rs.getObject("birthday", LocalDate.class));
-      student.setSex(rs.getString("sex"));
-      student.setFactAddress(rs.getString("fact_address"));
-      student.setAddress(rs.getString("address"));
-      student.setTelephone(rs.getString("telephone"));
-      student.setGroupClass(groupClass);
-      student.setCathedra(cathedra);
+      Student student = fillInStudent(rs, groupClass, cathedra);
       student.setFaculty(cathedra.getFaculty());
       studentSet.add(student);
     } while (rs.next());

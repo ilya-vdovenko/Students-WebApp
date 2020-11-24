@@ -24,7 +24,6 @@ import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +46,7 @@ public class StudentExtractor implements ResultSetExtractor<List<Student>> {
   }
 
   @Override
-  public List<Student> extractData(ResultSet rs) throws SQLException, DataAccessException {
+  public List<Student> extractData(ResultSet rs) throws SQLException {
     List<Student> studentList = new ArrayList<>();
     while (rs.next()) {
       Student student = new Student();

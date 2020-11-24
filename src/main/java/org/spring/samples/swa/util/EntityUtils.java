@@ -15,6 +15,9 @@
 
 package org.spring.samples.swa.util;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +82,30 @@ public class EntityUtils {
     repo.getInternalGroupClasses().remove(student.getGroupClass().getId());
     repo.getInternalCathedras().remove(student.getCathedra().getId());
     repo.getInternalFaculties().remove(student.getFaculty().getId());
+  }
+
+  /**
+   * Method for fill in Student model. Reduce boilerplate code in extractors.
+   *
+   * @param rs         sql result set.
+   * @param groupClass {@link GroupClass} class.
+   * @param cathedra   {@link Cathedra} class.
+   * @return {@link Student} object.
+   * @throws SQLException data retrieval error.
+   */
+  public static Student fillInStudent(ResultSet rs, GroupClass groupClass, Cathedra cathedra)
+      throws SQLException {
+    Student student = new Student();
+    student.setId(rs.getInt("studentID"));
+    student.setFio(rs.getString("fio"));
+    student.setBirthday(rs.getObject("birthday", LocalDate.class));
+    student.setSex(rs.getString("sex"));
+    student.setFactAddress(rs.getString("fact_address"));
+    student.setAddress(rs.getString("address"));
+    student.setTelephone(rs.getString("telephone"));
+    student.setGroupClass(groupClass);
+    student.setCathedra(cathedra);
+    return student;
   }
 
 }

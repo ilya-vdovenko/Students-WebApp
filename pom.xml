@@ -354,9 +354,6 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-<!--                    <excludes>-->
-<!--                        <exclude>%regex[.*(${maven.test.exclude}).*Tests.*]</exclude>-->
-<!--                    </excludes>-->
                     <skipTests>${maven.skipTests}</skipTests>
                 </configuration>
             </plugin>
@@ -430,7 +427,6 @@
             </activation>
             <properties>
                 <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jdbc|SpringDataJpa</maven.test.exclude>-->
                 <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
@@ -452,7 +448,6 @@
             <id>JDBC_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>-->
                 <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
@@ -474,7 +469,6 @@
             <id>SDJ_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jdbc|ServiceJpa</maven.test.exclude>-->
                 <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
@@ -496,7 +490,6 @@
             <id>JDBC_MySQL</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>-->
                 <maven.skipTests>true</maven.skipTests>
                 <maven.db.script>mysql</maven.db.script>
                 <maven.jpa.database>MYSQL</maven.jpa.database>

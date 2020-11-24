@@ -45,7 +45,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml",
     "classpath:SpringConfigs/mvc-test-config.xml"})
-public class StudentControllerTests {
+class StudentControllerTests {
 
   private final int TEST_STUDENT_ID = 1;
   private final LocalDate birthday = LocalDate.parse("1994-09-26");

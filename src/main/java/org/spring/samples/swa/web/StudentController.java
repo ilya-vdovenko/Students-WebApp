@@ -23,6 +23,7 @@ import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
+import org.spring.samples.swa.model.StudentDto;
 import org.spring.samples.swa.service.InstituteService;
 import org.spring.samples.swa.web.editor.CathedraEditor;
 import org.spring.samples.swa.web.editor.FacultyEditor;
@@ -48,7 +49,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
   private final InstituteService service;
-  private final String studentCreateOrUpdateForm = "StudentCreateOrUpdateForm";
+  private static final String studentCreateOrUpdateForm = "StudentCreateOrUpdateForm";
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -60,7 +61,7 @@ public class StudentController {
    *
    * @param binder {@link WebDataBinder}
    */
-  @InitBinder("student")
+  @InitBinder("studentDto")
   public void facultyBinder(WebDataBinder binder) {
     binder.registerCustomEditor(Faculty.class, "faculty", new FacultyEditor(service));
     binder.registerCustomEditor(Cathedra.class, "cathedra", new CathedraEditor(service));
@@ -81,25 +82,25 @@ public class StudentController {
 
   @RequestMapping(value = "/new", method = GET)
   public String initCreationForm(Model model) {
-    model.addAttribute(new Student());
+    model.addAttribute("student", new StudentDto());
     return studentCreateOrUpdateForm;
   }
 
   /**
    * Post new student to db.
    *
-   * @param student model with data.
-   * @param errors errors that can be.
-   * @param model model with same student if errors happen.
+   * @param studentDto model with data.
+   * @param errors     errors that can be.
+   * @param model      model with same student if errors happen.
    * @return redirect.
    */
   @RequestMapping(value = "/new", method = POST)
-  public String processCreationForm(@Valid Student student, Errors errors, Model model) {
+  public String processCreationForm(@Valid StudentDto studentDto, Errors errors, Model model) {
     if (errors.hasErrors()) {
-      model.addAttribute(student);
+      model.addAttribute("student", studentDto);
       return studentCreateOrUpdateForm;
     }
-    service.saveStudent(student);
+    saveStudent(studentDto, null);
     return "redirect:/students";
   }
 
@@ -112,22 +113,36 @@ public class StudentController {
   /**
    * Post updated student to db.
    *
-   * @param student model with data.
-   * @param result of editing.
-   * @param studentId id of student.
-   * @param model model with same student if errors happen.
+   * @param studentDto model with data.
+   * @param result     of editing.
+   * @param studentId  id of student.
+   * @param model      model with same student if errors happen.
    * @return redirect.
    */
   @RequestMapping(value = "/{studentId}/edit", method = POST)
-  public String processUpdateOwnerForm(@Valid Student student, BindingResult result,
+  public String processUpdateOwnerForm(@Valid StudentDto studentDto, BindingResult result,
       @PathVariable int studentId, Model model) {
     if (result.hasErrors()) {
-      model.addAttribute(student);
+      model.addAttribute("student", studentDto);
       return studentCreateOrUpdateForm;
     } else {
-      student.setId(studentId);
-      service.saveStudent(student);
+      saveStudent(studentDto, studentId);
       return "redirect:/students/{studentId}";
     }
+  }
+
+  private void saveStudent(StudentDto studentDto, Integer id) {
+    Student persistentStudent = new Student();
+    persistentStudent.setId(id);
+    persistentStudent.setFio(studentDto.getFio());
+    persistentStudent.setBirthday(studentDto.getBirthday());
+    persistentStudent.setSex(studentDto.getSex());
+    persistentStudent.setFactAddress(studentDto.getFactAddress());
+    persistentStudent.setAddress(studentDto.getAddress());
+    persistentStudent.setTelephone(studentDto.getTelephone());
+    persistentStudent.setFaculty(studentDto.getFaculty());
+    persistentStudent.setCathedra(studentDto.getCathedra());
+    persistentStudent.setGroupClass(studentDto.getGroupClass());
+    service.saveStudent(persistentStudent);
   }
 }

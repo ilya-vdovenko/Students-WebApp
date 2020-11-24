@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+package org.spring.samples.swa;
+
 import javax.servlet.Filter;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;

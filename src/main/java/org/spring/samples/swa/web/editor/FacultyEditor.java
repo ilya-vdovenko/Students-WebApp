@@ -34,7 +34,7 @@ public class FacultyEditor extends PropertyEditorSupport {
   }
 
   @Override
-  public void setAsText(String text) throws IllegalArgumentException {
+  public void setAsText(String text) {
     setValue(service.findFacultyById(Integer.parseInt(text)));
   }
 }

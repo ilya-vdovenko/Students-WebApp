@@ -23,7 +23,6 @@ import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +45,7 @@ public class EmployeeExtractor implements ResultSetExtractor<List<Employee>> {
   }
 
   @Override
-  public List<Employee> extractData(ResultSet rs) throws SQLException, DataAccessException {
+  public List<Employee> extractData(ResultSet rs) throws SQLException {
     List<Employee> employeeList = new ArrayList<>();
     while (rs.next()) {
       Employee employee = new Employee();

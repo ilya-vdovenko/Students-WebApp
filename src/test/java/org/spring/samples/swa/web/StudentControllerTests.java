@@ -45,7 +45,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml",
     "classpath:SpringConfigs/mvc-test-config.xml"})
-public class StudentControllerTests {
+class StudentControllerTests {
 
   private final int TEST_STUDENT_ID = 1;
   private final LocalDate birthday = LocalDate.parse("1994-09-26");
@@ -72,7 +72,7 @@ public class StudentControllerTests {
     ilya.setSex("муж");
     ilya.setFactAddress("г.Воронеж, Московский пр-кт 141");
     ilya.setAddress("-");
-    ilya.setTelephone("89518719254");
+    ilya.setTelephone("89618729234");
     ilya.setFaculty(faculty);
     ilya.setCathedra(cathedra);
     ilya.setGroupClass(groupClass);
@@ -91,11 +91,11 @@ public class StudentControllerTests {
         .andExpect(model().attribute("student",
             hasProperty("factAddress", is("г.Воронеж, Московский пр-кт 141"))))
         .andExpect(model().attribute("student", hasProperty("address", is("-"))))
-        .andExpect(model().attribute("student", hasProperty("telephone", is("89518719254"))))
+        .andExpect(model().attribute("student", hasProperty("telephone", is("89618729234"))))
         .andExpect(model().attribute("student", hasProperty("faculty", is(faculty))))
         .andExpect(model().attribute("student", hasProperty("cathedra", is(cathedra))))
         .andExpect(model().attribute("student", hasProperty("groupClass", is(groupClass))))
-        .andExpect(view().name("studentProfile"));
+        .andExpect(view().name("student/studentProfile"));
   }
 
   @Test
@@ -103,7 +103,7 @@ public class StudentControllerTests {
     mockMvc.perform(get("/students"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("student_list"))
-        .andExpect(view().name("studentList"));
+        .andExpect(view().name("student/studentList"));
   }
 
   @Test
@@ -111,7 +111,7 @@ public class StudentControllerTests {
     mockMvc.perform(get("/students/new"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("student"))
-        .andExpect(view().name("StudentCreateOrUpdateForm"));
+        .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 
   @Test
@@ -146,7 +146,7 @@ public class StudentControllerTests {
         .andExpect(model().attributeHasFieldErrors("student", "factAddress"))
         .andExpect(model().attributeHasFieldErrors("student", "address"))
         .andExpect(model().attributeHasFieldErrors("student", "telephone"))
-        .andExpect(view().name("StudentCreateOrUpdateForm"));
+        .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 
   @Test
@@ -160,11 +160,11 @@ public class StudentControllerTests {
         .andExpect(model().attribute("student",
             hasProperty("factAddress", is("г.Воронеж, Московский пр-кт 141"))))
         .andExpect(model().attribute("student", hasProperty("address", is("-"))))
-        .andExpect(model().attribute("student", hasProperty("telephone", is("89518719254"))))
+        .andExpect(model().attribute("student", hasProperty("telephone", is("89618729234"))))
         .andExpect(model().attribute("student", hasProperty("faculty", is(faculty))))
         .andExpect(model().attribute("student", hasProperty("cathedra", is(cathedra))))
         .andExpect(model().attribute("student", hasProperty("groupClass", is(groupClass))))
-        .andExpect(view().name("StudentCreateOrUpdateForm"));
+        .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 
   @Test
@@ -175,7 +175,7 @@ public class StudentControllerTests {
         .param("sex", "муж")
         .param("factAddress", "г.Воронеж, Московский пр-кт 141")
         .param("address", "-")
-        .param("telephone", "89518719254")
+        .param("telephone", "89618729234")
         .param("faculty", "1")
         .param("cathedra", "1")
         .param("groupClass", "1")
@@ -199,6 +199,6 @@ public class StudentControllerTests {
         .andExpect(model().attributeHasFieldErrors("student", "factAddress"))
         .andExpect(model().attributeHasFieldErrors("student", "address"))
         .andExpect(model().attributeHasFieldErrors("student", "telephone"))
-        .andExpect(view().name("StudentCreateOrUpdateForm"));
+        .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 }

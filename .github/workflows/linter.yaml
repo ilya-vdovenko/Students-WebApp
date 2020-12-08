@@ -25,8 +25,9 @@ jobs:
       - name: start lint code through Mega-Linter
         uses: nvuillam/mega-linter@v4
         env:
-          ENABLE: SQL,CSS,XML,YAML,MARKDOWN #,JAVASCRIPT
+          ENABLE: SQL,CSS,XML,YAML #, MARKDOWN ,JAVASCRIPT
           DISABLE: COPYPASTE,SPELL
+          ENABLE_LINTERS: MARKDOWN_MARKDOWNLINT
           #DISABLE_LINTERS: JAVASCRIPT_ES
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master

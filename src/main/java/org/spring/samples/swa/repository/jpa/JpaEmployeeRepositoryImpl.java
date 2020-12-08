@@ -43,10 +43,9 @@ public class JpaEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   public Employee findById(int id) {
-    if (EntityUtils.isValidCollection(employeesMap.values())) {
-      if (employeesMap.containsKey(id)) {
-        return employeesMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(employeesMap.values())
+        && employeesMap.containsKey(id)) {
+      return employeesMap.get(id);
     }
     Query query = this.em.createQuery("from Employee as e where e.id =:id");
     query.setParameter("id", id);

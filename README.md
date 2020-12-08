@@ -1,5 +1,9 @@
 # Students-WebApp
 
+![SonarCloud](https://github.com/ilya-vdovenko/Students-WebApp/workflows/SonarCloud/badge.svg)
+![Build and deploy tests](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy%20tests/badge.svg)
+![Lint Code Base](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Lint%20Code%20Base/badge.svg)
+
 This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a plain old **Spring Framework configuration**
 and with a **3-layer architecture** (i.e. presentation --> service --> repository).
 Created by following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic).
@@ -15,7 +19,7 @@ cd Students-WebApp
 # For Windows : ./mvnw.cmd tomcat:run-war
 ```
 
-You can then access app here: localhost:8080
+You can then access app here: localhost:8080/Students-WebApp
 
 ## Working with in your IDE
 
@@ -44,12 +48,12 @@ File -> Import -> Maven -> Existing Maven project
 
 3) After import, click `tomcat:run` from maven window, or type in IDE command line `mvn tomcat:run`
 
-4) Visit localhost:8080 in your browser.
+4) Visit localhost:8080/Students-WebApp in your browser.
 
 ## Database configuration
 
 By default, Students-WebApp uses an in-memory database (HSQLDB) which gets populated at startup with data.
-A similar setups is provided for MySQL in case a persistent database configuration is needed.
+A similar setup is provided for MySQL in case a persistent database configuration is needed.
 To run web-app locally using persistent database, it is needed to run with profile defined in main pom.xml file.
 
 For MySQL database, it is needed to run with 'MySQL' profile defined in main pom.xml file.

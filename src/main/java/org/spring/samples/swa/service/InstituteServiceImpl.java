@@ -111,7 +111,7 @@ public class InstituteServiceImpl implements InstituteService {
   private Collection<Employee> getList(List<Integer> listOfEmployersId, Set<Employee> employees) {
     Collection<Employee> listOfEmployers = new ArrayList<>();
     if (EntityUtils.isValidCollection(listOfEmployersId)
-        & EntityUtils.isValidCollection(employees)) {
+        && EntityUtils.isValidCollection(employees)) {
       for (int id : listOfEmployersId) {
         for (Employee employee : employees) {
           if (employee.getId().equals(id)) {

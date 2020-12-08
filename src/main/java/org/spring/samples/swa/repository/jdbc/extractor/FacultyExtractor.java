@@ -15,9 +15,10 @@
 
 package org.spring.samples.swa.repository.jdbc.extractor;
 
+import static org.spring.samples.swa.util.EntityUtils.fillInStudent;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -29,7 +30,6 @@ import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
 import org.spring.samples.swa.util.EntityUtils;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
 public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
 
   @Override
-  public List<Faculty> extractData(ResultSet rs) throws SQLException, DataAccessException {
+  public List<Faculty> extractData(ResultSet rs) throws SQLException {
     List<Faculty> facultyList = new ArrayList<>();
     Map<Integer, List<Cathedra>> facultyData = new LinkedHashMap<>();
     Map<Integer, List<GroupClass>> cathedraData = new LinkedHashMap<>();
@@ -100,16 +100,7 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
         groupClass.setCathedra(cathedra);
         cathedraData.get(cathedraId).add(groupClass);
       }
-      Student student = new Student();
-      student.setId(rs.getInt("studentID"));
-      student.setFio(rs.getString("fio"));
-      student.setBirthday(rs.getObject("birthday", LocalDate.class));
-      student.setSex(rs.getString("sex"));
-      student.setFactAddress(rs.getString("fact_address"));
-      student.setAddress(rs.getString("address"));
-      student.setTelephone(rs.getString("telephone"));
-      student.setGroupClass(groupClass);
-      student.setCathedra(cathedra);
+      Student student = fillInStudent(rs, groupClass, cathedra);
       student.setFaculty(faculty);
       groupData.get(groupId).add(student);
     }

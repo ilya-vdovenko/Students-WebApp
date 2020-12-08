@@ -108,10 +108,9 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
 
   @Override
   public Student findById(int id) {
-    if (EntityUtils.isValidCollection(studentsMap.values())) {
-      if (studentsMap.containsKey(id)) {
-        return studentsMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(studentsMap.values())
+        && studentsMap.containsKey(id)) {
+      return studentsMap.get(id);
     }
     Student student;
     try {

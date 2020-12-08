@@ -38,12 +38,17 @@
         <hsqldb.version>2.5.1</hsqldb.version>
 
         <!-- Java EE -->
-        <javax.jstl.version>1.2</javax.jstl.version>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <taglibs-standard.version>1.2.5</taglibs-standard.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
 
         <!-- Front -->
-        <jquery.version>3.5.1</jquery.version>
+        <webjars-jquery.version>3.5.1</webjars-jquery.version>
+        <webjars-popper.js.version>1.14.7</webjars-popper.js.version>
+        <webjars-bootstrap.version>4.5.3</webjars-bootstrap.version>
+        <webjars-bootstrap-table.version>1.16.0</webjars-bootstrap-table.version>
+        <webjars-font-awesome.version>5.15.1</webjars-font-awesome.version>
+        <webjars-locator.version>0.31</webjars-locator.version>
         <node.version>v10.23.0</node.version>
         <npm.version>6.14.8</npm.version>
 
@@ -146,9 +151,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${javax.jstl.version}</version>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-jstlel</artifactId>
+            <version>${taglibs-standard.version}</version>
         </dependency>
 
         <dependency>
@@ -242,7 +247,37 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>${jquery.version}</version>
+            <version>${webjars-jquery.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>${webjars-font-awesome.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>popper.js</artifactId>
+            <version>${webjars-popper.js.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${webjars-bootstrap.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap-table</artifactId>
+            <version>${webjars-bootstrap-table.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>${webjars-locator.version}</version>
         </dependency>
 
         <!-- Back -->
@@ -354,9 +389,6 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-<!--                    <excludes>-->
-<!--                        <exclude>%regex[.*(${maven.test.exclude}).*Tests.*]</exclude>-->
-<!--                    </excludes>-->
                     <skipTests>${maven.skipTests}</skipTests>
                 </configuration>
             </plugin>
@@ -430,7 +462,6 @@
             </activation>
             <properties>
                 <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jdbc|SpringDataJpa</maven.test.exclude>-->
                 <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
@@ -452,7 +483,6 @@
             <id>JDBC_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>-->
                 <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
@@ -474,7 +504,6 @@
             <id>SDJ_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jdbc|ServiceJpa</maven.test.exclude>-->
                 <maven.skipTests>false</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
@@ -496,7 +525,6 @@
             <id>JDBC_MySQL</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-<!--                <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>-->
                 <maven.skipTests>true</maven.skipTests>
                 <maven.db.script>mysql</maven.db.script>
                 <maven.jpa.database>MYSQL</maven.jpa.database>

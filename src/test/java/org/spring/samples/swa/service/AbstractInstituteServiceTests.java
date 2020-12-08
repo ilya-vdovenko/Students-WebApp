@@ -49,7 +49,7 @@ abstract class AbstractInstituteServiceTests {
   @Test
   void shouldGetFaculties() {
     Collection<Faculty> faculties = this.service.getFaculties();
-    assertThat(faculties.size()).isEqualTo(2);
+    assertThat(faculties).hasSize(2);
   }
 
   @Test
@@ -65,21 +65,21 @@ abstract class AbstractInstituteServiceTests {
   void shouldGetFacultyEmployees() {
     Faculty faculty = this.service.findFacultyById(1);
     Collection<Employee> employees = this.service.getFacultyEmployees(faculty.getEmployees(), 1);
-    assertThat(employees.size()).isEqualTo(3);
+    assertThat(employees).hasSize(3);
   }
 
   @Test
   void shouldGetFacultySoviet() {
     Faculty faculty = this.service.findFacultyById(1);
     Collection<Employee> employees = this.service.getFacultySoviet(faculty.getEmployees(), 1);
-    assertThat(employees.size()).isEqualTo(5);
+    assertThat(employees).hasSize(5);
   }
 
   @Test
   void shouldGetCathedraLecturers() {
     Cathedra cathedra = this.service.findCathedraById(3);
     Collection<Employee> employees = this.service.getCathedraLecturers(cathedra.getEmployees(), 3);
-    assertThat(employees.size()).isEqualTo(4);
+    assertThat(employees).hasSize(4);
   }
 
   @Test
@@ -100,9 +100,9 @@ abstract class AbstractInstituteServiceTests {
     student.setGroupClass(this.service.findGroupClassById(3));
 
     this.service.saveStudent(student);
-    assertThat(student.getId().longValue()).isNotEqualTo(0);
+    assertThat(student.getId()).isNotZero();
     students = this.service.getStudents();
-    assertThat(students.size()).isEqualTo(found + 1);
+    assertThat(students).hasSize(found + 1);
   }
 
   @Test
@@ -128,7 +128,7 @@ abstract class AbstractInstituteServiceTests {
   @Test
   void shouldGetStudents() {
     Collection<Student> students = this.service.getStudents();
-    assertThat(students.size()).isEqualTo(19);
+    assertThat(students).hasSize(19);
   }
 
   @Test
@@ -141,7 +141,7 @@ abstract class AbstractInstituteServiceTests {
   @Test
   void shouldGetEmployees() {
     Collection<Employee> employees = this.service.getEmployees();
-    assertThat(employees.size()).isEqualTo(26);
+    assertThat(employees).hasSize(26);
   }
 
   @Test

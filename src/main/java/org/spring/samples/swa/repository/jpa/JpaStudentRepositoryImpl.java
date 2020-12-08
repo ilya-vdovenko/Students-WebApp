@@ -75,10 +75,9 @@ public class JpaStudentRepositoryImpl implements StudentRepository {
 
   @Override
   public Student findById(int id) {
-    if (EntityUtils.isValidCollection(studentsMap.values())) {
-      if (studentsMap.containsKey(id)) {
-        return studentsMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(studentsMap.values())
+        && studentsMap.containsKey(id)) {
+      return studentsMap.get(id);
     }
     Query query = this.em.createQuery("from Student as s where s.id =:id");
     query.setParameter("id", id);

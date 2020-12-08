@@ -47,10 +47,9 @@ public class JpaInstituteRepositoryImpl implements InstituteRepository {
 
   @Override
   public Faculty findFacultyById(int id) {
-    if (EntityUtils.isValidCollection(facultiesMap.values())) {
-      if (facultiesMap.containsKey(id)) {
-        return facultiesMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(facultiesMap.values())
+        && facultiesMap.containsKey(id)) {
+      return facultiesMap.get(id);
     }
     Query query = this.em.createQuery("from Faculty as f where f.id =:id");
     query.setParameter("id", id);
@@ -71,10 +70,9 @@ public class JpaInstituteRepositoryImpl implements InstituteRepository {
 
   @Override
   public Cathedra findCathedraById(int id) {
-    if (EntityUtils.isValidCollection(cathedrasMap.values())) {
-      if (cathedrasMap.containsKey(id)) {
-        return cathedrasMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(cathedrasMap.values())
+        && cathedrasMap.containsKey(id)) {
+      return cathedrasMap.get(id);
     }
     Query query = this.em.createQuery("from Cathedra as c where c.id =:id");
     query.setParameter("id", id);
@@ -85,10 +83,9 @@ public class JpaInstituteRepositoryImpl implements InstituteRepository {
 
   @Override
   public GroupClass findGroupClassById(int id) {
-    if (EntityUtils.isValidCollection(groupClassesMap.values())) {
-      if (groupClassesMap.containsKey(id)) {
-        return groupClassesMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(groupClassesMap.values())
+        && groupClassesMap.containsKey(id)) {
+      return groupClassesMap.get(id);
     }
     Query query = this.em.createQuery("from GroupClass as gc where gc.id =:id");
     query.setParameter("id", id);

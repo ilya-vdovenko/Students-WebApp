@@ -63,10 +63,9 @@ public class JdbcEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   public Employee findById(int id) {
-    if (EntityUtils.isValidCollection(employeesMap.values())) {
-      if (employeesMap.containsKey(id)) {
-        return employeesMap.get(id);
-      }
+    if (EntityUtils.isValidCollection(employeesMap.values())
+        && employeesMap.containsKey(id)) {
+      return employeesMap.get(id);
     }
     Employee employee;
     try {

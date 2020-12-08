@@ -94,7 +94,7 @@ class InstituteControllerTests {
         .andExpect(status().isOk())
         .andExpect(model()
             .attribute("faculty", hasProperty("title", is("Энергетики и систем управления"))))
-        .andExpect(view().name("facultyProfile"));
+        .andExpect(view().name("institute/facultyProfile"));
   }
 
   @Test
@@ -102,7 +102,7 @@ class InstituteControllerTests {
     mockMvc.perform(get("/faculties"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("faculty_list"))
-        .andExpect(view().name("facultyList"));
+        .andExpect(view().name("institute/facultyList"));
   }
 
   @Test
@@ -111,7 +111,7 @@ class InstituteControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attribute("cathedra",
             hasProperty("title", is("Электромеханических систем и электроснабжения"))))
-        .andExpect(view().name("cathedraProfile"));
+        .andExpect(view().name("institute/cathedraProfile"));
   }
 
   @Test
@@ -119,7 +119,7 @@ class InstituteControllerTests {
     mockMvc.perform(get("/faculties/{facultyId}/cathedras", TEST_FACULTY_ID))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("faculty", "cathedra_list"))
-        .andExpect(view().name("cathedraList"));
+        .andExpect(view().name("institute/cathedraList"));
   }
 
   @Test
@@ -127,7 +127,7 @@ class InstituteControllerTests {
     mockMvc.perform(get("/faculties/*/cathedras/*/groupClasses/{groupClassId}", TEST_GROUP_ID))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("groupClass", "group_students_list"))
-        .andExpect(view().name("groupClassProfile"));
+        .andExpect(view().name("institute/groupClassProfile"));
   }
 
   @Test
@@ -135,7 +135,7 @@ class InstituteControllerTests {
     mockMvc.perform(get("/faculties/*/cathedras/{cathedraId}/groupClasses", TEST_CATHEDRA_ID))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("cathedra", "group_class_list"))
-        .andExpect(view().name("groupClassList"));
+        .andExpect(view().name("institute/groupClassList"));
   }
 
   @Test
@@ -144,7 +144,7 @@ class InstituteControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("faculty", "employee_list", "soviet"))
         .andExpect(model().attribute("soviet", false))
-        .andExpect(view().name("employeeList"));
+        .andExpect(view().name("institute/unitEmployees"));
   }
 
   @Test
@@ -153,7 +153,7 @@ class InstituteControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("faculty", "employee_list", "soviet"))
         .andExpect(model().attribute("soviet", true))
-        .andExpect(view().name("employeeList"));
+        .andExpect(view().name("institute/unitEmployees"));
   }
 
   @Test
@@ -161,6 +161,6 @@ class InstituteControllerTests {
     mockMvc.perform(get("/faculties/*/cathedras/{cathedraId}/lecturers", TEST_CATHEDRA_ID))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("cathedra", "employee_list"))
-        .andExpect(view().name("employeeList"));
+        .andExpect(view().name("institute/unitEmployees"));
   }
 }

@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
   private final InstituteService service;
-  private static final String studentCreateOrUpdateForm = "StudentCreateOrUpdateForm";
+  private static final String studentCreateOrUpdateForm = "student/StudentCreateOrUpdateForm";
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -71,13 +71,13 @@ public class StudentController {
   @RequestMapping(value = "/{studentId}", method = GET)
   public String showStudentProfile(@PathVariable int studentId, Model model) {
     model.addAttribute(service.findStudentById(studentId));
-    return "studentProfile";
+    return "student/studentProfile";
   }
 
   @RequestMapping(method = GET)
   public String showAllStudents(Model model) {
     model.addAttribute("student_list", service.getStudents());
-    return "studentList";
+    return "student/studentList";
   }
 
   @RequestMapping(value = "/new", method = GET)
@@ -127,7 +127,7 @@ public class StudentController {
       return studentCreateOrUpdateForm;
     } else {
       saveStudent(studentDto, studentId);
-      return "redirect:/students/{studentId}";
+      return "redirect:/students";
     }
   }
 

@@ -44,12 +44,12 @@ public class EmployeeController {
   @RequestMapping(value = "/{employeeId}", method = GET)
   public String showEmployeeProfile(@PathVariable int employeeId, Model model) {
     model.addAttribute("employee", service.findEmployeeById(employeeId));
-    return "employeeProfile";
+    return "institute/employeeProfile";
   }
 
   @RequestMapping(method = GET)
   public String showAllEmployees(Model model) {
     model.addAttribute("employee_list", service.getEmployees());
-    return "employeeList";
+    return "institute/employeeList";
   }
 }

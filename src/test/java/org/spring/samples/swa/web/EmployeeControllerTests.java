@@ -75,7 +75,7 @@ class EmployeeControllerTests {
         .andExpect(model().attribute("employee", hasProperty("position", is("Заведущий кафедрой"))))
         .andExpect(model()
             .attribute("employee", hasProperty("degree", is("Доктор технических наук, профессор"))))
-        .andExpect(view().name("employeeProfile"));
+        .andExpect(view().name("institute/employeeProfile"));
   }
 
   @Test
@@ -83,6 +83,6 @@ class EmployeeControllerTests {
     mockMvc.perform(get("/employees"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("employee_list"))
-        .andExpect(view().name("employeeList"));
+        .andExpect(view().name("institute/employeeList"));
   }
 }

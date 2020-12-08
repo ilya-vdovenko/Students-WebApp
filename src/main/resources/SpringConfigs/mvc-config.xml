@@ -15,6 +15,15 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
+    <mvc:resources mapping="/webjars/**" location="/webjars/" >
+        <mvc:cache-control cache-public="true" max-age="2592000"/>
+        <mvc:resource-chain resource-cache="true">
+            <mvc:resolvers>
+                <bean class="org.springframework.web.servlet.resource.WebJarsResourceResolver"/>
+            </mvc:resolvers>
+        </mvc:resource-chain>
+    </mvc:resources>
+
     <mvc:view-resolvers>
         <mvc:content-negotiation use-not-acceptable="true">
             <mvc:default-views>

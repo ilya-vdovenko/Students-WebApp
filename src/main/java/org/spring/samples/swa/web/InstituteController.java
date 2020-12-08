@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/faculties")
 public class InstituteController {
 
-  private static final String employeeListView = "employeeList";
+  private static final String employeeListView = "institute/unitEmployees";
   private static final String employeeList = "employee_list";
   private final InstituteService service;
 
@@ -49,19 +49,19 @@ public class InstituteController {
   @RequestMapping(value = "/{facultyId}", method = GET)
   public String showFacultyProfile(@PathVariable int facultyId, Model model) {
     model.addAttribute(service.findFacultyById(facultyId));
-    return "facultyProfile";
+    return "institute/facultyProfile";
   }
 
   @RequestMapping(method = GET)
   public String showAllFaculties(Model model) {
     model.addAttribute("faculty_list", service.getFaculties());
-    return "facultyList";
+    return "institute/facultyList";
   }
 
   @RequestMapping(value = "/*/cathedras/{cathedraId}", method = GET)
   public String showCathedraProfile(@PathVariable int cathedraId, Model model) {
     model.addAttribute(service.findCathedraById(cathedraId));
-    return "cathedraProfile";
+    return "institute/cathedraProfile";
   }
 
   /**
@@ -76,7 +76,7 @@ public class InstituteController {
     Faculty faculty = service.findFacultyById(facultyId);
     model.addAttribute(faculty);
     model.addAttribute("cathedra_list", faculty.getCathedras());
-    return "cathedraList";
+    return "institute/cathedraList";
   }
 
   private void getEmployeesModel(Model model, int id, boolean isSoviet) {
@@ -131,7 +131,7 @@ public class InstituteController {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
     model.addAttribute("group_class_list", cathedra.getGroupClasses());
-    return "groupClassList";
+    return "institute/groupClassList";
   }
 
   /**
@@ -146,7 +146,7 @@ public class InstituteController {
     GroupClass groupClass = service.findGroupClassById(groupClassId);
     model.addAttribute(groupClass);
     model.addAttribute("group_students_list", groupClass.getGroupStudents());
-    return "groupClassProfile";
+    return "institute/groupClassProfile";
   }
 
 }

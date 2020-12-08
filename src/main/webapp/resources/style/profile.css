@@ -1,9 +1,17 @@
-table {
-  border-collapse: collapse;
+.student tr:nth-child(even) {
+  background-color: #c1f5c2;
 }
 
-tr:nth-child(even) {
-  background-color: #ebfaeb;
+.employee tr:nth-child(even) {
+  background-color: #f6dfba;
+}
+
+.unit tr:nth-child(even) {
+  background-color: #d1e4f3;
+}
+
+.second th {
+  text-align: left;
 }
 
 th {
@@ -11,52 +19,12 @@ th {
   font-weight: bold;
 }
 
-td {
-  text-align: left;
-  height: 30px;
-  border: 8px white;
-  border-style: none none none solid;
-}
-
-table.list tr:nth-child(even) {
-  background-color: #e6ffff;
-}
-
-table.list th {
-  text-align: center;
-  font-weight: bold;
-  padding: 10px;
-  height: 30px;
-  background-color: #85e0e0;
-}
-
-table.list td {
-  padding: 4px;
-  border-bottom: 1px solid white;
-}
-
-td.center {
-  text-align: center;
-}
-
-a {
+a.link {
   text-decoration: none;
   font-weight: bold;
-  color: black;
+  color: #000000;
 }
 
-a:hover,
-a:active {
-  color: red;
-}
-
-#UpdateButton a:link,
-#UpdateButton a:visited {
-  margin: 15px;
-  background-color: #3c3;
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  border-radius: 4px;
-  display: inline-block;
+a.link:hover {
+  color: #ff0000;
 }

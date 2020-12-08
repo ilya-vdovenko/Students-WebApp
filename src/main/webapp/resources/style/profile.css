@@ -10,21 +10,21 @@
   background-color: #d1e4f3;
 }
 
-.second th {
-  text-align: left;
-}
-
 th {
   text-align: right;
   font-weight: bold;
 }
 
+.second th {
+  text-align: left;
+}
+
 a.link {
   text-decoration: none;
   font-weight: bold;
-  color: #000000;
+  color: #000;
 }
 
 a.link:hover {
-  color: #ff0000;
+  color: #f00;
 }

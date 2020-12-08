@@ -11,19 +11,19 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2><b><c:out value="${employee.fio}"/></b></h2>
+                <h2><strong><c:out value="${employee.fio}"/></strong></h2>
                 <table class="table table-borderless table-sm employee"
                        aria-describedby="employeeInformation">
                     <tr>
-                        <th>Position</th>
+                        <th scope="row">Position</th>
                         <td><c:out value="${employee.position}"/></td>
                     </tr>
                     <tr>
-                        <th>Degree</th>
+                        <th scope="row">Degree</th>
                         <td><c:out value="${employee.degree}"/></td>
                     </tr>
                     <tr>
-                        <th>Cathedra</th>
+                        <th scope="row">Cathedra</th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                                 <spring:param name="facultyId" value="${employee.faculty.id}"/>
@@ -33,7 +33,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Faculty</th>
+                        <th scope="row">Faculty</th>
                         <td>
                             <spring:url value="/faculties/{facultyId}" var="facUrl">
                                 <spring:param name="facultyId" value="${employee.faculty.id}"/>

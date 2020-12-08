@@ -15,70 +15,12 @@
 
 package org.spring.samples.swa.model;
 
-import java.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
-
 /**
  * Data Transfer Object for student model.
  *
  * @author Ilya Vdovenko
  */
 
-public class StudentDto extends Person {
+public class StudentDto extends Student {
 
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
-  private LocalDate birthday;
-  private String sex;
-  private String factAddress;
-  private String address;
-  private String telephone;
-  private GroupClass groupClass;
-
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(LocalDate birthday) {
-    this.birthday = birthday;
-  }
-
-  public String getSex() {
-    return sex;
-  }
-
-  public void setSex(String sex) {
-    this.sex = sex;
-  }
-
-  public String getFactAddress() {
-    return factAddress;
-  }
-
-  public void setFactAddress(String factAddress) {
-    this.factAddress = factAddress;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getTelephone() {
-    return telephone;
-  }
-
-  public void setTelephone(String telephone) {
-    this.telephone = telephone;
-  }
-
-  public GroupClass getGroupClass() {
-    return groupClass;
-  }
-
-  public void setGroupClass(GroupClass groupClass) {
-    this.groupClass = groupClass;
-  }
 }

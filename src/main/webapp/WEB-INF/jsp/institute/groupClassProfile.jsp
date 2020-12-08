@@ -11,15 +11,15 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-5">
-                <h2>grp. "<b><c:out value="${groupClass.title}"/></b>"</h2>
+                <h2>grp. "<strong><c:out value="${groupClass.title}"/></strong>"</h2>
                 <table class="table table-borderless table-sm unit"
                        aria-describedby="groupInformation">
                     <tr>
-                        <th>Education form</th>
+                        <th scope="row">Education form</th>
                         <td><c:out value="${groupClass.eduForm}"/><td>
                     </tr>
                     <tr>
-                        <th>Cathedra</th>
+                        <th scope="row">Cathedra</th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                                 <spring:param name="facultyId" value="${groupClass.cathedra.faculty.id}"/>
@@ -29,7 +29,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Faculty</th>
+                        <th scope="row">Faculty</th>
                         <td>
                             <spring:url value="/faculties/{facultyId}" var="facUrl">
                                 <spring:param name="facultyId" value="${groupClass.cathedra.faculty.id}"/>
@@ -43,10 +43,10 @@
                        aria-describedby="students">
                     <thead class="bg-success text-white">
                     <tr>
-                        <th>Name</th>
-                        <th>Sex</th>
-                        <th>BirthDay</th>
-                        <th>Telephone</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Sex</th>
+                        <th scope="col">BirthDay</th>
+                        <th scope="col">Telephone</th>
                     </tr>
                     </thead>
                     <tbody>

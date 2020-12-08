@@ -37,7 +37,7 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 @SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml",
     "classpath:SpringConfigs/mvc-test-config.xml"})
-public class CrashControllerTests {
+class CrashControllerTests {
 
   @Autowired
   private CrashController crashController;

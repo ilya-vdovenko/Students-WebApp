@@ -49,7 +49,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
   private final InstituteService service;
-  private static final String studentCreateOrUpdateForm = "student/StudentCreateOrUpdateForm";
+  private static final String STUDENT_CREATE_OR_UPDATE_FORM = "student/StudentCreateOrUpdateForm";
+  private static final String STUDENT_ATTRIBUTE_NAME = "student";
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -82,8 +83,8 @@ public class StudentController {
 
   @RequestMapping(value = "/new", method = GET)
   public String initCreationForm(Model model) {
-    model.addAttribute("student", new StudentDto());
-    return studentCreateOrUpdateForm;
+    model.addAttribute(STUDENT_ATTRIBUTE_NAME, new StudentDto());
+    return STUDENT_CREATE_OR_UPDATE_FORM;
   }
 
   /**
@@ -97,8 +98,8 @@ public class StudentController {
   @RequestMapping(value = "/new", method = POST)
   public String processCreationForm(@Valid StudentDto studentDto, Errors errors, Model model) {
     if (errors.hasErrors()) {
-      model.addAttribute("student", studentDto);
-      return studentCreateOrUpdateForm;
+      model.addAttribute(STUDENT_ATTRIBUTE_NAME, studentDto);
+      return STUDENT_CREATE_OR_UPDATE_FORM;
     }
     saveStudent(studentDto, null);
     return "redirect:/students";
@@ -107,7 +108,7 @@ public class StudentController {
   @RequestMapping(value = "/{studentId}/edit", method = GET)
   public String initUpdateOwnerForm(@PathVariable int studentId, Model model) {
     model.addAttribute(service.findStudentById(studentId));
-    return studentCreateOrUpdateForm;
+    return STUDENT_CREATE_OR_UPDATE_FORM;
   }
 
   /**
@@ -123,8 +124,8 @@ public class StudentController {
   public String processUpdateOwnerForm(@Valid StudentDto studentDto, BindingResult result,
       @PathVariable int studentId, Model model) {
     if (result.hasErrors()) {
-      model.addAttribute("student", studentDto);
-      return studentCreateOrUpdateForm;
+      model.addAttribute(STUDENT_ATTRIBUTE_NAME, studentDto);
+      return STUDENT_CREATE_OR_UPDATE_FORM;
     } else {
       saveStudent(studentDto, studentId);
       return "redirect:/students";

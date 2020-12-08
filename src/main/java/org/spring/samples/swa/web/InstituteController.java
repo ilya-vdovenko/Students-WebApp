@@ -37,8 +37,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/faculties")
 public class InstituteController {
 
-  private static final String employeeListView = "institute/unitEmployees";
-  private static final String employeeList = "employee_list";
+  private static final String INSTITUTE_UNIT_EMPLOYEES = "institute/unitEmployees";
+  private static final String EMPLOYEE_LIST = "employee_list";
   private final InstituteService service;
 
   @Autowired
@@ -83,10 +83,10 @@ public class InstituteController {
     Faculty faculty = service.findFacultyById(id);
     model.addAttribute(faculty);
     if (isSoviet) {
-      model.addAttribute(employeeList, service.getFacultySoviet(faculty.getEmployees(), id));
+      model.addAttribute(EMPLOYEE_LIST, service.getFacultySoviet(faculty.getEmployees(), id));
       model.addAttribute("soviet", true);
     } else {
-      model.addAttribute(employeeList, service.getFacultyEmployees(faculty.getEmployees(), id));
+      model.addAttribute(EMPLOYEE_LIST, service.getFacultyEmployees(faculty.getEmployees(), id));
       model.addAttribute("soviet", false);
     }
   }
@@ -94,13 +94,13 @@ public class InstituteController {
   @RequestMapping(value = "/{facultyId}/employees", method = GET)
   public String showFacultyEmployees(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, false);
-    return employeeListView;
+    return INSTITUTE_UNIT_EMPLOYEES;
   }
 
   @RequestMapping(value = "/{facultyId}/soviet", method = GET)
   public String showFacultySoviet(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, true);
-    return employeeListView;
+    return INSTITUTE_UNIT_EMPLOYEES;
   }
 
   /**
@@ -114,9 +114,9 @@ public class InstituteController {
   public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
-    model.addAttribute(employeeList,
+    model.addAttribute(EMPLOYEE_LIST,
         service.getCathedraLecturers(cathedra.getEmployees(), cathedraId));
-    return employeeListView;
+    return INSTITUTE_UNIT_EMPLOYEES;
   }
 
   /**

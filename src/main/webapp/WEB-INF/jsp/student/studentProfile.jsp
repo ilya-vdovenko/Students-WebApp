@@ -11,31 +11,31 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2><b><c:out value="${student.fio}"/></b></h2>
+                <h2><strong><c:out value="${student.fio}"/></strong></h2>
                 <table class="table table-borderless table-sm student"
                        aria-describedby="studentInformation">
                     <tr>
-                        <th>BirthDay</th>
+                        <th scope="row">BirthDay</th>
                         <td><c:out value="${student.birthday}"/></td>
                     </tr>
                     <tr>
-                        <th>Sex</th>
+                        <th scope="row">Sex</th>
                         <td><c:out value="${student.sex}"/></td>
                     </tr>
                     <tr>
-                        <th>Actual address</th>
+                        <th scope="row">Actual address</th>
                         <td><c:out value="${student.factAddress}"/></td>
                     </tr>
                     <tr>
-                        <th>Address</th>
+                        <th scope="row">Address</th>
                         <td><c:out value="${student.address}"/></td>
                     </tr>
                     <tr>
-                        <th>Telephone</th>
+                        <th scope="row">Telephone</th>
                         <td><c:out value="${student.telephone}"/></td>
                     </tr>
                     <tr>
-                        <th>Group</th>
+                        <th scope="row">Group</th>
                         <td>
                             <spring:url
                                     value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}"
@@ -48,7 +48,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Cathedra</th>
+                        <th scope="row">Cathedra</th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                                 <spring:param name="facultyId" value="${student.faculty.id}"/>
@@ -58,7 +58,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Faculty</th>
+                        <th scope="row">Faculty</th>
                         <td>
                             <spring:url value="/faculties/{facultyId}" var="facUrl">
                                 <spring:param name="facultyId" value="${student.faculty.id}"/>

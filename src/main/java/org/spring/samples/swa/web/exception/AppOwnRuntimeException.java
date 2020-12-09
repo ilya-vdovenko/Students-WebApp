@@ -13,21 +13,20 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.repository;
-
-import java.util.Collection;
-import org.spring.samples.swa.model.Employee;
+package org.spring.samples.swa.web.exception;
 
 /**
- * Repository class for {@link Employee} domain objects.
+ * Implementation of own runtime exception.
  *
  * @author Ilya Vdovenko
  */
 
-public interface EmployeeRepository {
+public class AppOwnRuntimeException extends RuntimeException {
 
-  Employee findById(int id);
+  public AppOwnRuntimeException() {
+  }
 
-  Collection<Employee> findAllByOrderByFioAsc();
-
+  public AppOwnRuntimeException(String message) {
+    super(message);
+  }
 }

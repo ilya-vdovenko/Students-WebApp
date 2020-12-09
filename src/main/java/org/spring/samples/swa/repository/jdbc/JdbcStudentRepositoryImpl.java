@@ -94,7 +94,7 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
   }
 
   @Override
-  public Collection<Student> findAll() {
+  public Collection<Student> findAllByOrderByFioAsc() {
     List<Student> studentList = jdbcTemplate
         .query("SELECT * FROM students ORDER BY fio", studentExtractor);
     studentsMap.clear();

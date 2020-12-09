@@ -17,6 +17,7 @@ package org.spring.samples.swa.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import org.spring.samples.swa.web.exception.AppOwnRuntimeException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,6 +32,7 @@ public class CrashController {
 
   @RequestMapping(value = {"/oups"}, method = GET)
   public String triggerException() {
-    throw new RuntimeException("Example of showcase what happens when an exception is thrown");
+    throw new AppOwnRuntimeException(
+        "Example of showcase what happens when an exception is thrown");
   }
 }

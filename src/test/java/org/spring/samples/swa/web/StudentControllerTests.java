@@ -17,6 +17,7 @@ package org.spring.samples.swa.web;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -64,6 +65,11 @@ class StudentControllerTests {
   @BeforeEach
   void setup() {
     this.mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
+    faculty.setId(1);
+    cathedra.setId(1);
+    cathedra.setFaculty(faculty);
+    groupClass.setId(1);
+    groupClass.setCathedra(cathedra);
 
     Student ilya = new Student();
     ilya.setId(TEST_STUDENT_ID);
@@ -78,6 +84,9 @@ class StudentControllerTests {
     ilya.setGroupClass(groupClass);
 
     given(this.service.findStudentById(TEST_STUDENT_ID)).willReturn(ilya);
+    given(this.service.findFacultyById(anyInt())).willReturn(faculty);
+    given(this.service.findCathedraById(anyInt())).willReturn(cathedra);
+    given(this.service.findGroupClassById(anyInt())).willReturn(groupClass);
   }
 
   @Test
@@ -110,7 +119,7 @@ class StudentControllerTests {
   void testInitCreationForm() throws Exception {
     mockMvc.perform(get("/students/new"))
         .andExpect(status().isOk())
-        .andExpect(model().attributeExists("student"))
+        .andExpect(model().attributeExists("studentDto"))
         .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 
@@ -120,32 +129,33 @@ class StudentControllerTests {
         .param("fio", "Иванов Иван Иванович")
         .param("birthday", "1994-06-23")
         .param("sex", "муж")
-        .param("factAddress", "-")
+        .param("factAddress", "г.Воронеж, Московский проспект, 179в")
         .param("address", "-")
         .param("telephone", "89081355694")
         .param("faculty", "1")
-        .param("cathedra", "2")
-        .param("groupClass", "3")
+        .param("cathedra", "1")
+        .param("groupClass", "1")
     )
         .andExpect(status().is3xxRedirection());
   }
 
-  //@Test
-  //TODO no passes, until make validation
+  @Test
   void testProcessCreationFormHasErrors() throws Exception {
     mockMvc.perform(post("/students/new")
-        .param("fio", "Иванов Иван Иванович")
-        .param("birthday", "1994-06-23")
+        .param("fio", "Иванов")
+        .param("birthday", "")
         .param("sex", "муж")
+        .param("telephone", "8903456")
+        .param("factAddress", "ул. НетНазвания")
         .param("faculty", "1")
-        .param("cathedra", "2")
-        .param("groupClass", "3")
+        .param("cathedra", "1")
+        .param("groupClass", "1")
     )
         .andExpect(status().isOk())
-        .andExpect(model().attributeHasErrors("student"))
-        .andExpect(model().attributeHasFieldErrors("student", "factAddress"))
-        .andExpect(model().attributeHasFieldErrors("student", "address"))
-        .andExpect(model().attributeHasFieldErrors("student", "telephone"))
+        .andExpect(model().attributeHasErrors("studentDto"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "birthday"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "factAddress"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "telephone"))
         .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 
@@ -153,17 +163,18 @@ class StudentControllerTests {
   void testInitUpdateStudentForm() throws Exception {
     mockMvc.perform(get("/students/{studentId}/edit", TEST_STUDENT_ID))
         .andExpect(status().isOk())
-        .andExpect(model().attributeExists("student"))
-        .andExpect(model().attribute("student", hasProperty("fio", is("Вдовенко Илья Сергеевич"))))
-        .andExpect(model().attribute("student", hasProperty("birthday", is(birthday))))
-        .andExpect(model().attribute("student", hasProperty("sex", is("муж"))))
-        .andExpect(model().attribute("student",
+        .andExpect(model().attributeExists("studentDto"))
+        .andExpect(
+            model().attribute("studentDto", hasProperty("fio", is("Вдовенко Илья Сергеевич"))))
+        .andExpect(model().attribute("studentDto", hasProperty("birthday", is(birthday))))
+        .andExpect(model().attribute("studentDto", hasProperty("sex", is("муж"))))
+        .andExpect(model().attribute("studentDto",
             hasProperty("factAddress", is("г.Воронеж, Московский пр-кт 141"))))
-        .andExpect(model().attribute("student", hasProperty("address", is("-"))))
-        .andExpect(model().attribute("student", hasProperty("telephone", is("89618729234"))))
-        .andExpect(model().attribute("student", hasProperty("faculty", is(faculty))))
-        .andExpect(model().attribute("student", hasProperty("cathedra", is(cathedra))))
-        .andExpect(model().attribute("student", hasProperty("groupClass", is(groupClass))))
+        .andExpect(model().attribute("studentDto", hasProperty("address", is("-"))))
+        .andExpect(model().attribute("studentDto", hasProperty("telephone", is("89618729234"))))
+        .andExpect(model().attribute("studentDto", hasProperty("faculty", is(faculty))))
+        .andExpect(model().attribute("studentDto", hasProperty("cathedra", is(cathedra))))
+        .andExpect(model().attribute("studentDto", hasProperty("groupClass", is(groupClass))))
         .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 
@@ -172,10 +183,10 @@ class StudentControllerTests {
     mockMvc.perform(post("/students/{studentId}/edit", TEST_STUDENT_ID)
         .param("fio", "Вдовенко Илья Сергеевич")
         .param("birthday", "1994-09-26")
-        .param("sex", "муж")
+        .param("sex", "жен")
         .param("factAddress", "г.Воронеж, Московский пр-кт 141")
         .param("address", "-")
-        .param("telephone", "89618729234")
+        .param("telephone", "89518739244")
         .param("faculty", "1")
         .param("cathedra", "1")
         .param("groupClass", "1")
@@ -183,22 +194,23 @@ class StudentControllerTests {
         .andExpect(status().is3xxRedirection());
   }
 
-  //@Test
-  //TODO no passes, until make validation
+  @Test
   void testProcessUpdateStudentFormHasErrors() throws Exception {
     mockMvc.perform(post("/students/{studentId}/edit", TEST_STUDENT_ID)
         .param("fio", "Иванов Иван Иванович")
-        .param("birthday", "1994-06-23")
+        .param("birthday", "")
         .param("sex", "муж")
+        .param("telephone", "8903456")
+        .param("factAddress", "ул. НетНазвания")
         .param("faculty", "1")
         .param("cathedra", "1")
         .param("groupClass", "1")
     )
         .andExpect(status().isOk())
-        .andExpect(model().attributeHasErrors("student"))
-        .andExpect(model().attributeHasFieldErrors("student", "factAddress"))
-        .andExpect(model().attributeHasFieldErrors("student", "address"))
-        .andExpect(model().attributeHasFieldErrors("student", "telephone"))
+        .andExpect(model().attributeHasErrors("studentDto"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "birthday"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "factAddress"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "telephone"))
         .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
 }

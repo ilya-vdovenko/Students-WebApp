@@ -35,6 +35,8 @@ public class CathedraEditor extends PropertyEditorSupport {
 
   @Override
   public void setAsText(String text) {
-    setValue(service.findCathedraById(Integer.parseInt(text)));
+    if (!text.isEmpty()) {
+      setValue(service.findCathedraById(Integer.parseInt(text)));
+    }
   }
 }

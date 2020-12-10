@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="studapp" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <studapp:layout pageName="students" back="false">
     <jsp:attribute name="customScript">
@@ -13,7 +14,7 @@
             <div class="col-md-4">
                 <h2>
                     <c:choose>
-                        <c:when test="${student['new']}">
+                        <c:when test="${studentDto['new']}">
                             Add
                         </c:when>
                         <c:otherwise>
@@ -22,7 +23,7 @@
                     </c:choose>
                     student
                 </h2>
-                <sf:form method="POST" modelAttribute="student">
+                <sf:form method="post" modelAttribute="studentDto">
                 <studapp:inputField label="Name" type="text" maxlength="40" name="fio"/>
                 <div class="row">
                     <div class="col-auto">
@@ -39,26 +40,30 @@
                 <studapp:inputField label="Address" type="text" maxlength="100" name="address"/>
                 <studapp:inputField label="Faculty" type="selectUnit" name="faculty"
                                     selId="selFac"
-                                    itemValue="${student.faculty.id}"
-                                    itemLabel="${student.faculty.title}"/>
+                                    itemValue="${studentDto.faculty.id}"
+                                    itemLabel="${studentDto.faculty.title}"/>
                 <studapp:inputField label="Cathedra" type="selectUnit" name="cathedra"
                                     selId="selCat"
-                                    itemValue="${student.cathedra.id}"
-                                    itemLabel="${student.cathedra.title}"/>
+                                    itemValue="${studentDto.cathedra.id}"
+                                    itemLabel="${studentDto.cathedra.title}"/>
                 <studapp:inputField label="Group" type="selectUnit" name="groupClass"
                                     selId="selGrp"
-                                    itemValue="${student.groupClass.id}"
-                                    itemLabel="${student.groupClass.title}"/>
+                                    itemValue="${studentDto.groupClass.id}"
+                                    itemLabel="${studentDto.groupClass.title}"/>
                 <div class="mt-5">
+                    <button class="btn btn-primary" type="submit">
                     <c:choose>
-                        <c:when test="${student['new']}">
-                            <button class="btn btn-primary" type="submit">Add</button>
+                        <c:when test="${studentDto['new']}">
+                            Add</button>
+                            <spring:url value="/students" var="backUrl"/>
                         </c:when>
                         <c:otherwise>
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            Save</button>
+                            <spring:url value="/students/{studentId}" var="backUrl">
+                                <spring:param name="studentId" value="${studentDto.id}"/>
+                            </spring:url>
                         </c:otherwise>
-                    </c:choose>
-                    <a href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+                    </c:choose><a href="${backUrl}" class="btn btn-danger">Cancel</a>
                     </sf:form>
                 </div>
             </div>

@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,7 +49,6 @@ public class StudentController {
 
   private final InstituteService service;
   private static final String STUDENT_CREATE_OR_UPDATE_FORM = "student/StudentCreateOrUpdateForm";
-  private static final String STUDENT_ATTRIBUTE_NAME = "student";
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -67,6 +65,7 @@ public class StudentController {
     binder.registerCustomEditor(Faculty.class, "faculty", new FacultyEditor(service));
     binder.registerCustomEditor(Cathedra.class, "cathedra", new CathedraEditor(service));
     binder.registerCustomEditor(GroupClass.class, "groupClass", new GroupClassEditor(service));
+    binder.setValidator(new StudentValidator());
   }
 
   @RequestMapping(value = "/{studentId}", method = GET)
@@ -83,7 +82,7 @@ public class StudentController {
 
   @RequestMapping(value = "/new", method = GET)
   public String initCreationForm(Model model) {
-    model.addAttribute(STUDENT_ATTRIBUTE_NAME, new StudentDto());
+    model.addAttribute(new StudentDto());
     return STUDENT_CREATE_OR_UPDATE_FORM;
   }
 
@@ -91,14 +90,15 @@ public class StudentController {
    * Post new student to db.
    *
    * @param studentDto model with data.
-   * @param errors     errors that can be.
+   * @param result     have info about errors that can be.
    * @param model      model with same student if errors happen.
    * @return redirect.
    */
   @RequestMapping(value = "/new", method = POST)
-  public String processCreationForm(@Valid StudentDto studentDto, Errors errors, Model model) {
-    if (errors.hasErrors()) {
-      model.addAttribute(STUDENT_ATTRIBUTE_NAME, studentDto);
+  public String processCreationForm(@Valid StudentDto studentDto, BindingResult result,
+      Model model) {
+    if (result.hasErrors()) {
+      model.addAttribute(studentDto);
       return STUDENT_CREATE_OR_UPDATE_FORM;
     }
     saveStudent(studentDto, null);
@@ -107,7 +107,7 @@ public class StudentController {
 
   @RequestMapping(value = "/{studentId}/edit", method = GET)
   public String initUpdateOwnerForm(@PathVariable int studentId, Model model) {
-    model.addAttribute(service.findStudentById(studentId));
+    model.addAttribute(new StudentDto(service.findStudentById(studentId)));
     return STUDENT_CREATE_OR_UPDATE_FORM;
   }
 
@@ -115,16 +115,17 @@ public class StudentController {
    * Post updated student to db.
    *
    * @param studentDto model with data.
-   * @param result     of editing.
+   * @param result     have info about errors that can be.
    * @param studentId  id of student.
    * @param model      model with same student if errors happen.
    * @return redirect.
    */
   @RequestMapping(value = "/{studentId}/edit", method = POST)
-  public String processUpdateOwnerForm(@Valid StudentDto studentDto, BindingResult result,
-      @PathVariable int studentId, Model model) {
+  public String processUpdateOwnerForm(@PathVariable int studentId, @Valid StudentDto studentDto,
+      BindingResult result, Model model) {
     if (result.hasErrors()) {
-      model.addAttribute(STUDENT_ATTRIBUTE_NAME, studentDto);
+      studentDto.setId(studentId);
+      model.addAttribute(studentDto);
       return STUDENT_CREATE_OR_UPDATE_FORM;
     } else {
       saveStudent(studentDto, studentId);

@@ -35,6 +35,8 @@ public class GroupClassEditor extends PropertyEditorSupport {
 
   @Override
   public void setAsText(String text) {
-    setValue(service.findGroupClassById(Integer.parseInt(text)));
+    if (!text.isEmpty()) {
+      setValue(service.findGroupClassById(Integer.parseInt(text)));
+    }
   }
 }

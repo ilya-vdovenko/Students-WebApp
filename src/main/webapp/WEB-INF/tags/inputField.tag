@@ -16,35 +16,37 @@
               description="label for type:select" %>
 <%@ attribute name="itemValue" required="false" rtexprvalue="true"
               description="value for type:select" %>
-<%@ attribute name="helpText" required="false" rtexprvalue="true"
-              description="help text for input" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true"
               description="max length of text field" %>
 
 
 <spring:bind path="${name}">
+    <c:set var="inputFeedback"
+           value="form-control ${status.errors.hasFieldErrors(name) ? 'is-invalid' : ''} mb-2"/>
+    <c:set var="selectFeedback"
+           value="custom-select ${status.errors.hasFieldErrors(name) ? 'is-invalid' : ''} mb-2"/>
     <div class="form-group">
         <label>${label}</label>
         <c:if test="${type eq 'text'}">
-            <sf:input class="form-control mb-2" maxlength="${maxlength}" path="${name}"/>
+            <sf:input class="${inputFeedback}" maxlength="${maxlength}" path="${name}"/>
         </c:if>
         <c:if test="${type eq 'date'}">
-            <sf:input class="form-control mb-2" type="date" path="${name}"/>
+            <sf:input class="${inputFeedback}" type="date" path="${name}"/>
         </c:if>
         <c:if test="${type eq 'tel'}">
-            <sf:input class="form-control mb-2" type="tel" maxlength="11" path="${name}"/>
+            <sf:input class="${inputFeedback}" type="tel" maxlength="11" path="${name}"/>
         </c:if>
         <c:if test="${type eq 'selectSex'}">
-            <sf:select class="custom-select mb-2" path="${name}">
+            <sf:select class="${selectFeedback}" path="${name}">
                 <sf:option value="муж">муж</sf:option>
                 <sf:option value="жен">жен</sf:option>
             </sf:select>
         </c:if>
         <c:if test="${type eq 'selectUnit'}">
-            <sf:select class="custom-select mb-2" path="${name}" id="${selId}">
+            <sf:select class="${selectFeedback}" path="${name}" id="${selId}">
                 <sf:option value="${itemValue}">${itemLabel}</sf:option>
             </sf:select>
         </c:if>
-        <small class="form-text text-muted">${helpText}</small>
+        <small class="invalid-feedback"><sf:errors path="${name}"/></small>
     </div>
 </spring:bind>

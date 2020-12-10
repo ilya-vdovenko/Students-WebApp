@@ -35,6 +35,8 @@ public class FacultyEditor extends PropertyEditorSupport {
 
   @Override
   public void setAsText(String text) {
-    setValue(service.findFacultyById(Integer.parseInt(text)));
+    if (!text.isEmpty()) {
+      setValue(service.findFacultyById(Integer.parseInt(text)));
+    }
   }
 }

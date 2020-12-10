@@ -23,4 +23,31 @@ package org.spring.samples.swa.model;
 
 public class StudentDto extends Student {
 
+  public StudentDto() {
+  }
+
+  /**
+   * Constructor that initialise this object by student object.
+   *
+   * @param student object of {@link Student} class.
+   */
+  public StudentDto(Student student) {
+    this.setId(student.getId());
+    this.setFio(student.getFio());
+    this.setSex(student.getSex());
+    this.setBirthday(student.getBirthday());
+    this.setFactAddress(student.getFactAddress());
+    this.setAddress(student.getAddress());
+    this.setTelephone(student.getTelephone());
+    this.setFaculty(student.getFaculty());
+    this.setCathedra(student.getCathedra());
+    this.setGroupClass(student.getGroupClass());
+  }
+
+  @Override
+  public String toString() {
+    return "StudentDto{"
+        + "id=" + id
+        + '}';
+  }
 }

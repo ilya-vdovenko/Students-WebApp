@@ -51,8 +51,8 @@ public class JpaStudentRepositoryImpl implements StudentRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Student> findAll() {
-    List<Student> studentList = this.em.createQuery("from Student").getResultList();
+  public Collection<Student> findAllByOrderByFioAsc() {
+    List<Student> studentList = this.em.createQuery("from Student Order by fio").getResultList();
     studentsMap.clear();
     if (EntityUtils.isValidCollection(studentList)) {
       for (Student student : studentList) {

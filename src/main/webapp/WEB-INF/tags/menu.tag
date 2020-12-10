@@ -17,7 +17,7 @@
     <c:if test="${back}">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="javascript:history.back()">
+                <a class="nav-link back">
                     <i class="fas fa-arrow-left"></i> Back</a>
             </li>
         </ul>

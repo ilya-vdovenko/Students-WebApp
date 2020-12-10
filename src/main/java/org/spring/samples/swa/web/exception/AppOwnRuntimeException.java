@@ -13,30 +13,20 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.web.editor;
-
-import java.beans.PropertyEditorSupport;
-import org.spring.samples.swa.model.GroupClass;
-import org.spring.samples.swa.service.InstituteService;
+package org.spring.samples.swa.web.exception;
 
 /**
- * Property editor for managing conversion between String id and Integer id of {@link GroupClass}.
+ * Implementation of own runtime exception.
  *
  * @author Ilya Vdovenko
  */
 
-public class GroupClassEditor extends PropertyEditorSupport {
+public class AppOwnRuntimeException extends RuntimeException {
 
-  private final InstituteService service;
-
-  public GroupClassEditor(InstituteService is) {
-    this.service = is;
+  public AppOwnRuntimeException() {
   }
 
-  @Override
-  public void setAsText(String text) {
-    if (!text.isEmpty()) {
-      setValue(service.findGroupClassById(Integer.parseInt(text)));
-    }
+  public AppOwnRuntimeException(String message) {
+    super(message);
   }
 }

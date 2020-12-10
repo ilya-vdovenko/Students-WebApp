@@ -81,7 +81,7 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
   }
 
   @Override
-  public Collection<Faculty> findAllFaculties() {
+  public Collection<Faculty> findAllByOrderByTitleAsc() {
     List<Faculty> facultyList = this.jdbcTemplate.query(
         "SELECT f.id as facultyID, f.title as facultyTitle, f.information as facultyInfo,\n"
             + "f.boss as facultyBossID, fb.fio as facultyBossFio,\n"

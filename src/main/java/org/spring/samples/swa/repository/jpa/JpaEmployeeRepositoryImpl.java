@@ -56,8 +56,8 @@ public class JpaEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Employee> findAll() {
-    List<Employee> employeeList = this.em.createQuery("from Employee").getResultList();
+  public Collection<Employee> findAllByOrderByFioAsc() {
+    List<Employee> employeeList = this.em.createQuery("from Employee Order by fio").getResultList();
     employeesMap.clear();
     if (EntityUtils.isValidCollection(employeeList)) {
       for (Employee employee : employeeList) {

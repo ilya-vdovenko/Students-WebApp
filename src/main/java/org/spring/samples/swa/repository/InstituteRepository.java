@@ -38,7 +38,7 @@ public interface InstituteRepository {
 
   Faculty findFacultyById(int id);
 
-  Collection<Faculty> findAllFaculties();
+  Collection<Faculty> findAllByOrderByTitleAsc();
 
   Cathedra findCathedraById(int id);
 

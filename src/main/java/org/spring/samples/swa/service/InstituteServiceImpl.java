@@ -75,7 +75,7 @@ public class InstituteServiceImpl implements InstituteService {
   @Override
   @Transactional(readOnly = true)
   public Collection<Faculty> getFaculties() {
-    return instituteRepository.findAllFaculties();
+    return instituteRepository.findAllByOrderByTitleAsc();
   }
 
   @Override
@@ -138,7 +138,7 @@ public class InstituteServiceImpl implements InstituteService {
   @Override
   @Transactional(readOnly = true)
   public Collection<Student> getStudents() {
-    return studentRepository.findAll();
+    return studentRepository.findAllByOrderByFioAsc();
   }
 
   @Override
@@ -150,7 +150,7 @@ public class InstituteServiceImpl implements InstituteService {
   @Override
   @Transactional(readOnly = true)
   public Collection<Employee> getEmployees() {
-    return employeeRepository.findAll();
+    return employeeRepository.findAllByOrderByFioAsc();
   }
 
   @Override

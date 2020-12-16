@@ -24,11 +24,19 @@
 
     <tx:annotation-driven/>
 
-    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-        <property name="favorParameter" value="false"/>
-        <property name="ignoreAcceptHeader" value="true"/>
-        <property name="defaultContentType" value="application/json"/>
-    </bean>
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"
+      p:favorParameter="false"
+      p:ignoreAcceptHeader="true"
+      p:defaultContentType="application/json"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+      p:basename="classpath:messages/messages"
+      p:defaultEncoding="UTF-8"/>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+      p:defaultLocale="en"
+      p:cookieName="StudentWebAppCookie"
+      p:cookieMaxAge="3600"/>
 
     <beans profile="jpa">
         <context:component-scan base-package="org.spring.samples.swa.repository.jpa"/>

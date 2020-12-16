@@ -12,35 +12,38 @@
             <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
             <spring:param name="cathedraId" value="${cathedra.id}"/>
         </spring:url>
-            Groups list of cathedra "<a class="link" href="${catUrl}"><c:out value="${cathedra.title}"/></a>"
+            <spring:message code="list.group"/> "<a class="link" href="${catUrl}"><c:out value="${cathedra.title}"/></a>"
         </h2>
         <c:forEach items="${group_class_list}" var="groupClass">
-            <p>grp.
-                <spring:url
-                        value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}"
-                        var="grclUrl">
+            <p>
+                <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}" var="grclUrl">
                     <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                     <spring:param name="cathedraId" value="${cathedra.id}"/>
                     <spring:param name="groupClassId" value="${groupClass.id}"/>
                 </spring:url>
-                <a class="link" href="${grclUrl}"><c:out value="${groupClass.title}"/></a>
-                (<c:out value="${groupClass.eduForm}"/> education form)</p>
-            <p>Students of group:</p>
+                <spring:message code="list.group.ab"/>
+                <a class="link" href="${grclUrl}"> <c:out value="${groupClass.title}"/></a>
+                (<c:out value="${groupClass.eduForm} "/><spring:message code="list.group.eduform"/>)
+            </p>
+            <p><spring:message code="list.group.student"/></p>
             <div class="col-md-5">
             <table class="table-sm"
                    data-toggle="table"
-                   data-locale="en-US"
+                   data-locale="<spring:message code="table.locale"/>"
                    aria-describedby="students">
                 <thead class="bg-success text-white">
                 <tr>
                     <th scope="col" data-width="50" data-width-unit="%"
-                        data-halign="center">Name</th>
+                        data-halign="center"><spring:message code="table.name"/></th>
                     <th scope="col" data-width="10" data-width-unit="%"
-                        data-halign="center" data-align="center">Sex</th>
+                        data-halign="center" data-align="center">
+                        <spring:message code="table.sex"/></th>
                     <th scope="col" data-width="20" data-width-unit="%"
-                        data-halign="center" data-align="center">BirthDay</th>
+                        data-halign="center" data-align="center">
+                        <spring:message code="table.birthday"/></th>
                     <th scope="col" data-width="20" data-width-unit="%"
-                        data-halign="center" data-align="center">Telephone</th>
+                        data-halign="center" data-align="center">
+                        <spring:message code="table.telephone"/></th>
                 </tr>
                 </thead>
                 <tbody>

@@ -16,20 +16,26 @@
             <div class="col-md-10">
                 <h2><spring:url value="/faculties/{facultyId}" var="facUrl">
                     <spring:param name="facultyId" value="${faculty.id}"/>
-                </spring:url>Cathedras list of faculty "<a class="link" href="${facUrl}"><c:out value="${faculty.title}"/></a>"
+                </spring:url>
+                    <spring:message code="list.cathedra"/>
+                    "<a class="link" href="${facUrl}"><c:out value="${faculty.title}"/></a>"
                 </h2>
                 <table class="table-sm"
                        data-toggle="table"
                        data-custom-sort="customSort"
-                       data-locale="en-US"
+                       data-locale="<spring:message code="table.locale"/>"
                        data-remember-order="true"
                        aria-describedby="cathedras">
                     <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col" data-halign="center" data-sortable="true">Title</th>
-                        <th scope="col" data-halign="center">Boss</th>
-                        <th scope="col" data-halign="center" data-align="center">Lecturers</th>
-                        <th scope="col" data-halign="center" data-align="center">Groups</th>
+                        <th scope="col" data-halign="center" data-sortable="true">
+                            <spring:message code="table.title"/></th>
+                        <th scope="col" data-halign="center">
+                            <spring:message code="table.boss"/></th>
+                        <th scope="col" data-halign="center" data-align="center">
+                            <spring:message code="table.lect"/></th>
+                        <th scope="col" data-halign="center" data-align="center">
+                            <spring:message code="table.groups"/></th>
                     </tr>
                     </thead>
                     <tbody>

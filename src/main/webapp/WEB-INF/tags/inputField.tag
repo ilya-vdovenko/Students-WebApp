@@ -37,9 +37,12 @@
             <sf:input class="${inputFeedback}" type="tel" maxlength="11" path="${name}"/>
         </c:if>
         <c:if test="${type eq 'selectSex'}">
+            <c:set var="man"><spring:message code="field.man"/></c:set>
+            <c:set var="fem"><spring:message code="field.fem"/></c:set>
             <sf:select class="${selectFeedback}" path="${name}">
-                <sf:option value="муж">муж</sf:option>
-                <sf:option value="жен">жен</sf:option>
+                <sf:option disabled="true" value="" selected="true"> </sf:option>
+                <sf:option value="${man}">${man}</sf:option>
+                <sf:option value="${fem}">${fem}</sf:option>
             </sf:select>
         </c:if>
         <c:if test="${type eq 'selectUnit'}">

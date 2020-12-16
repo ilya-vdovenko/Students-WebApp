@@ -11,15 +11,15 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2>Faculty of "<strong><c:out value="${faculty.title}"/></strong>"</h2>
+                <h2><spring:message code="profile.faculty"/> "<strong><c:out value="${faculty.title}"/></strong>"</h2>
                 <table class="table table-borderless table-sm unit"
                        aria-describedby="facultyInformation">
                     <tr>
-                        <th scope="row">Information</th>
+                        <th scope="row"><spring:message code="table.info"/></th>
                         <td><c:out value="${faculty.information}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Boss</th>
+                        <th scope="row"><spring:message code="table.boss"/></th>
                         <td>
                             <spring:url value="/employees/{employeId}" var="empUrl">
                                 <spring:param name="employeId" value="${faculty.boss.id}"/>
@@ -28,11 +28,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Telephone</th>
+                        <th scope="row"><spring:message code="table.telephone"/></th>
                         <td><c:out value="${faculty.contactInf}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Board</th>
+                        <th scope="row"><spring:message code="table.board"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/soviet" var="sovUrl">
                                 <spring:param name="facultyId" value="${faculty.id}"/>
@@ -41,7 +41,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Cathedras</th>
+                        <th scope="row"><spring:message code="table.cathedras"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/cathedras" var="catUrl">
                                 <spring:param name="facultyId" value="${faculty.id}"/>
@@ -50,7 +50,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Employees</th>
+                        <th scope="row"><spring:message code="table.employees"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/employees" var="emplUrl">
                                 <spring:param name="facultyId" value="${faculty.id}"/>

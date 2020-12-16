@@ -4,7 +4,7 @@
 
 <studapp:layout pageName="error" back="false">
     <div class="d-flex justify-content-center">
-        <h2>Oups. Something happened...</h2>
+        <h2><spring:message code="error.oups"/></h2>
     </div>
     <div class="d-flex justify-content-center">
         <p>${exception.message}</p>

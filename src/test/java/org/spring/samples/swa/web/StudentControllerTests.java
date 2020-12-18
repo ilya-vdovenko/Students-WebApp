@@ -142,7 +142,7 @@ class StudentControllerTests {
   @Test
   void testProcessCreationFormHasErrors() throws Exception {
     mockMvc.perform(post("/students/new")
-        .param("fio", "Иванов")
+        .param("fio", "Иванов Иван Иванович")
         .param("birthday", "")
         .param("sex", "муж")
         .param("telephone", "8903456")

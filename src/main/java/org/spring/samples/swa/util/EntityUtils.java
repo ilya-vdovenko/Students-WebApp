@@ -19,13 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
 
 /**
  * Class of useful methods for manipulating Entities.
@@ -41,47 +37,6 @@ public class EntityUtils {
 
   public static <E> boolean isValidCollection(Collection<E> collection) {
     return collection != null && !collection.isEmpty();
-  }
-
-  /**
-   * Method for fill in Map variables.
-   *
-   * @param facultyList     contains all faculty
-   * @param facultiesMap    contains faculty as value and Id as key.
-   * @param cathedrasMap    contains cathedra as value and Id as key.
-   * @param groupClassesMap contains groupClass as value and Id as key.
-   */
-  public static void setEntityMaps(List<Faculty> facultyList,
-      Map<Integer, Faculty> facultiesMap,
-      Map<Integer, Cathedra> cathedrasMap,
-      Map<Integer, GroupClass> groupClassesMap) {
-
-    facultiesMap.clear();
-    cathedrasMap.clear();
-    groupClassesMap.clear();
-
-    for (Faculty faculty : facultyList) {
-      facultiesMap.putIfAbsent(faculty.getId(), faculty);
-      for (Cathedra cathedra : faculty.getCathedras()) {
-        cathedrasMap.putIfAbsent(cathedra.getId(), cathedra);
-        for (GroupClass groupClass : cathedra.getGroupClasses()) {
-          groupClassesMap.putIfAbsent(groupClass.getId(), groupClass);
-        }
-      }
-    }
-  }
-
-  /**
-   * Method for cleaning internal variables when Student was saved.
-   *
-   * @param repo    {@link InstituteRepository} class.
-   * @param student saved Student.
-   */
-  public static void clearAfterSetStudent(InstituteRepository repo,
-      Student student) {
-    repo.getInternalGroupClasses().remove(student.getGroupClass().getId());
-    repo.getInternalCathedras().remove(student.getCathedra().getId());
-    repo.getInternalFaculties().remove(student.getFaculty().getId());
   }
 
   /**

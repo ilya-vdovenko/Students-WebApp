@@ -17,7 +17,6 @@ package org.spring.samples.swa.repository.jdbc;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.spring.samples.swa.model.Employee;
@@ -43,7 +42,7 @@ public class JdbcEmployeeRepositoryImpl implements EmployeeRepository {
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
   private final EmployeeExtractor employeeExtractor;
-  private final Map<Integer, Employee> employeesMap = new LinkedHashMap<>();
+  private Employee tempEmployee;
 
   /**
    * Constructor of {@link JdbcEmployeeRepositoryImpl} class.
@@ -63,9 +62,8 @@ public class JdbcEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   public Employee findById(int id) {
-    if (EntityUtils.isValidCollection(employeesMap.values())
-        && employeesMap.containsKey(id)) {
-      return employeesMap.get(id);
+    if (tempEmployee != null && (tempEmployee.getId()).equals(id)) {
+      return tempEmployee;
     }
     Employee employee;
     try {
@@ -83,21 +81,13 @@ public class JdbcEmployeeRepositoryImpl implements EmployeeRepository {
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Employee.class, id);
     }
-    employeesMap.putIfAbsent(id, employee);
+    tempEmployee = employee;
     return employee;
   }
 
   @Override
   public Collection<Employee> findAllByOrderByFioAsc() {
-    List<Employee> employeeList = jdbcTemplate
-        .query("SELECT * FROM employees ORDER BY fio", employeeExtractor);
-    employeesMap.clear();
-    if (EntityUtils.isValidCollection(employeeList)) {
-      for (Employee employee : employeeList) {
-        employeesMap.putIfAbsent(employee.getId(), employee);
-      }
-    }
-    return employeeList;
+    return jdbcTemplate.query("SELECT * FROM employees ORDER BY fio", employeeExtractor);
   }
 
 }

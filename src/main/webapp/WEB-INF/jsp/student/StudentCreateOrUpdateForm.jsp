@@ -15,38 +15,46 @@
                 <h2>
                     <c:choose>
                         <c:when test="${studentDto['new']}">
-                            Add
+                            <spring:message code="student.add"/>
                         </c:when>
                         <c:otherwise>
-                            Edit
+                            <spring:message code="student.edit"/>
                         </c:otherwise>
                     </c:choose>
-                    student
                 </h2>
+                <c:set var="name"><spring:message code="table.name"/></c:set>
+                <c:set var="birthday"><spring:message code="table.birthday"/></c:set>
+                <c:set var="sex"><spring:message code="table.sex"/></c:set>
+                <c:set var="telephone"><spring:message code="table.telephone"/></c:set>
+                <c:set var="actAddr"><spring:message code="table.actAddr"/></c:set>
+                <c:set var="address"><spring:message code="table.address"/></c:set>
+                <c:set var="faculty"><spring:message code="table.faculty"/></c:set>
+                <c:set var="cathedra"><spring:message code="table.cathedra"/></c:set>
+                <c:set var="group"><spring:message code="table.group"/></c:set>
                 <sf:form method="post" modelAttribute="studentDto">
-                <studapp:inputField label="Name" type="text" maxlength="40" name="fio"/>
+                <studapp:inputField label="${name}" type="text" maxlength="40" name="fio"/>
                 <div class="row">
-                    <div class="col-auto">
-                        <studapp:inputField label="BirthDay" type="date" name="birthday"/>
+                    <div class="col-4">
+                        <studapp:inputField label="${birthday}" type="date" name="birthday"/>
                     </div>
-                    <div class="col-auto">
-                        <studapp:inputField label="Sex" type="selectSex" name="sex"/>
+                    <div class="col-3">
+                        <studapp:inputField label="${sex}" type="selectSex" name="sex"/>
                     </div>
-                    <div class="col-auto">
-                        <studapp:inputField label="Telephone" type="tel" name="telephone"/>
+                    <div class="col-5">
+                        <studapp:inputField label="${telephone}" type="tel" name="telephone"/>
                     </div>
                 </div>
-                <studapp:inputField label="Actual address" type="text" maxlength="100" name="factAddress"/>
-                <studapp:inputField label="Address" type="text" maxlength="100" name="address"/>
-                <studapp:inputField label="Faculty" type="selectUnit" name="faculty"
+                <studapp:inputField label="${actAddr}" type="text" maxlength="100" name="factAddress"/>
+                <studapp:inputField label="${address}" type="text" maxlength="100" name="address"/>
+                <studapp:inputField label="${faculty}" type="selectUnit" name="faculty"
                                     selId="selFac"
                                     itemValue="${studentDto.faculty.id}"
                                     itemLabel="${studentDto.faculty.title}"/>
-                <studapp:inputField label="Cathedra" type="selectUnit" name="cathedra"
+                <studapp:inputField label="${cathedra}" type="selectUnit" name="cathedra"
                                     selId="selCat"
                                     itemValue="${studentDto.cathedra.id}"
                                     itemLabel="${studentDto.cathedra.title}"/>
-                <studapp:inputField label="Group" type="selectUnit" name="groupClass"
+                <studapp:inputField label="${group}" type="selectUnit" name="groupClass"
                                     selId="selGrp"
                                     itemValue="${studentDto.groupClass.id}"
                                     itemLabel="${studentDto.groupClass.title}"/>
@@ -54,16 +62,16 @@
                     <button class="btn btn-primary" type="submit">
                     <c:choose>
                         <c:when test="${studentDto['new']}">
-                            Add</button>
+                            <spring:message code="btn.add"/></button>
                             <spring:url value="/students" var="backUrl"/>
                         </c:when>
                         <c:otherwise>
-                            Save</button>
+                            <spring:message code="btn.save"/></button>
                             <spring:url value="/students/{studentId}" var="backUrl">
                                 <spring:param name="studentId" value="${studentDto.id}"/>
                             </spring:url>
                         </c:otherwise>
-                    </c:choose><a href="${backUrl}" class="btn btn-danger">Cancel</a>
+                    </c:choose><a href="${backUrl}" class="btn btn-danger"><spring:message code="btn.cancel"/></a>
                     </sf:form>
                 </div>
             </div>

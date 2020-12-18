@@ -15,11 +15,7 @@
 
 package org.spring.samples.swa.repository.springdatajpa;
 
-import java.util.Map;
 import org.spring.samples.swa.model.BaseEntity;
-import org.spring.samples.swa.model.Cathedra;
-import org.spring.samples.swa.model.Faculty;
-import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.springframework.data.repository.Repository;
 
@@ -32,16 +28,4 @@ import org.springframework.data.repository.Repository;
 public interface SpringDataInstituteRepository extends InstituteRepository,
     Repository<BaseEntity, Integer> {
 
-  //TODO скорее вместе с реализацией кэша это будет не нужно
-  default Map<Integer, Faculty> getInternalFaculties() {
-    return null;
-  }
-
-  default Map<Integer, Cathedra> getInternalCathedras() {
-    return null;
-  }
-
-  default Map<Integer, GroupClass> getInternalGroupClasses() {
-    return null;
-  }
 }

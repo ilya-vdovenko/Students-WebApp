@@ -20,9 +20,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.spring.samples.swa.model.Employee;
-import org.spring.samples.swa.repository.InstituteRepository;
+import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -36,12 +36,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmployeeExtractor implements ResultSetExtractor<List<Employee>> {
 
-  private final InstituteRepository instituteRepo;
+  private final InstituteService service;
 
   @Autowired
-  public EmployeeExtractor(
-      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
-    this.instituteRepo = instituteRepo;
+  public EmployeeExtractor(@Lazy InstituteService service) {
+    this.service = service;
   }
 
   @Override
@@ -53,9 +52,9 @@ public class EmployeeExtractor implements ResultSetExtractor<List<Employee>> {
       employee.setFio(rs.getString("fio"));
       employee.setPosition(rs.getString("position"));
       employee.setDegree(rs.getString("degree"));
-      employee.setFaculty(instituteRepo.findFacultyById(rs.getInt("faculty_id")));
+      employee.setFaculty(service.findFacultyById(rs.getInt("faculty_id")));
       if (rs.getInt("cathedra_id") != 0) {
-        employee.setCathedra(instituteRepo.findCathedraById(rs.getInt("cathedra_id")));
+        employee.setCathedra(service.findCathedraById(rs.getInt("cathedra_id")));
       }
       employeeList.add(employee);
     }

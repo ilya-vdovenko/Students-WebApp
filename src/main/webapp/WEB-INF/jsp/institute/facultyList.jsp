@@ -14,29 +14,34 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h1>List of all faculties</h1>
+                <h1><spring:message code="list.faculty"/></h1>
                 <table class="table-sm"
                        data-toggle="table"
                        data-custom-sort="customSort"
-                       data-locale="en-US"
+                       data-locale="<spring:message code="table.locale"/>"
                        data-remember-order="true"
                        aria-describedby="faculties">
                     <thead class="bg-primary text-white">
                     <tr>
                         <th scope="col" data-width="50" data-width-unit="%"
-                            data-sortable="true" data-halign="center">Title
+                            data-sortable="true" data-halign="center">
+                            <spring:message code="table.title"/>
                         </th>
                         <th scope="col" data-width="35" data-width-unit="%"
-                            data-halign="center">Boss
+                            data-halign="center">
+                            <spring:message code="table.boss"/>
                         </th>
                         <th scope="col" data-width="5" data-width-unit="%"
-                            data-halign="center" data-align="center">Board
+                            data-halign="center" data-align="center">
+                            <spring:message code="table.board"/>
                         </th>
                         <th scope="col" data-width="5" data-width-unit="%"
-                            data-halign="center" data-align="center">Cathedras
+                            data-halign="center" data-align="center">
+                            <spring:message code="table.cathedras"/>
                         </th>
                         <th scope="col" data-width="5" data-width-unit="%"
-                            data-halign="center" data-align="center">Employees
+                            data-halign="center" data-align="center">
+                            <spring:message code="table.employees"/>
                         </th>
                     </tr>
                     </thead>

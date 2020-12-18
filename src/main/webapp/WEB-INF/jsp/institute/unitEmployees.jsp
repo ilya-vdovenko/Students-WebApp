@@ -19,14 +19,14 @@
                 </spring:url>
                 <c:choose>
                     <c:when test="${faculty!=null && !soviet}">
-                        <h2>Employees list of faculty "<a class="link" href="${facUrl}">
-                            <c:out value="${faculty.title}"/></a>"</h2>
+                        <h2><spring:message code="list.unit.employee"/>
+                            "<a class="link" href="${facUrl}"><c:out value="${faculty.title}"/></a>"</h2>
                     </c:when>
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${soviet}">
-                                <h2>The board of faculty "<a class="link" href="${facUrl}">
-                                    <c:out value="${faculty.title}"/></a>"</h2>
+                                <h2><spring:message code="list.unit.board"/>
+                                    "<a class="link" href="${facUrl}"><c:out value="${faculty.title}"/></a>"</h2>
                             </c:when>
                             <c:otherwise>
                                 <c:if test="${cathedra!=null}">
@@ -34,8 +34,8 @@
                                     <spring:param name="facultyId" value="${cathedra.faculty.id}"/>
                                     <spring:param name="cathedraId" value="${cathedra.id}"/>
                                 </spring:url>
-                                <h2>Lecturers list of cathedra "<a class="link" href="${catUrl}">
-                                    <c:out value="${cathedra.title}"/></a>"</h2>
+                                <h2><spring:message code="list.unit.lect"/>
+                                    "<a class="link" href="${catUrl}"><c:out value="${cathedra.title}"/></a>"</h2>
                                 </c:if>
                             </c:otherwise>
                         </c:choose>
@@ -43,21 +43,25 @@
                 </c:choose>
                 <table class="table-sm"
                        data-toggle="table"
-                       data-locale="en-US"
+                       data-locale="<spring:message code="table.locale"/>"
                        aria-describedby="employees">
                     <thead class="bg-warning text-dark">
                     <tr>
                         <th scope="col" data-width="20" data-width-unit="%"
-                            data-sortable="true" data-halign="center">Name
+                            data-sortable="true" data-halign="center">
+                            <spring:message code="table.name"/>
                         </th>
-                        <th scope="col" data-width="15" data-width-unit="%"
-                            data-halign="center">Position
+                        <th scope="col" data-width="15"
+                            data-width-unit="%" data-halign="center">
+                            <spring:message code="table.position"/>
                         </th>
-                        <th scope="col" data-width="40" data-width-unit="%"
-                            data-halign="center">Cathedra
+                        <th scope="col" data-width="40"
+                            data-width-unit="%" data-halign="center">
+                            <spring:message code="table.cathedra"/>
                         </th>
-                        <th scope="col" data-width="30" data-width-unit="%"
-                            data-halign="center">Faculty
+                        <th scope="col" data-width="30"
+                            data-width-unit="%" data-halign="center">
+                            <spring:message code="table.faculty"/>
                         </th>
                     </tr>
                     </thead>

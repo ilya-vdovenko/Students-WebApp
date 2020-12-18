@@ -15,27 +15,27 @@
                 <table class="table table-borderless table-sm student"
                        aria-describedby="studentInformation">
                     <tr>
-                        <th scope="row">BirthDay</th>
+                        <th scope="row"><spring:message code="table.birthday"/></th>
                         <td><c:out value="${student.birthday}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Sex</th>
+                        <th scope="row"><spring:message code="table.sex"/></th>
                         <td><c:out value="${student.sex}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Actual address</th>
+                        <th scope="row"><spring:message code="table.actAddr"/></th>
                         <td><c:out value="${student.factAddress}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Address</th>
+                        <th scope="row"><spring:message code="table.address"/></th>
                         <td><c:out value="${student.address}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Telephone</th>
+                        <th scope="row"><spring:message code="table.telephone"/></th>
                         <td><c:out value="${student.telephone}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Group</th>
+                        <th scope="row"><spring:message code="table.group"/></th>
                         <td>
                             <spring:url
                                     value="/faculties/{facultyId}/cathedras/{cathedraId}/groupClasses/{groupClassId}"
@@ -48,7 +48,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Cathedra</th>
+                        <th scope="row"><spring:message code="table.cathedra"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                                 <spring:param name="facultyId" value="${student.faculty.id}"/>
@@ -58,7 +58,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Faculty</th>
+                        <th scope="row"><spring:message code="table.faculty"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}" var="facUrl">
                                 <spring:param name="facultyId" value="${student.faculty.id}"/>
@@ -71,7 +71,7 @@
                     <spring:url value="/students/{studentId}/edit" var="editUrl">
                         <spring:param name="studentId" value="${student.id}"/>
                     </spring:url>
-                    <a href="${editUrl}" class="btn btn-info">Edit student</a>
+                    <a href="${editUrl}" class="btn btn-info"><spring:message code="student.edit"/></a>
                 </div>
             </div>
             <div class="col-md-3"></div>

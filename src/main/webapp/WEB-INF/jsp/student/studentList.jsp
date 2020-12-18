@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h1>List of all students</h1>
+                <h1><spring:message code="list.student"/></h1>
                 <table class="table-sm"
                        data-toggle="table"
                        data-pagination="true"
                        data-page-list="[10, 25, 50, 100, All]"
                        data-custom-sort="customSort"
-                       data-locale="en-US"
+                       data-locale="<spring:message code="table.locale"/>"
                        data-search="true"
                        data-show-search-clear-button="true"
                        data-show-search-button="true"
@@ -29,19 +29,19 @@
                     <thead class="bg-success text-white">
                     <tr>
                         <th scope="col" data-width="20" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Name</th>
+                            data-halign="center"><spring:message code="table.name"/></th>
                         <th scope="col" data-width="5" data-width-unit="%" data-halign="center"
-                            data-align="center">Sex</th>
+                            data-align="center"><spring:message code="table.sex"/></th>
                         <th scope="col" data-width="10" data-width-unit="%" data-sortable="true"
-                            data-halign="center" data-align="center">BirthDay</th>
+                            data-halign="center" data-align="center"><spring:message code="table.birthday"/></th>
                         <th scope="col" data-width="10" data-width-unit="%" data-halign="center"
-                            data-align="center">Telephone</th>
+                            data-align="center"><spring:message code="table.telephone"/></th>
                         <th scope="col" data-width="5" data-width-unit="%" data-sortable="true"
-                            data-halign="center" data-align="center">Group</th>
+                            data-halign="center" data-align="center"><spring:message code="table.group"/></th>
                         <th scope="col" data-width="30" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Cathedra</th>
+                            data-halign="center"><spring:message code="table.cathedra"/></th>
                         <th scope="col" data-width="20" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Faculty</th>
+                            data-halign="center"><spring:message code="table.faculty"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,7 @@
                 </table>
                 <div>
                    <spring:url value="/students/new" var="newUrl"/>
-                   <a href="${newUrl}" class="btn btn-primary">Add student</a>
+                   <a href="${newUrl}" class="btn btn-primary"><spring:message code="student.add"/></a>
                 </div>
             </div>
             <div class="col-md-1"></div>

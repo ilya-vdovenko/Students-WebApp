@@ -15,15 +15,15 @@
                 <table class="table table-borderless table-sm employee"
                        aria-describedby="employeeInformation">
                     <tr>
-                        <th scope="row">Position</th>
+                        <th scope="row"><spring:message code="table.position"/></th>
                         <td><c:out value="${employee.position}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Degree</th>
+                        <th scope="row"><spring:message code="table.degree"/></th>
                         <td><c:out value="${employee.degree}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row">Cathedra</th>
+                        <th scope="row"><spring:message code="table.cathedra"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}/cathedras/{cathedraId}" var="catUrl">
                                 <spring:param name="facultyId" value="${employee.faculty.id}"/>
@@ -33,7 +33,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Faculty</th>
+                        <th scope="row"><spring:message code="table.faculty"/></th>
                         <td>
                             <spring:url value="/faculties/{facultyId}" var="facUrl">
                                 <spring:param name="facultyId" value="${employee.faculty.id}"/>

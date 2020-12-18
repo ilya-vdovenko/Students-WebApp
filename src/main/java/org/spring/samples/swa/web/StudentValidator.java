@@ -38,21 +38,22 @@ public class StudentValidator implements Validator {
     StudentDto student = (StudentDto) target;
 
     if (student.getFio().length() < 10 | student.getFio().length() > 60) {
-      errors.rejectValue("fio", "size", "Field length from 10 to 60 characters");
+      errors.rejectValue("fio", "error.min_max.size", new Object[]{10, 60}, null);
     }
 
-    ValidationUtils.rejectIfEmpty(errors, "birthday", "birthday.empty", "Please choose date");
+    ValidationUtils.rejectIfEmpty(errors, "birthday", "error.empty");
+    ValidationUtils.rejectIfEmpty(errors, "sex", "error.empty");
 
     if (student.getTelephone().length() < 11) {
-      errors.rejectValue("telephone", "size", "Field length 11 characters");
+      errors.rejectValue("telephone", "error.max.size", new Object[]{11}, null);
     }
 
     if (student.getFactAddress().length() < 20 | student.getFactAddress().length() > 100) {
-      errors.rejectValue("factAddress", "size", "Field length from 20 to 100 characters");
+      errors.rejectValue("factAddress", "error.min_max.size", new Object[]{20, 100}, null);
     }
 
-    ValidationUtils.rejectIfEmpty(errors, "faculty", "faculty.empty", "Please choose faculty");
-    ValidationUtils.rejectIfEmpty(errors, "cathedra", "cathedra.empty", "Please choose cathedra");
-    ValidationUtils.rejectIfEmpty(errors, "groupClass", "groupClass.empty", "Please choose group");
+    ValidationUtils.rejectIfEmpty(errors, "faculty", "error.empty");
+    ValidationUtils.rejectIfEmpty(errors, "cathedra", "error.empty");
+    ValidationUtils.rejectIfEmpty(errors, "groupClass", "error.empty");
   }
 }

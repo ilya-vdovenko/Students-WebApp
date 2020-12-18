@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h1>List of all employees</h1>
+                <h1><spring:message code="list.employee"/></h1>
                 <table class="table-sm"
                        data-toggle="table"
                        data-pagination="true"
                        data-page-list="[10, 25, 50, 100, All]"
                        data-custom-sort="customSort"
-                       data-locale="en-US"
+                       data-locale="<spring:message code="table.locale"/>"
                        data-search="true"
                        data-show-search-clear-button="true"
                        data-show-search-button="true"
@@ -29,16 +29,16 @@
                     <thead class="bg-warning text-dark">
                     <tr>
                         <th scope="col" data-width="20" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Name
+                            data-halign="center"><spring:message code="table.name"/>
                         </th>
                         <th scope="col" data-width="15" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Position
+                            data-halign="center"><spring:message code="table.position"/>
                         </th>
                         <th scope="col" data-width="40" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Cathedra
+                            data-halign="center"><spring:message code="table.cathedra"/>
                         </th>
                         <th scope="col" data-width="30" data-width-unit="%" data-sortable="true"
-                            data-halign="center">Faculty
+                            data-halign="center"><spring:message code="table.faculty"/>
                         </th>
                     </tr>
                     </thead>

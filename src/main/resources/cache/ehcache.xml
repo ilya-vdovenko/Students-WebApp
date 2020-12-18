@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache>
+    <cache name="faculties"
+        maxElementsInMemory="20"
+        eternal="false"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+        overflowToDisk="false"/>
+
+    <cache name="cathedras"
+        maxElementsInMemory="40"
+        eternal="false"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+        overflowToDisk="false"/>
+
+    <cache name="students"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+        overflowToDisk="false"/>
+
+    <cache name="employees"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+        overflowToDisk="false"/>
+
+    <cache name="groups"
+        maxElementsInMemory="100"
+        eternal="false"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+        overflowToDisk="false"/>
+</ehcache>

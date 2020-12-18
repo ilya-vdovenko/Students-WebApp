@@ -25,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
  * @see AbstractInstituteServiceTests AbstractInstituteServiceTests for more details.
  */
 
-@SpringJUnitConfig(locations = {"classpath:SpringConfigs/root-config.xml"})
+@SpringJUnitConfig(locations = "classpath:SpringConfigs/root-config.xml")
 @ActiveProfiles("jdbc")
 public class InstituteServiceJdbcTests extends AbstractInstituteServiceTests {
 

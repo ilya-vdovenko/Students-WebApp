@@ -17,17 +17,14 @@ package org.spring.samples.swa.repository.jdbc;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
 import org.spring.samples.swa.repository.StudentRepository;
 import org.spring.samples.swa.repository.jdbc.extractor.StudentExtractor;
 import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -49,8 +46,7 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
   private final JdbcTemplate jdbcTemplate;
   private final SimpleJdbcInsert insertStudent;
   private final StudentExtractor studentExtractor;
-  private final InstituteRepository instituteRepo;
-  private final Map<Integer, Student> studentsMap = new LinkedHashMap<>();
+  private Student tempStudent;
 
   /**
    * Constructor of {@link JdbcStudentRepositoryImpl} class.
@@ -60,21 +56,19 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
    * @param jdbcTemplate               used for query.
    * @param namedParameterJdbcTemplate used for named query.
    * @param studentExtractor           used for extract data to {@link Student} model.
-   * @param instituteRepo              injected {@link InstituteRepository} class.
    */
   @Autowired
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  public JdbcStudentRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate,
+  public JdbcStudentRepositoryImpl(
+      DataSource dataSource,
+      JdbcTemplate jdbcTemplate,
       NamedParameterJdbcTemplate namedParameterJdbcTemplate,
-      StudentExtractor studentExtractor,
-      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
+      StudentExtractor studentExtractor) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     this.jdbcTemplate = jdbcTemplate;
-    this.insertStudent = new SimpleJdbcInsert(dataSource)
-        .withTableName("students")
+    this.insertStudent = new SimpleJdbcInsert(dataSource).withTableName("students")
         .usingGeneratedKeyColumns("id");
     this.studentExtractor = studentExtractor;
-    this.instituteRepo = instituteRepo;
   }
 
   @Override
@@ -89,28 +83,17 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
               + "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id",
           createPetParameterSource(student));
     }
-    studentsMap.replace(student.getId(), student);
-    EntityUtils.clearAfterSetStudent(instituteRepo, student);
   }
 
   @Override
   public Collection<Student> findAllByOrderByFioAsc() {
-    List<Student> studentList = jdbcTemplate
-        .query("SELECT * FROM students ORDER BY fio", studentExtractor);
-    studentsMap.clear();
-    if (EntityUtils.isValidCollection(studentList)) {
-      for (Student student : studentList) {
-        studentsMap.putIfAbsent(student.getId(), student);
-      }
-    }
-    return studentList;
+    return jdbcTemplate.query("SELECT * FROM students ORDER BY fio", studentExtractor);
   }
 
   @Override
   public Student findById(int id) {
-    if (EntityUtils.isValidCollection(studentsMap.values())
-        && studentsMap.containsKey(id)) {
-      return studentsMap.get(id);
+    if (tempStudent != null && (tempStudent.getId()).equals(id)) {
+      return tempStudent;
     }
     Student student;
     try {
@@ -128,7 +111,7 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Student.class, id);
     }
-    studentsMap.putIfAbsent(id, student);
+    tempStudent = student;
     return student;
   }
 
@@ -145,5 +128,4 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
         .addValue("cathedra_id", student.getCathedra().getId())
         .addValue("faculty_id", student.getFaculty().getId());
   }
-
 }

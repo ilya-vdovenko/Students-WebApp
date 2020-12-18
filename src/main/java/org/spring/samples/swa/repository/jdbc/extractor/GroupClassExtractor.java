@@ -24,9 +24,9 @@ import java.util.Set;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
+import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -40,12 +40,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class GroupClassExtractor implements ResultSetExtractor<GroupClass> {
 
-  private final InstituteRepository instituteRepo;
+  private final InstituteService service;
 
   @Autowired
-  public GroupClassExtractor(
-      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
-    this.instituteRepo = instituteRepo;
+  public GroupClassExtractor(@Lazy InstituteService service) {
+    this.service = service;
   }
 
   @Override
@@ -55,7 +54,7 @@ public class GroupClassExtractor implements ResultSetExtractor<GroupClass> {
     groupClass.setId(rs.getInt("groupID"));
     groupClass.setTitle(rs.getString("groupTitle"));
     groupClass.setEduForm(rs.getString("edu_form"));
-    Cathedra cathedra = instituteRepo.findCathedraById(rs.getInt("grpCat"));
+    Cathedra cathedra = service.findCathedraById(rs.getInt("grpCat"));
     groupClass.setCathedra(cathedra);
     Set<Student> studentSet = new HashSet<>();
     do {

@@ -30,10 +30,10 @@ import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
+import org.spring.samples.swa.service.InstituteService;
 import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -47,12 +47,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CathedraExtractor implements ResultSetExtractor<Cathedra> {
 
-  private final InstituteRepository instituteRepo;
+  private final InstituteService service;
 
   @Autowired
-  public CathedraExtractor(
-      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
-    this.instituteRepo = instituteRepo;
+  public CathedraExtractor(@Lazy InstituteService service) {
+    this.service = service;
   }
 
   @Override
@@ -74,7 +73,7 @@ public class CathedraExtractor implements ResultSetExtractor<Cathedra> {
     cathedra.setInformation(rs.getString("cathedraInfo"));
     cathedra.setContactInf(rs.getString("cathedraContInf"));
     cathedra.setEduPrograms(rs.getString("edu_programs"));
-    Faculty faculty = instituteRepo.findFacultyById(rs.getInt("catFac"));
+    Faculty faculty = service.findFacultyById(rs.getInt("catFac"));
     cathedra.setFaculty(faculty);
     cathedraBoss.setFaculty(faculty);
     do {

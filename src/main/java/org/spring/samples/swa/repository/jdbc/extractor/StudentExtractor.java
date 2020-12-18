@@ -21,9 +21,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
+import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -37,12 +37,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentExtractor implements ResultSetExtractor<List<Student>> {
 
-  private final InstituteRepository instituteRepo;
+  private final InstituteService service;
 
   @Autowired
-  public StudentExtractor(
-      @Qualifier("jdbcInstituteRepositoryImpl") InstituteRepository instituteRepo) {
-    this.instituteRepo = instituteRepo;
+  public StudentExtractor(@Lazy InstituteService service) {
+    this.service = service;
   }
 
   @Override
@@ -57,9 +56,9 @@ public class StudentExtractor implements ResultSetExtractor<List<Student>> {
       student.setFactAddress(rs.getString("fact_address"));
       student.setAddress(rs.getString("address"));
       student.setTelephone(rs.getString("telephone"));
-      student.setGroupClass(instituteRepo.findGroupClassById(rs.getInt("group_class_id")));
-      student.setCathedra(instituteRepo.findCathedraById(rs.getInt("cathedra_id")));
-      student.setFaculty(instituteRepo.findFacultyById(rs.getInt("faculty_id")));
+      student.setGroupClass(service.findGroupClassById(rs.getInt("group_class_id")));
+      student.setCathedra(service.findCathedraById(rs.getInt("cathedra_id")));
+      student.setFaculty(service.findFacultyById(rs.getInt("faculty_id")));
       studentList.add(student);
     }
     return studentList;

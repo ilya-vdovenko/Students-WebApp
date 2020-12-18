@@ -30,6 +30,9 @@ import org.spring.samples.swa.repository.InstituteRepository;
 import org.spring.samples.swa.repository.StudentRepository;
 import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,18 +70,27 @@ public class InstituteServiceImpl implements InstituteService {
   }
 
   @Override
+  @Cacheable(value = "faculties")
   @Transactional(readOnly = true)
   public Faculty findFacultyById(int id) {
     return instituteRepository.findFacultyById(id);
   }
 
   @Override
+  @Caching(
+      evict = {
+          @CacheEvict(value = "faculties", allEntries = true),
+          @CacheEvict(value = "cathedras", allEntries = true),
+          @CacheEvict(value = "groups", allEntries = true)
+      }
+  )
   @Transactional(readOnly = true)
   public Collection<Faculty> getFaculties() {
     return instituteRepository.findAllByOrderByTitleAsc();
   }
 
   @Override
+  @Cacheable(value = "cathedras")
   @Transactional(readOnly = true)
   public Cathedra findCathedraById(int id) {
     return instituteRepository.findCathedraById(id);
@@ -130,30 +142,35 @@ public class InstituteServiceImpl implements InstituteService {
   }
 
   @Override
+  @Cacheable(value = "students")
   @Transactional(readOnly = true)
   public Student findStudentById(int id) {
     return studentRepository.findById(id);
   }
 
   @Override
+  @CacheEvict(value = "students", allEntries = true)
   @Transactional(readOnly = true)
   public Collection<Student> getStudents() {
     return studentRepository.findAllByOrderByFioAsc();
   }
 
   @Override
+  @Cacheable(value = "employees")
   @Transactional(readOnly = true)
   public Employee findEmployeeById(int id) {
     return employeeRepository.findById(id);
   }
 
   @Override
+  @CacheEvict(value = "employees", allEntries = true)
   @Transactional(readOnly = true)
   public Collection<Employee> getEmployees() {
     return employeeRepository.findAllByOrderByFioAsc();
   }
 
   @Override
+  @Cacheable(value = "groups")
   @Transactional(readOnly = true)
   public GroupClass findGroupClassById(int id) {
     return instituteRepository.findGroupClassById(id);

@@ -16,17 +16,11 @@
 package org.spring.samples.swa.repository.jpa;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.repository.InstituteRepository;
 import org.spring.samples.swa.repository.StudentRepository;
-import org.spring.samples.swa.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -38,28 +32,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JpaStudentRepositoryImpl implements StudentRepository {
 
-  private final InstituteRepository instituteRepo;
-  private final Map<Integer, Student> studentsMap = new LinkedHashMap<>();
-
   @PersistenceContext
   private EntityManager em;
-
-  public JpaStudentRepositoryImpl(
-      @Qualifier("jpaInstituteRepositoryImpl") InstituteRepository instituteRepo) {
-    this.instituteRepo = instituteRepo;
-  }
 
   @Override
   @SuppressWarnings("unchecked")
   public Collection<Student> findAllByOrderByFioAsc() {
-    List<Student> studentList = this.em.createQuery("from Student Order by fio").getResultList();
-    studentsMap.clear();
-    if (EntityUtils.isValidCollection(studentList)) {
-      for (Student student : studentList) {
-        studentsMap.putIfAbsent(student.getId(), student);
-      }
-    }
-    return studentList;
+    return this.em.createQuery("from Student Order by fio").getResultList();
   }
 
   @Override
@@ -69,20 +48,12 @@ public class JpaStudentRepositoryImpl implements StudentRepository {
     } else {
       this.em.merge(student);
     }
-    studentsMap.replace(student.getId(), student);
-    EntityUtils.clearAfterSetStudent(instituteRepo, student);
   }
 
   @Override
   public Student findById(int id) {
-    if (EntityUtils.isValidCollection(studentsMap.values())
-        && studentsMap.containsKey(id)) {
-      return studentsMap.get(id);
-    }
     Query query = this.em.createQuery("from Student as s where s.id =:id");
     query.setParameter("id", id);
-    Student student = (Student) query.getSingleResult();
-    studentsMap.putIfAbsent(id, student);
-    return student;
+    return (Student) query.getSingleResult();
   }
 }

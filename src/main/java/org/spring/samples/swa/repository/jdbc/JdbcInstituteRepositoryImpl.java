@@ -18,7 +18,6 @@ package org.spring.samples.swa.repository.jdbc;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,18 +50,12 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
   private final FacultyExtractor facultyExtractor;
-  private final Map<Integer, Faculty> facultiesMap = new LinkedHashMap<>();
-  private final Map<Integer, Cathedra> cathedrasMap = new LinkedHashMap<>();
-  private final Map<Integer, GroupClass> groupClassesMap = new LinkedHashMap<>();
-
-  @Autowired
-  private EmployeeExtractor employeeExtractor;
-
-  @Autowired
-  private CathedraExtractor cathedraExtractor;
-
-  @Autowired
-  private GroupClassExtractor groupClassExtractor;
+  private final EmployeeExtractor employeeExtractor;
+  private final CathedraExtractor cathedraExtractor;
+  private final GroupClassExtractor groupClassExtractor;
+  private Faculty tempFaculty;
+  private Cathedra tempCathhedra;
+  private GroupClass tempGroupClass;
 
   /**
    * Constructor of {@link JdbcInstituteRepositoryImpl} class.
@@ -72,12 +65,19 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
    * @param facultyExtractor           used for extract data to {@link Faculty} model.
    */
   @Autowired
-  public JdbcInstituteRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+  public JdbcInstituteRepositoryImpl(
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+      JdbcTemplate jdbcTemplate,
       FacultyExtractor facultyExtractor,
-      JdbcTemplate jdbcTemplate) {
+      EmployeeExtractor employeeExtractor,
+      CathedraExtractor cathedraExtractor,
+      GroupClassExtractor groupClassExtractor) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-    this.facultyExtractor = facultyExtractor;
     this.jdbcTemplate = jdbcTemplate;
+    this.facultyExtractor = facultyExtractor;
+    this.employeeExtractor = employeeExtractor;
+    this.cathedraExtractor = cathedraExtractor;
+    this.groupClassExtractor = groupClassExtractor;
   }
 
   @Override
@@ -100,7 +100,6 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
         facultyExtractor);
 
     if (EntityUtils.isValidCollection(facultyList)) {
-      EntityUtils.setEntityMaps(facultyList, facultiesMap, cathedrasMap, groupClassesMap);
       for (Faculty faculty : facultyList) {
         faculty.setEmployees(findEmployeesByEntity(faculty.getId(), "faculty_id"));
         for (Cathedra cathedra : faculty.getCathedras()) {
@@ -113,9 +112,8 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
 
   @Override
   public Faculty findFacultyById(int id) {
-    if (EntityUtils.isValidCollection(facultiesMap.values())
-        && facultiesMap.containsKey(id)) {
-      return facultiesMap.get(id);
+    if (tempFaculty != null && (tempFaculty.getId()).equals(id)) {
+      return tempFaculty;
     }
     Faculty faculty;
     try {
@@ -146,16 +144,15 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Faculty.class, id);
     }
-    facultiesMap.putIfAbsent(id, faculty);
+    tempFaculty = faculty;
     faculty.setEmployees(findEmployeesByEntity(faculty.getId(), "faculty_id"));
     return faculty;
   }
 
   @Override
   public Cathedra findCathedraById(int id) {
-    if (EntityUtils.isValidCollection(cathedrasMap.values())
-        && cathedrasMap.containsKey(id)) {
-      return cathedrasMap.get(id);
+    if (tempCathhedra != null && (tempCathhedra.getId()).equals(id)) {
+      return tempCathhedra;
     }
     Cathedra cathedra;
     try {
@@ -179,16 +176,15 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(Cathedra.class, id);
     }
-    cathedrasMap.putIfAbsent(id, cathedra);
+    tempCathhedra = cathedra;
     cathedra.setEmployees(findEmployeesByEntity(cathedra.getId(), "cathedra_id"));
     return cathedra;
   }
 
   @Override
   public GroupClass findGroupClassById(int id) {
-    if (EntityUtils.isValidCollection(groupClassesMap.values())
-        && groupClassesMap.containsKey(id)) {
-      return groupClassesMap.get(id);
+    if (tempGroupClass != null && (tempGroupClass.getId()).equals(id)) {
+      return tempGroupClass;
     }
     GroupClass groupClass;
     try {
@@ -205,7 +201,7 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
     } catch (EmptyResultDataAccessException ex) {
       throw new ObjectRetrievalFailureException(GroupClass.class, id);
     }
-    groupClassesMap.putIfAbsent(id, groupClass);
+    tempGroupClass = groupClass;
     return groupClass;
   }
 
@@ -226,20 +222,5 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
       throw new ObjectRetrievalFailureException(Faculty.class, id);
     }
     return new HashSet<>(employeeList);
-  }
-
-  @Override
-  public Map<Integer, Faculty> getInternalFaculties() {
-    return facultiesMap;
-  }
-
-  @Override
-  public Map<Integer, Cathedra> getInternalCathedras() {
-    return cathedrasMap;
-  }
-
-  @Override
-  public Map<Integer, GroupClass> getInternalGroupClasses() {
-    return groupClassesMap;
   }
 }

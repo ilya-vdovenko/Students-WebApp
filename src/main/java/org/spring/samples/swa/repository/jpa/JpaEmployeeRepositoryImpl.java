@@ -16,15 +16,11 @@
 package org.spring.samples.swa.repository.jpa;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.repository.EmployeeRepository;
-import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -36,35 +32,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JpaEmployeeRepositoryImpl implements EmployeeRepository {
 
-  private final Map<Integer, Employee> employeesMap = new LinkedHashMap<>();
 
   @PersistenceContext
   private EntityManager em;
 
   @Override
   public Employee findById(int id) {
-    if (EntityUtils.isValidCollection(employeesMap.values())
-        && employeesMap.containsKey(id)) {
-      return employeesMap.get(id);
-    }
     Query query = this.em.createQuery("from Employee as e where e.id =:id");
     query.setParameter("id", id);
-    Employee employee = (Employee) query.getSingleResult();
-    employeesMap.putIfAbsent(id, employee);
-    return employee;
+    return (Employee) query.getSingleResult();
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public Collection<Employee> findAllByOrderByFioAsc() {
-    List<Employee> employeeList = this.em.createQuery("from Employee Order by fio").getResultList();
-    employeesMap.clear();
-    if (EntityUtils.isValidCollection(employeeList)) {
-      for (Employee employee : employeeList) {
-        employeesMap.putIfAbsent(employee.getId(), employee);
-      }
-    }
-    return employeeList;
+    return this.em.createQuery("from Employee Order by fio").getResultList();
   }
 
 }

@@ -16,7 +16,6 @@
 package org.spring.samples.swa.repository;
 
 import java.util.Collection;
-import java.util.Map;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
@@ -29,12 +28,6 @@ import org.spring.samples.swa.model.UnitEntity;
  */
 
 public interface InstituteRepository {
-
-  Map<Integer, Faculty> getInternalFaculties();
-
-  Map<Integer, Cathedra> getInternalCathedras();
-
-  Map<Integer, GroupClass> getInternalGroupClasses();
 
   Faculty findFacultyById(int id);
 

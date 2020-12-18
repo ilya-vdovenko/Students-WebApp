@@ -16,9 +16,6 @@
 package org.spring.samples.swa.repository.jpa;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,7 +23,6 @@ import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.repository.InstituteRepository;
-import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -38,74 +34,33 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JpaInstituteRepositoryImpl implements InstituteRepository {
 
-  private final Map<Integer, Faculty> facultiesMap = new LinkedHashMap<>();
-  private final Map<Integer, Cathedra> cathedrasMap = new LinkedHashMap<>();
-  private final Map<Integer, GroupClass> groupClassesMap = new LinkedHashMap<>();
-
   @PersistenceContext
   private EntityManager em;
 
   @Override
   public Faculty findFacultyById(int id) {
-    if (EntityUtils.isValidCollection(facultiesMap.values())
-        && facultiesMap.containsKey(id)) {
-      return facultiesMap.get(id);
-    }
     Query query = this.em.createQuery("from Faculty as f where f.id =:id");
     query.setParameter("id", id);
-    Faculty faculty = (Faculty) query.getSingleResult();
-    facultiesMap.putIfAbsent(id, faculty);
-    return faculty;
+    return (Faculty) query.getSingleResult();
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public Collection<Faculty> findAllByOrderByTitleAsc() {
-    List<Faculty> facultyList = this.em.createQuery("from Faculty Order by title").getResultList();
-    if (EntityUtils.isValidCollection(facultyList)) {
-      EntityUtils.setEntityMaps(facultyList, facultiesMap, cathedrasMap, groupClassesMap);
-    }
-    return facultyList;
+    return this.em.createQuery("from Faculty Order by title").getResultList();
   }
 
   @Override
   public Cathedra findCathedraById(int id) {
-    if (EntityUtils.isValidCollection(cathedrasMap.values())
-        && cathedrasMap.containsKey(id)) {
-      return cathedrasMap.get(id);
-    }
     Query query = this.em.createQuery("from Cathedra as c where c.id =:id");
     query.setParameter("id", id);
-    Cathedra cathedra = (Cathedra) query.getSingleResult();
-    cathedrasMap.putIfAbsent(id, cathedra);
-    return cathedra;
+    return (Cathedra) query.getSingleResult();
   }
 
   @Override
   public GroupClass findGroupClassById(int id) {
-    if (EntityUtils.isValidCollection(groupClassesMap.values())
-        && groupClassesMap.containsKey(id)) {
-      return groupClassesMap.get(id);
-    }
     Query query = this.em.createQuery("from GroupClass as gc where gc.id =:id");
     query.setParameter("id", id);
-    GroupClass groupClass = (GroupClass) query.getSingleResult();
-    groupClassesMap.putIfAbsent(id, groupClass);
-    return groupClass;
-  }
-
-  @Override
-  public Map<Integer, Faculty> getInternalFaculties() {
-    return facultiesMap;
-  }
-
-  @Override
-  public Map<Integer, Cathedra> getInternalCathedras() {
-    return cathedrasMap;
-  }
-
-  @Override
-  public Map<Integer, GroupClass> getInternalGroupClasses() {
-    return groupClassesMap;
+    return (GroupClass) query.getSingleResult();
   }
 }

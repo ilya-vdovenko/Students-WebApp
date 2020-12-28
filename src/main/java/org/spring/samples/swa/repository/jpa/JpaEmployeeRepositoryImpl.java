@@ -45,8 +45,8 @@ public class JpaEmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Employee> findAllByOrderByFioAsc() {
-    return this.em.createQuery("from Employee Order by fio").getResultList();
+  public Collection<Employee> findAllByOrderByFullNameAsc() {
+    return this.em.createQuery("from Employee Order by fullName").getResultList();
   }
 
 }

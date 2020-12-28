@@ -8,6 +8,7 @@
   </appender>
   
   <logger name="org.spring.samples.swa" level="TRACE"/>
+  <logger name="org.hibernate.stat" level="DEBUG"/>
 
   <root level="info">
     <appender-ref ref="STDOUT" />

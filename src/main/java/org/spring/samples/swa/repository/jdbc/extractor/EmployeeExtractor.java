@@ -49,7 +49,7 @@ public class EmployeeExtractor implements ResultSetExtractor<List<Employee>> {
     while (rs.next()) {
       Employee employee = new Employee();
       employee.setId(rs.getInt("id"));
-      employee.setFio(rs.getString("fio"));
+      employee.setFullName(rs.getString("fullName"));
       employee.setPosition(rs.getString("position"));
       employee.setDegree(rs.getString("degree"));
       employee.setFaculty(service.findFacultyById(rs.getInt("faculty_id")));

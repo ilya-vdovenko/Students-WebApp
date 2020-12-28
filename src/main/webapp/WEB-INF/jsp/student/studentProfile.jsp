@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2><strong><c:out value="${student.fio}"/></strong></h2>
+                <h2><strong><c:out value="${student.fullName}"/></strong></h2>
                 <table class="table table-borderless table-sm student"
                        aria-describedby="studentInformation">
                     <tr>
@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <th scope="row"><spring:message code="table.actAddr"/></th>
-                        <td><c:out value="${student.factAddress}"/></td>
+                        <td><c:out value="${student.actualAddress}"/></td>
                     </tr>
                     <tr>
                         <th scope="row"><spring:message code="table.address"/></th>

@@ -33,10 +33,10 @@ public class StudentDto extends Student {
    */
   public StudentDto(Student student) {
     this.setId(student.getId());
-    this.setFio(student.getFio());
+    this.setFullName(student.getFullName());
     this.setSex(student.getSex());
     this.setBirthday(student.getBirthday());
-    this.setFactAddress(student.getFactAddress());
+    this.setActualAddress(student.getActualAddress());
     this.setAddress(student.getAddress());
     this.setTelephone(student.getTelephone());
     this.setFaculty(student.getFaculty());

@@ -84,14 +84,14 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
   public Collection<Faculty> findAllByOrderByTitleAsc() {
     List<Faculty> facultyList = this.jdbcTemplate.query(
         "SELECT f.id as facultyID, f.title as facultyTitle, f.information as facultyInfo,\n"
-            + "f.boss as facultyBossID, fb.fio as facultyBossFio,\n"
+            + "f.boss as facultyBossID, fb.fullName as facultyBossName,\n"
             + "fb.position as facultyBossPosition, fb.degree as facultyBossDegree,\n"
             + "f.contact_inf as facultyContInf, c.id as cathedraID, c.title as cathedraTitle,\n"
             + "c.information as cathedraInfo, c.boss as cathedraBossID,\n"
-            + "cb.fio as cathedraBossFio, cb.position as cathedraBossPosition,\n"
+            + "cb.fullName as cathedraBossName, cb.position as cathedraBossPosition,\n"
             + "cb.degree as cathedraBossDegree, c.contact_inf as cathedraContInf, edu_programs,\n"
-            + "g.id as groupID, g.title as groupTitle, edu_form, s.id as studentID, s.fio,\n"
-            + "birthday, sex, fact_address, address, telephone from faculties as f\n"
+            + "g.id as groupID, g.title as groupTitle, edu_form, s.id as studentID, s.fullName,\n"
+            + "birthday, sex, actualAddress, address, telephone from faculties as f\n"
             + "LEFT JOIN cathedras c on f.id = c.faculty_id\n"
             + "LEFT JOIN employees fb on f.boss = fb.id\n"
             + "LEFT JOIN employees cb on c.boss = cb.id\n"
@@ -121,14 +121,14 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
       params.put("id", id);
       List<Faculty> facultyList = this.namedParameterJdbcTemplate.query(
           "SELECT f.id as facultyID, f.title as facultyTitle, f.information as facultyInfo,\n"
-              + "f.boss as facultyBossID, fb.fio as facultyBossFio,\n"
+              + "f.boss as facultyBossID, fb.fullName as facultyBossName,\n"
               + "fb.position as facultyBossPosition, fb.degree as facultyBossDegree,\n"
               + "f.contact_inf as facultyContInf, c.id as cathedraID, c.title as cathedraTitle,\n"
               + "c.information as cathedraInfo, c.boss as cathedraBossID,\n"
-              + "cb.fio as cathedraBossFio, cb.position as cathedraBossPosition,\n"
+              + "cb.fullName as cathedraBossName, cb.position as cathedraBossPosition,\n"
               + "cb.degree as cathedraBossDegree, c.contact_inf as cathedraContInf, edu_programs,\n"
-              + "g.id as groupID, g.title as groupTitle, edu_form, s.id as studentID, s.fio,\n"
-              + "birthday, sex, fact_address, address, telephone from faculties as f\n"
+              + "g.id as groupID, g.title as groupTitle, edu_form, s.id as studentID, s.fullName,\n"
+              + "birthday, sex, actualAddress, address, telephone from faculties as f\n"
               + "LEFT JOIN cathedras c on f.id = c.faculty_id\n"
               + "LEFT JOIN employees fb on f.boss = fb.id\n"
               + "LEFT JOIN employees cb on c.boss = cb.id\n"
@@ -160,11 +160,11 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
       params.put("id", id);
       cathedra = this.namedParameterJdbcTemplate.query(
           "SELECT c.id as cathedraID, c.title as cathedraTitle, c.information as cathedraInfo,\n"
-              + "c.boss as cathedraBossID, cb.fio as cathedraBossFio,\n"
+              + "c.boss as cathedraBossID, cb.fullName as cathedraBossName,\n"
               + "cb.position as cathedraBossPosition, cb.degree as cathedraBossDegree,\n"
               + "c.contact_inf as cathedraContInf, edu_programs, c.faculty_id as catFac,\n"
-              + "g.id as groupID, g.title as groupTitle, edu_form, s.id as studentID, s.fio,\n"
-              + "birthday, sex, fact_address, address, telephone from cathedras as c\n"
+              + "g.id as groupID, g.title as groupTitle, edu_form, s.id as studentID, s.fullName,\n"
+              + "birthday, sex, actualAddress, address, telephone from cathedras as c\n"
               + "LEFT JOIN employees as cb on c.boss = cb.id\n"
               + "LEFT JOIN group_classes as g on c.id = g.cathedra_id\n"
               + "LEFT JOIN students as s on g.id = s.group_class_id WHERE c.id = :id",
@@ -192,7 +192,7 @@ public class JdbcInstituteRepositoryImpl implements InstituteRepository {
       params.put("id", id);
       groupClass = this.namedParameterJdbcTemplate.query(
           "SELECT g.id as groupID, g.title as groupTitle, edu_form, g.cathedra_id as grpCat,\n"
-              + "s.id as studentID, fio, birthday, sex, fact_address,\n"
+              + "s.id as studentID, fullName, birthday, sex, actualAddress,\n"
               + "address, telephone from group_classes as g\n"
               + "LEFT JOIN students as s on g.id = s.group_class_id WHERE g.id = :id",
           params,

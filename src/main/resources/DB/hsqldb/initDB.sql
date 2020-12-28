@@ -29,10 +29,10 @@ ALTER TABLE group_classes ADD CONSTRAINT fk_group_classes_cathedras FOREIGN KEY 
 
 CREATE TABLE students (
     id             INTEGER IDENTITY PRIMARY KEY,
-    fio            VARCHAR(40),
+    fullName       VARCHAR(40),
     birthday       DATE,
     sex            VARCHAR(3),
-    fact_address   VARCHAR(100),
+    actualAddress  VARCHAR(100),
     address        VARCHAR(100),
     telephone      VARCHAR(11),
     group_class_id INTEGER NOT NULL,
@@ -45,7 +45,7 @@ ALTER TABLE students ADD CONSTRAINT fk_students_faculties FOREIGN KEY (faculty_i
 
 CREATE TABLE employees (
     id             INTEGER IDENTITY PRIMARY KEY,
-    fio            VARCHAR(60),
+    fullName       VARCHAR(60),
     position       VARCHAR(30),
     degree         VARCHAR(40),
     cathedra_id    INTEGER,
@@ -63,12 +63,12 @@ CREATE TABLE facultyWorker (
 ALTER TABLE facultyWorker ADD CONSTRAINT fk_facultyWorker_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
 ALTER TABLE facultyWorker ADD CONSTRAINT fk_facultyWorker_employees FOREIGN KEY (employee_id) REFERENCES employees (id);
 
-CREATE TABLE facultySoviet (
+CREATE TABLE facultyBoard (
     faculty_id     INTEGER NOT NULL,
     employee_id    INTEGER NOT NULL
 );
-ALTER TABLE facultySoviet ADD CONSTRAINT fk_facultySoviet_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
-ALTER TABLE facultySoviet ADD CONSTRAINT fk_facultySoviet_employees FOREIGN KEY (employee_id) REFERENCES employees (id);
+ALTER TABLE facultyBoard ADD CONSTRAINT fk_facultyBoard_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
+ALTER TABLE facultyBoard ADD CONSTRAINT fk_facultyBoard_employees FOREIGN KEY (employee_id) REFERENCES employees (id);
 
 CREATE TABLE cathedraLectures (
     cathedra_id    INTEGER NOT NULL,

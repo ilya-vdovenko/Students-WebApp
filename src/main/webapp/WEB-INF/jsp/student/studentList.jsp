@@ -51,7 +51,7 @@
                                 <spring:url value="/students/{studentId}" var="studUrl">
                                     <spring:param name="studentId" value="${student.id}"/>
                                 </spring:url>
-                                <a class="link" href="${studUrl}"><c:out value="${student.fio}"/></a>
+                                <a class="link" href="${studUrl}"><c:out value="${student.fullName}"/></a>
                             </td>
                             <td><c:out value="${student.sex}"/></td>
                             <td><c:out value="${student.birthday}"/></td>

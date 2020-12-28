@@ -39,7 +39,7 @@ public interface InstituteService {
 
   Collection<Employee> getFacultyEmployees(Set<Employee> employees, int facultyId);
 
-  Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId);
+  Collection<Employee> getFacultyBoard(Set<Employee> employees, int facultyId);
 
   Collection<Employee> getCathedraLecturers(Set<Employee> employees, int cathedraId);
 

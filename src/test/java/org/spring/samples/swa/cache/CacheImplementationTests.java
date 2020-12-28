@@ -67,10 +67,10 @@ class CacheImplementationTests {
     groupClass.setTitle("АТ-121");
     Employee employee = new Employee();
     employee.setId(TEST_ID);
-    employee.setFio("Бурковский Виктор Леонидович");
+    employee.setFullName("Бурковский Виктор Леонидович");
     Student student = new Student();
     student.setId(TEST_ID);
-    student.setFio("Вдовенко Илья Сергеевич");
+    student.setFullName("Вдовенко Илья Сергеевич");
 
     given(this.instituteRepository.findFacultyById(TEST_ID)).willReturn(faculty);
     given(this.instituteRepository.findCathedraById(TEST_ID)).willReturn(cathedra);
@@ -104,14 +104,14 @@ class CacheImplementationTests {
   @RepeatedTest(2)
   void shouldFindStudentById() {
     Student student = this.service.findStudentById(TEST_ID);
-    assertThat(student.getFio()).isEqualTo("Вдовенко Илья Сергеевич");
+    assertThat(student.getFullName()).isEqualTo("Вдовенко Илья Сергеевич");
     verify(studentRepository, times(1)).findById(TEST_ID);
   }
 
   @RepeatedTest(2)
   void shouldFindEmployeeById() {
     Employee employee = this.service.findEmployeeById(TEST_ID);
-    assertThat(employee.getFio()).isEqualTo("Бурковский Виктор Леонидович");
+    assertThat(employee.getFullName()).isEqualTo("Бурковский Виктор Леонидович");
     verify(employeeRepository, times(1)).findById(TEST_ID);
   }
 }

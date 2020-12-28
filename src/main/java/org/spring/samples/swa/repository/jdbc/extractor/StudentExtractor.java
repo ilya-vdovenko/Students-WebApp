@@ -50,10 +50,10 @@ public class StudentExtractor implements ResultSetExtractor<List<Student>> {
     while (rs.next()) {
       Student student = new Student();
       student.setId(rs.getInt("id"));
-      student.setFio(rs.getString("fio"));
+      student.setFullName(rs.getString("fullName"));
       student.setBirthday(rs.getObject("birthday", LocalDate.class));
       student.setSex(rs.getString("sex"));
-      student.setFactAddress(rs.getString("fact_address"));
+      student.setActualAddress(rs.getString("actualAddress"));
       student.setAddress(rs.getString("address"));
       student.setTelephone(rs.getString("telephone"));
       student.setGroupClass(service.findGroupClassById(rs.getInt("group_class_id")));

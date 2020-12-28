@@ -49,7 +49,7 @@
                                 <spring:url value="/employees/{employeId}" var="empUrl">
                                     <spring:param name="employeId" value="${employee.id}"/>
                                 </spring:url>
-                                <a class="link" href="${empUrl}"><c:out value="${employee.fio}"/></a>
+                                <a class="link" href="${empUrl}"><c:out value="${employee.fullName}"/></a>
                             </td>
                             <td><c:out value="${employee.position}"/></td>
                             <td>

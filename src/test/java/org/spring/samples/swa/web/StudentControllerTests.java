@@ -73,10 +73,10 @@ class StudentControllerTests {
 
     Student ilya = new Student();
     ilya.setId(TEST_STUDENT_ID);
-    ilya.setFio("Вдовенко Илья Сергеевич");
+    ilya.setFullName("Вдовенко Илья Сергеевич");
     ilya.setBirthday(birthday);
     ilya.setSex("муж");
-    ilya.setFactAddress("г.Воронеж, Московский пр-кт 141");
+    ilya.setActualAddress("г.Воронеж, Московский пр-кт 141");
     ilya.setAddress("-");
     ilya.setTelephone("89618729234");
     ilya.setFaculty(faculty);
@@ -94,11 +94,11 @@ class StudentControllerTests {
     mockMvc.perform(get("/students/{studentId}", TEST_STUDENT_ID))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("student"))
-        .andExpect(model().attribute("student", hasProperty("fio", is("Вдовенко Илья Сергеевич"))))
+        .andExpect(model().attribute("student", hasProperty("fullName", is("Вдовенко Илья Сергеевич"))))
         .andExpect(model().attribute("student", hasProperty("birthday", is(birthday))))
         .andExpect(model().attribute("student", hasProperty("sex", is("муж"))))
         .andExpect(model().attribute("student",
-            hasProperty("factAddress", is("г.Воронеж, Московский пр-кт 141"))))
+            hasProperty("actualAddress", is("г.Воронеж, Московский пр-кт 141"))))
         .andExpect(model().attribute("student", hasProperty("address", is("-"))))
         .andExpect(model().attribute("student", hasProperty("telephone", is("89618729234"))))
         .andExpect(model().attribute("student", hasProperty("faculty", is(faculty))))
@@ -126,10 +126,10 @@ class StudentControllerTests {
   @Test
   void testProcessCreationFormSuccess() throws Exception {
     mockMvc.perform(post("/students/new")
-        .param("fio", "Иванов Иван Иванович")
+        .param("fullName", "Иванов Иван Иванович")
         .param("birthday", "1994-06-23")
         .param("sex", "муж")
-        .param("factAddress", "г.Воронеж, Московский проспект, 179в")
+        .param("actualAddress", "г.Воронеж, Московский проспект, 179в")
         .param("address", "-")
         .param("telephone", "89081355694")
         .param("faculty", "1")
@@ -142,11 +142,11 @@ class StudentControllerTests {
   @Test
   void testProcessCreationFormHasErrors() throws Exception {
     mockMvc.perform(post("/students/new")
-        .param("fio", "Иванов Иван Иванович")
+        .param("fullName", "Иванов Иван Иванович")
         .param("birthday", "")
         .param("sex", "муж")
         .param("telephone", "8903456")
-        .param("factAddress", "ул. НетНазвания")
+        .param("actualAddress", "ул. НетНазвания")
         .param("faculty", "1")
         .param("cathedra", "1")
         .param("groupClass", "1")
@@ -154,7 +154,7 @@ class StudentControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeHasErrors("studentDto"))
         .andExpect(model().attributeHasFieldErrors("studentDto", "birthday"))
-        .andExpect(model().attributeHasFieldErrors("studentDto", "factAddress"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "actualAddress"))
         .andExpect(model().attributeHasFieldErrors("studentDto", "telephone"))
         .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }
@@ -165,11 +165,11 @@ class StudentControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("studentDto"))
         .andExpect(
-            model().attribute("studentDto", hasProperty("fio", is("Вдовенко Илья Сергеевич"))))
+            model().attribute("studentDto", hasProperty("fullName", is("Вдовенко Илья Сергеевич"))))
         .andExpect(model().attribute("studentDto", hasProperty("birthday", is(birthday))))
         .andExpect(model().attribute("studentDto", hasProperty("sex", is("муж"))))
         .andExpect(model().attribute("studentDto",
-            hasProperty("factAddress", is("г.Воронеж, Московский пр-кт 141"))))
+            hasProperty("actualAddress", is("г.Воронеж, Московский пр-кт 141"))))
         .andExpect(model().attribute("studentDto", hasProperty("address", is("-"))))
         .andExpect(model().attribute("studentDto", hasProperty("telephone", is("89618729234"))))
         .andExpect(model().attribute("studentDto", hasProperty("faculty", is(faculty))))
@@ -181,10 +181,10 @@ class StudentControllerTests {
   @Test
   void testProcessUpdateStudentFormSuccess() throws Exception {
     mockMvc.perform(post("/students/{studentId}/edit", TEST_STUDENT_ID)
-        .param("fio", "Вдовенко Илья Сергеевич")
+        .param("fullName", "Вдовенко Илья Сергеевич")
         .param("birthday", "1994-09-26")
         .param("sex", "жен")
-        .param("factAddress", "г.Воронеж, Московский пр-кт 141")
+        .param("actualAddress", "г.Воронеж, Московский пр-кт 141")
         .param("address", "-")
         .param("telephone", "89518739244")
         .param("faculty", "1")
@@ -197,11 +197,11 @@ class StudentControllerTests {
   @Test
   void testProcessUpdateStudentFormHasErrors() throws Exception {
     mockMvc.perform(post("/students/{studentId}/edit", TEST_STUDENT_ID)
-        .param("fio", "Иванов Иван Иванович")
+        .param("fullName", "Иванов Иван Иванович")
         .param("birthday", "")
         .param("sex", "муж")
         .param("telephone", "8903456")
-        .param("factAddress", "ул. НетНазвания")
+        .param("actualAddress", "ул. НетНазвания")
         .param("faculty", "1")
         .param("cathedra", "1")
         .param("groupClass", "1")
@@ -209,7 +209,7 @@ class StudentControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeHasErrors("studentDto"))
         .andExpect(model().attributeHasFieldErrors("studentDto", "birthday"))
-        .andExpect(model().attributeHasFieldErrors("studentDto", "factAddress"))
+        .andExpect(model().attributeHasFieldErrors("studentDto", "actualAddress"))
         .andExpect(model().attributeHasFieldErrors("studentDto", "telephone"))
         .andExpect(view().name("student/StudentCreateOrUpdateForm"));
   }

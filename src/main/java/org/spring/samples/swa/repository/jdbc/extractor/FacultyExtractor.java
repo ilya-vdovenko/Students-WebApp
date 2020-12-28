@@ -61,7 +61,7 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
         faculty.setTitle(rs.getString("facultyTitle"));
         Employee facultyBoss = new Employee();
         facultyBoss.setId(rs.getInt("facultyBossID"));
-        facultyBoss.setFio(rs.getString("facultyBossFio"));
+        facultyBoss.setFullName(rs.getString("facultyBossName"));
         facultyBoss.setPosition(rs.getString("facultyBossPosition"));
         facultyBoss.setDegree(rs.getString("facultyBossDegree"));
         facultyBoss.setFaculty(faculty);
@@ -78,7 +78,7 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
         cathedra.setTitle(rs.getString("cathedraTitle"));
         Employee cathedraBoss = new Employee();
         cathedraBoss.setId(rs.getInt("cathedraBossID"));
-        cathedraBoss.setFio(rs.getString("cathedraBossFio"));
+        cathedraBoss.setFullName(rs.getString("cathedraBossName"));
         cathedraBoss.setPosition(rs.getString("cathedraBossPosition"));
         cathedraBoss.setDegree(rs.getString("cathedraBossDegree"));
         cathedraBoss.setFaculty(faculty);

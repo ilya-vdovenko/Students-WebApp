@@ -69,9 +69,9 @@ abstract class AbstractInstituteServiceTests {
   }
 
   @Test
-  void shouldGetFacultySoviet() {
+  void shouldGetFacultyBoard() {
     Faculty faculty = this.service.findFacultyById(1);
-    Collection<Employee> employees = this.service.getFacultySoviet(faculty.getEmployees(), 1);
+    Collection<Employee> employees = this.service.getFacultyBoard(faculty.getEmployees(), 1);
     assertThat(employees).hasSize(5);
   }
 
@@ -89,10 +89,10 @@ abstract class AbstractInstituteServiceTests {
     int found = students.size();
 
     Student student = new Student();
-    student.setFio("Иванов Иван Иванович");
+    student.setFullName("Иванов Иван Иванович");
     student.setBirthday(LocalDate.parse("1994-06-23"));
     student.setSex("муж");
-    student.setFactAddress("-");
+    student.setActualAddress("-");
     student.setAddress("-");
     student.setTelephone("89081355694");
     student.setFaculty(this.service.findFacultyById(1));
@@ -109,17 +109,17 @@ abstract class AbstractInstituteServiceTests {
   @Transactional
   void shouldUpdateStudent() {
     Student student = this.service.findStudentById(2);
-    String newFio = "Сидоров Иван Иванович";
-    student.setFio(newFio);
+    String newName = "Сидоров Иван Иванович";
+    student.setFullName(newName);
     this.service.saveStudent(student);
     student = this.service.findStudentById(2);
-    assertThat(student.getFio()).isEqualTo(newFio);
+    assertThat(student.getFullName()).isEqualTo(newName);
   }
 
   @Test
   void shouldFindStudentById() {
     Student student = this.service.findStudentById(1);
-    assertThat(student.getFio()).isEqualTo("Вдовенко Илья Сергеевич");
+    assertThat(student.getFullName()).isEqualTo("Вдовенко Илья Сергеевич");
     assertThat(student.getFaculty().getTitle()).isEqualTo("Энергетики и систем управления");
     assertThat(student.getCathedra().getTitle())
         .isEqualTo("Электропривода, автоматики и управления в технических системах");
@@ -134,7 +134,7 @@ abstract class AbstractInstituteServiceTests {
   @Test
   void shouldFindEmployeeById() {
     Employee employee = this.service.findEmployeeById(1);
-    assertThat(employee.getFio()).isEqualTo("Бурковский Виктор Леонидович");
+    assertThat(employee.getFullName()).isEqualTo("Бурковский Виктор Леонидович");
     assertThat(employee.getFaculty().getTitle()).isEqualTo("Энергетики и систем управления");
   }
 

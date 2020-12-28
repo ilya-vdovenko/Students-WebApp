@@ -7,7 +7,7 @@ ALTER DATABASE institute
 CREATE TABLE IF NOT EXISTS institute.employees
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fio         VARCHAR(60),
+    fullName    VARCHAR(60),
     position    VARCHAR(30),
     degree      VARCHAR(40),
     cathedra_id INT(4) UNSIGNED,
@@ -54,10 +54,10 @@ CREATE TABLE IF NOT EXISTS institute.group_classes
 CREATE TABLE IF NOT EXISTS institute.students
 (
     id             INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fio            VARCHAR(40),
+    fullName       VARCHAR(40),
     birthday       DATE,
     sex            VARCHAR(3),
-    fact_address   VARCHAR(100),
+    actualAddress  VARCHAR(100),
     address        VARCHAR(100),
     telephone      VARCHAR(11),
     group_class_id INT(4) UNSIGNED NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS institute.facultyWorker
     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.facultySoviet
+CREATE TABLE IF NOT EXISTS institute.facultyBoard
 (
     faculty_id  INT(4) UNSIGNED NOT NULL,
     employee_id INT(4) UNSIGNED NOT NULL,

@@ -52,10 +52,10 @@ public class EntityUtils {
       throws SQLException {
     Student student = new Student();
     student.setId(rs.getInt("studentID"));
-    student.setFio(rs.getString("fio"));
+    student.setFullName(rs.getString("fullName"));
     student.setBirthday(rs.getObject("birthday", LocalDate.class));
     student.setSex(rs.getString("sex"));
-    student.setFactAddress(rs.getString("fact_address"));
+    student.setActualAddress(rs.getString("actualAddress"));
     student.setAddress(rs.getString("address"));
     student.setTelephone(rs.getString("telephone"));
     student.setGroupClass(groupClass);

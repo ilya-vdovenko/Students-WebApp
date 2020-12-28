@@ -28,6 +28,6 @@ public interface EmployeeRepository {
 
   Employee findById(int id);
 
-  Collection<Employee> findAllByOrderByFioAsc();
+  Collection<Employee> findAllByOrderByFullNameAsc();
 
 }

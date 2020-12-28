@@ -79,15 +79,15 @@ public class InstituteController {
     return "institute/cathedraList";
   }
 
-  private void getEmployeesModel(Model model, int id, boolean isSoviet) {
+  private void getEmployeesModel(Model model, int id, boolean isBoard) {
     Faculty faculty = service.findFacultyById(id);
     model.addAttribute(faculty);
-    if (isSoviet) {
-      model.addAttribute(EMPLOYEE_LIST, service.getFacultySoviet(faculty.getEmployees(), id));
-      model.addAttribute("soviet", true);
+    if (isBoard) {
+      model.addAttribute(EMPLOYEE_LIST, service.getFacultyBoard(faculty.getEmployees(), id));
+      model.addAttribute("board", true);
     } else {
       model.addAttribute(EMPLOYEE_LIST, service.getFacultyEmployees(faculty.getEmployees(), id));
-      model.addAttribute("soviet", false);
+      model.addAttribute("board", false);
     }
   }
 
@@ -97,8 +97,8 @@ public class InstituteController {
     return INSTITUTE_UNIT_EMPLOYEES;
   }
 
-  @RequestMapping(value = "/{facultyId}/soviet", method = GET)
-  public String showFacultySoviet(@PathVariable int facultyId, Model model) {
+  @RequestMapping(value = "/{facultyId}/board", method = GET)
+  public String showFacultyBoard(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, true);
     return INSTITUTE_UNIT_EMPLOYEES;
   }

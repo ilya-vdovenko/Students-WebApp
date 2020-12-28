@@ -50,15 +50,15 @@ INSERT INTO facultyWorker VALUES(2, 18);
 INSERT INTO facultyWorker VALUES(2, 19);
 INSERT INTO facultyWorker VALUES(2, 20);
 
-INSERT INTO facultySoviet VALUES(1, 4);
-INSERT INTO facultySoviet VALUES(1, 5);
-INSERT INTO facultySoviet VALUES(1, 2);
-INSERT INTO facultySoviet VALUES(1, 3);
-INSERT INTO facultySoviet VALUES(1, 17);
-INSERT INTO facultySoviet VALUES(2, 18);
-INSERT INTO facultySoviet VALUES(2, 19);
-INSERT INTO facultySoviet VALUES(2, 20);
-INSERT INTO facultySoviet VALUES(2, 21);
+INSERT INTO facultyBoard VALUES(1, 4);
+INSERT INTO facultyBoard VALUES(1, 5);
+INSERT INTO facultyBoard VALUES(1, 2);
+INSERT INTO facultyBoard VALUES(1, 3);
+INSERT INTO facultyBoard VALUES(1, 17);
+INSERT INTO facultyBoard VALUES(2, 18);
+INSERT INTO facultyBoard VALUES(2, 19);
+INSERT INTO facultyBoard VALUES(2, 20);
+INSERT INTO facultyBoard VALUES(2, 21);
 
 INSERT INTO cathedraLectures VALUES(1, 1);
 INSERT INTO cathedraLectures VALUES(1, 2);

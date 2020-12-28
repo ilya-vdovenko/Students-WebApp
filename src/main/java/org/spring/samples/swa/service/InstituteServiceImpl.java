@@ -106,9 +106,9 @@ public class InstituteServiceImpl implements InstituteService {
 
   @Override
   @Transactional(readOnly = true)
-  public Collection<Employee> getFacultySoviet(Set<Employee> employees, int facultyId) {
+  public Collection<Employee> getFacultyBoard(Set<Employee> employees, int facultyId) {
     return getList(
-        jdbcTemplate.queryForList("SELECT employee_id FROM facultySoviet WHERE faculty_id = ?",
+        jdbcTemplate.queryForList("SELECT employee_id FROM facultyBoard WHERE faculty_id = ?",
             Integer.class, facultyId), employees);
   }
 
@@ -152,7 +152,7 @@ public class InstituteServiceImpl implements InstituteService {
   @CacheEvict(value = "students", allEntries = true)
   @Transactional(readOnly = true)
   public Collection<Student> getStudents() {
-    return studentRepository.findAllByOrderByFioAsc();
+    return studentRepository.findAllByOrderByFullNameAsc();
   }
 
   @Override
@@ -166,7 +166,7 @@ public class InstituteServiceImpl implements InstituteService {
   @CacheEvict(value = "employees", allEntries = true)
   @Transactional(readOnly = true)
   public Collection<Employee> getEmployees() {
-    return employeeRepository.findAllByOrderByFioAsc();
+    return employeeRepository.findAllByOrderByFullNameAsc();
   }
 
   @Override

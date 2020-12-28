@@ -4,8 +4,8 @@
 ![Build and deploy tests](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy%20tests/badge.svg)
 ![Lint Code Base](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Lint%20Code%20Base/badge.svg)
 
-This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a plain old **Spring Framework configuration**
-and with a **3-layer architecture** (i.e. presentation --> service --> repository).
+This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a plain old **XML**
+spring framework configuration (a java based configuration [here](https://github.com/ilya-vdovenko/Students-WebApp/tree/javaconfig)) and with a **3-layer architecture** (i.e. presentation --> service --> repository).
 Created by following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic).
 
 ## Running web-app locally
@@ -67,7 +67,7 @@ Before do this, would be good to check properties defined in MySQL profile insid
 ```xml
 <properties>
       <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-      <maven.test.exclude>Jpa|SpringDataJpa</maven.test.exclude>
+      <maven.skipTests>true</maven.skipTests>
       <maven.db.script>mysql</maven.db.script>
       <maven.jpa.database>MYSQL</maven.jpa.database>
       <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>

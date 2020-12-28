@@ -59,10 +59,10 @@
                                 <spring:url value="/employees/{employeId}" var="empUrl">
                                     <spring:param name="employeId" value="${faculty.boss.id}"/>
                                 </spring:url>
-                                <a class="link" href="${empUrl}"><c:out value="${faculty.boss.fio}"/></a>
+                                <a class="link" href="${empUrl}"><c:out value="${faculty.boss.fullName}"/></a>
                             </td>
                             <td>
-                                <spring:url value="/faculties/{facultyId}/soviet" var="sovUrl">
+                                <spring:url value="/faculties/{facultyId}/board" var="sovUrl">
                                     <spring:param name="facultyId" value="${faculty.id}"/>
                                 </spring:url>
                                 <a class="link" href="${sovUrl}"><c:out value="..."/></a>

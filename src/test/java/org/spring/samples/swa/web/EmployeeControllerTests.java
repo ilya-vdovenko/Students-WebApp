@@ -58,7 +58,7 @@ class EmployeeControllerTests {
 
     Employee burk = new Employee();
     burk.setId(TEST_EMPLOYEE_ID);
-    burk.setFio("Бурковский Виктор Леонидович");
+    burk.setFullName("Бурковский Виктор Леонидович");
     burk.setPosition("Заведущий кафедрой");
     burk.setDegree("Доктор технических наук, профессор");
 
@@ -71,7 +71,7 @@ class EmployeeControllerTests {
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("employee"))
         .andExpect(
-            model().attribute("employee", hasProperty("fio", is("Бурковский Виктор Леонидович"))))
+            model().attribute("employee", hasProperty("fullName", is("Бурковский Виктор Леонидович"))))
         .andExpect(model().attribute("employee", hasProperty("position", is("Заведущий кафедрой"))))
         .andExpect(model()
             .attribute("employee", hasProperty("degree", is("Доктор технических наук, профессор"))))

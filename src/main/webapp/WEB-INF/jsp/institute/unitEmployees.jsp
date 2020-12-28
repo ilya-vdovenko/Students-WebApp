@@ -18,13 +18,13 @@
                     <spring:param name="facultyId" value="${faculty.id}"/>
                 </spring:url>
                 <c:choose>
-                    <c:when test="${faculty!=null && !soviet}">
+                    <c:when test="${faculty!=null && !board}">
                         <h2><spring:message code="list.unit.employee"/>
                             "<a class="link" href="${facUrl}"><c:out value="${faculty.title}"/></a>"</h2>
                     </c:when>
                     <c:otherwise>
                         <c:choose>
-                            <c:when test="${soviet}">
+                            <c:when test="${board}">
                                 <h2><spring:message code="list.unit.board"/>
                                     "<a class="link" href="${facUrl}"><c:out value="${faculty.title}"/></a>"</h2>
                             </c:when>
@@ -72,7 +72,7 @@
                                 <spring:url value="/employees/{employeId}" var="empUrl">
                                     <spring:param name="employeId" value="${employee.id}"/>
                                 </spring:url>
-                                <a class="link" href="${empUrl}"><c:out value="${employee.fio}"/></a>
+                                <a class="link" href="${empUrl}"><c:out value="${employee.fullName}"/></a>
                             </td>
                             <td><c:out value="${employee.position}"/></td>
                             <td>

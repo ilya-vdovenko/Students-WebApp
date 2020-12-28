@@ -28,7 +28,7 @@ public interface StudentRepository {
 
   void save(Student student);
 
-  Collection<Student> findAllByOrderByFioAsc();
+  Collection<Student> findAllByOrderByFullNameAsc();
 
   Student findById(int id);
 }

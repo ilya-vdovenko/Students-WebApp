@@ -83,7 +83,7 @@ class InstituteControllerTests {
     given(this.service.findCathedraById(TEST_CATHEDRA_ID)).willReturn(cathedra);
     given(this.service.findGroupClassById(TEST_GROUP_ID)).willReturn(groupClass);
 
-    given(this.service.getFacultySoviet(anySet(), anyInt())).willReturn(new ArrayList<>());
+    given(this.service.getFacultyBoard(anySet(), anyInt())).willReturn(new ArrayList<>());
     given(this.service.getFacultyEmployees(anySet(), anyInt())).willReturn(new ArrayList<>());
     given(this.service.getCathedraLecturers(anySet(), anyInt())).willReturn(new ArrayList<>());
   }
@@ -142,17 +142,17 @@ class InstituteControllerTests {
   void testShowFacultyEmployees() throws Exception {
     mockMvc.perform(get("/faculties/{facultyId}/employees", TEST_FACULTY_ID))
         .andExpect(status().isOk())
-        .andExpect(model().attributeExists("faculty", "employee_list", "soviet"))
-        .andExpect(model().attribute("soviet", false))
+        .andExpect(model().attributeExists("faculty", "employee_list", "board"))
+        .andExpect(model().attribute("board", false))
         .andExpect(view().name("institute/unitEmployees"));
   }
 
   @Test
-  void testShowFacultySoviet() throws Exception {
-    mockMvc.perform(get("/faculties/{facultyId}/soviet", TEST_FACULTY_ID))
+  void testShowFacultyBoard() throws Exception {
+    mockMvc.perform(get("/faculties/{facultyId}/board", TEST_FACULTY_ID))
         .andExpect(status().isOk())
-        .andExpect(model().attributeExists("faculty", "employee_list", "soviet"))
-        .andExpect(model().attribute("soviet", true))
+        .andExpect(model().attributeExists("faculty", "employee_list", "board"))
+        .andExpect(model().attribute("board", true))
         .andExpect(view().name("institute/unitEmployees"));
   }
 

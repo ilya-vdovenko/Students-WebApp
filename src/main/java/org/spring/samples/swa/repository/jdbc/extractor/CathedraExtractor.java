@@ -65,7 +65,7 @@ public class CathedraExtractor implements ResultSetExtractor<Cathedra> {
     cathedra.setTitle(rs.getString("cathedraTitle"));
     Employee cathedraBoss = new Employee();
     cathedraBoss.setId(rs.getInt("cathedraBossID"));
-    cathedraBoss.setFio(rs.getString("cathedraBossFio"));
+    cathedraBoss.setFullName(rs.getString("cathedraBossName"));
     cathedraBoss.setPosition(rs.getString("cathedraBossPosition"));
     cathedraBoss.setDegree(rs.getString("cathedraBossDegree"));
     cathedraBoss.setCathedra(cathedra);

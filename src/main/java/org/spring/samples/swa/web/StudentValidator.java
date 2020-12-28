@@ -28,6 +28,8 @@ import org.springframework.validation.Validator;
 
 public class StudentValidator implements Validator {
 
+  public static final String ERROR_EMPTY = "error.empty";
+
   @Override
   public boolean supports(Class<?> clazz) {
     return StudentDto.class.isAssignableFrom(clazz);
@@ -37,23 +39,23 @@ public class StudentValidator implements Validator {
   public void validate(Object target, Errors errors) {
     StudentDto student = (StudentDto) target;
 
-    if (student.getFio().length() < 10 | student.getFio().length() > 60) {
-      errors.rejectValue("fio", "error.min_max.size", new Object[]{10, 60}, null);
+    if (student.getFullName().length() < 10 || student.getFullName().length() > 60) {
+      errors.rejectValue("fullName", "error.min_max.size", new Object[]{10, 60}, null);
     }
 
-    ValidationUtils.rejectIfEmpty(errors, "birthday", "error.empty");
-    ValidationUtils.rejectIfEmpty(errors, "sex", "error.empty");
+    ValidationUtils.rejectIfEmpty(errors, "birthday", ERROR_EMPTY);
+    ValidationUtils.rejectIfEmpty(errors, "sex", ERROR_EMPTY);
 
     if (student.getTelephone().length() < 11) {
       errors.rejectValue("telephone", "error.max.size", new Object[]{11}, null);
     }
 
-    if (student.getFactAddress().length() < 20 | student.getFactAddress().length() > 100) {
-      errors.rejectValue("factAddress", "error.min_max.size", new Object[]{20, 100}, null);
+    if (student.getActualAddress().length() < 20 || student.getActualAddress().length() > 100) {
+      errors.rejectValue("actualAddress", "error.min_max.size", new Object[]{20, 100}, null);
     }
 
-    ValidationUtils.rejectIfEmpty(errors, "faculty", "error.empty");
-    ValidationUtils.rejectIfEmpty(errors, "cathedra", "error.empty");
-    ValidationUtils.rejectIfEmpty(errors, "groupClass", "error.empty");
+    ValidationUtils.rejectIfEmpty(errors, "faculty", ERROR_EMPTY);
+    ValidationUtils.rejectIfEmpty(errors, "cathedra", ERROR_EMPTY);
+    ValidationUtils.rejectIfEmpty(errors, "groupClass", ERROR_EMPTY);
   }
 }

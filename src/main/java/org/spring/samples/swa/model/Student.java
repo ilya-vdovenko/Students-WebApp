@@ -45,8 +45,8 @@ public class Student extends Person {
   @Column(name = "sex")
   private String sex;
 
-  @Column(name = "fact_address")
-  private String factAddress;
+  @Column(name = "actualAddress")
+  private String actualAddress;
 
   @Column(name = "address")
   private String address;
@@ -76,12 +76,12 @@ public class Student extends Person {
     this.sex = sex;
   }
 
-  public String getFactAddress() {
-    return factAddress;
+  public String getActualAddress() {
+    return actualAddress;
   }
 
-  public void setFactAddress(String factAddress) {
-    this.factAddress = factAddress;
+  public void setActualAddress(String address) {
+    this.actualAddress = address;
   }
 
   public String getAddress() {
@@ -114,7 +114,7 @@ public class Student extends Person {
         + "id=" + id
         + ", birthday=" + birthday
         + ", sex='" + sex + '\''
-        + ", factAddress='" + factAddress + '\''
+        + ", actualAddress='" + actualAddress + '\''
         + ", address='" + address + '\''
         + ", telephone='" + telephone + '\''
         + ", groupClass id=" + groupClass.getId()

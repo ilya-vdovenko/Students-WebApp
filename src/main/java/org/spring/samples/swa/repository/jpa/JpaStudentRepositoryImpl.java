@@ -37,8 +37,8 @@ public class JpaStudentRepositoryImpl implements StudentRepository {
 
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Student> findAllByOrderByFioAsc() {
-    return this.em.createQuery("from Student Order by fio").getResultList();
+  public Collection<Student> findAllByOrderByFullNameAsc() {
+    return this.em.createQuery("from Student Order by fullName").getResultList();
   }
 
   @Override

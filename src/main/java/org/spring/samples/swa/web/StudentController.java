@@ -47,8 +47,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/students")
 public class StudentController {
 
-  private final InstituteService service;
   private static final String STUDENT_CREATE_OR_UPDATE_FORM = "student/StudentCreateOrUpdateForm";
+  private final InstituteService service;
 
   @Autowired
   public StudentController(InstituteService is) {
@@ -136,10 +136,10 @@ public class StudentController {
   private void saveStudent(StudentDto studentDto, Integer id) {
     Student persistentStudent = new Student();
     persistentStudent.setId(id);
-    persistentStudent.setFio(studentDto.getFio());
+    persistentStudent.setFullName(studentDto.getFullName());
     persistentStudent.setBirthday(studentDto.getBirthday());
     persistentStudent.setSex(studentDto.getSex());
-    persistentStudent.setFactAddress(studentDto.getFactAddress());
+    persistentStudent.setActualAddress(studentDto.getActualAddress());
     persistentStudent.setAddress(studentDto.getAddress());
     persistentStudent.setTelephone(studentDto.getTelephone());
     persistentStudent.setFaculty(studentDto.getFaculty());

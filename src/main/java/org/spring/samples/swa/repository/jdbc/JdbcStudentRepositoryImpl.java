@@ -78,16 +78,17 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
       student.setId(newKey.intValue());
     } else {
       this.namedParameterJdbcTemplate.update(
-          "UPDATE students SET fio=:fio, birthday=:birthday, sex=:sex, fact_address=:fact_address,"
-              + "address=:address, telephone=:telephone, group_class_id=:group_class_id,"
-              + "cathedra_id=:cathedra_id, faculty_id=:faculty_id WHERE id=:id",
+          "UPDATE students SET fullName=:fullName, birthday=:birthday, sex=:sex,"
+              + "actualAddress=:actualAddress, address=:address, telephone=:telephone,"
+              + "group_class_id=:group_class_id, cathedra_id=:cathedra_id,"
+              + "faculty_id=:faculty_id WHERE id=:id",
           createPetParameterSource(student));
     }
   }
 
   @Override
-  public Collection<Student> findAllByOrderByFioAsc() {
-    return jdbcTemplate.query("SELECT * FROM students ORDER BY fio", studentExtractor);
+  public Collection<Student> findAllByOrderByFullNameAsc() {
+    return jdbcTemplate.query("SELECT * FROM students ORDER BY fullName", studentExtractor);
   }
 
   @Override
@@ -118,10 +119,10 @@ public class JdbcStudentRepositoryImpl implements StudentRepository {
   private MapSqlParameterSource createPetParameterSource(Student student) {
     return new MapSqlParameterSource()
         .addValue("id", student.getId())
-        .addValue("fio", student.getFio())
+        .addValue("fullName", student.getFullName())
         .addValue("birthday", student.getBirthday())
         .addValue("sex", student.getSex())
-        .addValue("fact_address", student.getFactAddress())
+        .addValue("actualAddress", student.getActualAddress())
         .addValue("address", student.getAddress())
         .addValue("telephone", student.getTelephone())
         .addValue("group_class_id", student.getGroupClass().getId())

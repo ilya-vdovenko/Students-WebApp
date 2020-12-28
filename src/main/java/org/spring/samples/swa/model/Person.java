@@ -34,8 +34,8 @@ import org.hibernate.annotations.CascadeType;
 public class Person extends BaseEntity {
 
   @NotEmpty
-  @Column(name = "fio")
-  private String fio;
+  @Column(name = "fullName")
+  private String fullName;
 
   @NotEmpty
   @ManyToOne
@@ -48,12 +48,12 @@ public class Person extends BaseEntity {
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 
-  public String getFio() {
-    return fio;
+  public String getFullName() {
+    return fullName;
   }
 
-  public void setFio(String fio) {
-    this.fio = fio;
+  public void setFullName(String name) {
+    this.fullName = name;
   }
 
   public Faculty getFaculty() {

@@ -32,7 +32,7 @@
                 <c:set var="cathedra"><spring:message code="table.cathedra"/></c:set>
                 <c:set var="group"><spring:message code="table.group"/></c:set>
                 <sf:form method="post" modelAttribute="studentDto">
-                <studapp:inputField label="${name}" type="text" maxlength="40" name="fio"/>
+                <studapp:inputField label="${name}" type="text" maxlength="40" name="fullName"/>
                 <div class="row">
                     <div class="col-4">
                         <studapp:inputField label="${birthday}" type="date" name="birthday"/>
@@ -44,7 +44,7 @@
                         <studapp:inputField label="${telephone}" type="tel" name="telephone"/>
                     </div>
                 </div>
-                <studapp:inputField label="${actAddr}" type="text" maxlength="100" name="factAddress"/>
+                <studapp:inputField label="${actAddr}" type="text" maxlength="100" name="actualAddress"/>
                 <studapp:inputField label="${address}" type="text" maxlength="100" name="address"/>
                 <studapp:inputField label="${faculty}" type="selectUnit" name="faculty"
                                     selId="selFac"

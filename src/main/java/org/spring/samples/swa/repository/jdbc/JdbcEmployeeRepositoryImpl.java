@@ -86,8 +86,8 @@ public class JdbcEmployeeRepositoryImpl implements EmployeeRepository {
   }
 
   @Override
-  public Collection<Employee> findAllByOrderByFioAsc() {
-    return jdbcTemplate.query("SELECT * FROM employees ORDER BY fio", employeeExtractor);
+  public Collection<Employee> findAllByOrderByFullNameAsc() {
+    return jdbcTemplate.query("SELECT * FROM employees ORDER BY fullName", employeeExtractor);
   }
 
 }

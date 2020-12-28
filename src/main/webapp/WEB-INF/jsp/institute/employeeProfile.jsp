@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h2><strong><c:out value="${employee.fio}"/></strong></h2>
+                <h2><strong><c:out value="${employee.fullName}"/></strong></h2>
                 <table class="table table-borderless table-sm employee"
                        aria-describedby="employeeInformation">
                     <tr>

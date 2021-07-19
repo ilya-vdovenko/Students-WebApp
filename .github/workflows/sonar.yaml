@@ -2,8 +2,9 @@ name: SonarCloud
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - master
+    #java8 not supported anymore. This command off workflow.
+    branches-ignore:
+      - "**"
 
 jobs:
   build:

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.springframework.app</groupId>
     <artifactId>Students-WebApp</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>war</packaging>
     <description>A Spring Framework application based on JSP, Spring MVC, Spring Data JPA, Hibernate and JDBC
     </description>
@@ -42,6 +42,9 @@
         <taglibs-standard.version>1.2.5</taglibs-standard.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <jaxb-api.version>2.2.12</jaxb-api.version>
+        <jaxb-runtime.version>2.3.0</jaxb-runtime.version>
+        <javax-activation.version>1.2.0</javax-activation.version>
 
         <!-- Front -->
         <webjars-jquery.version>3.5.1</webjars-jquery.version>
@@ -167,6 +170,26 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${javax.validation.version}</version>
+        </dependency>
+
+         <!-- JAXB and Activation added for OpenJava and newer version compatibility -->
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>${jaxb-runtime.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
+            <version>${javax-activation.version}</version>
         </dependency>
 
         <!-- Tomcat -->

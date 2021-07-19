@@ -5,29 +5,28 @@ on:
       - master
 
 jobs:
-
   deploy:
     name: Deploy on Tomcat
     runs-on: ubuntu-latest
     services:
-        tomcat:
-          image: tomcat:7.0.106-jdk8-adoptopenjdk-hotspot
-          ports:
-            - 8282:8080
-          env:
-            spring.profiles.active: jdbc
-          volumes:
-            - /host/webapps:/usr/local/tomcat/webapps
+      tomcat:
+        image: tomcat:7.0.106-jdk8-adoptopenjdk-hotspot
+        ports:
+          - 8282:8080
+        env:
+          spring.profiles.active: jdbc
+        volumes:
+          - /host/webapps:/usr/local/tomcat/webapps
 
-        mysql:
-          image: mysql:8.0
-          ports:
-            - 3306:3306
-          env:
-            MYSQL_ROOT_PASSWORD: root2020
-            MYSQL_DATABASE: institute
-            MYSQL_USER: institute
-            MYSQL_PASSWORD: institute
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root2020
+          MYSQL_DATABASE: institute
+          MYSQL_USER: institute
+          MYSQL_PASSWORD: institute
 
     steps:
       - uses: actions/checkout@v2

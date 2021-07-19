@@ -3,6 +3,7 @@
 ![SonarCloud](https://github.com/ilya-vdovenko/Students-WebApp/workflows/SonarCloud/badge.svg)
 ![Build and deploy tests](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy%20tests/badge.svg)
 ![Lint Code Base](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Lint%20Code%20Base/badge.svg)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/ilya-vdovenko/Students-WebApp)
 
 This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a plain old **XML**
 spring framework configuration (a java based configuration [here](https://github.com/ilya-vdovenko/Students-WebApp/tree/javaconfig)) and with a **3-layer architecture** (i.e. presentation --> service --> repository).
@@ -31,6 +32,7 @@ The following items should be installed in your system:
   * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in Help -> About dialog. If m2e is not there, just follow the install process [here](http://www.eclipse.org/m2e/)
   * [Spring Tools Suite](https://spring.io/tools) (STS)
   * IntelliJ IDEA
+  * Visual studio code
 
 ### Steps
 
@@ -75,6 +77,12 @@ Before do this, would be good to check properties defined in MySQL profile insid
       <maven.jdbc.username>institute</maven.jdbc.username>
       <maven.jdbc.password>institute</maven.jdbc.password>
 </properties>
+```
+
+You can use `docker-compose.yml` file for run MySQL. Be sure that you had install [Docker-compose](https://docs.docker.com/compose/install/).
+
+```cmd
+docker-compose -f "docker-compose.yml" up -d --build
 ```
 
 ## License

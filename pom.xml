@@ -15,7 +15,7 @@
 
         <!-- Project -->
 
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -24,71 +24,67 @@
         <sonar.organization>ilya-vdovenko</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
-        <sonar.nodejs.executable>${project.basedir}/frontend/node/node.exe</sonar.nodejs.executable>
+        <sonar.nodejs.executable>${project.basedir}/frontend/node/node</sonar.nodejs.executable>
         <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
         <!-- Spring -->
-        <spring-framework.version>5.2.8.RELEASE</spring-framework.version>
-        <spring-data-jdbc.version>2.0.3.RELEASE</spring-data-jdbc.version>
+        <spring-framework.version>5.3.9</spring-framework.version>
+        <spring-data-jdbc.version>2.2.3</spring-data-jdbc.version>
 
         <!-- Persistence -->
-        <spring-data-releasetrain.version>Moore-RELEASE</spring-data-releasetrain.version>
-        <hibernate.version>5.3.7.Final</hibernate.version>
-        <hibernate-annotations.version>5.1.0.Final</hibernate-annotations.version>
-        <hsqldb.version>2.5.1</hsqldb.version>
+        <spring-data-releasetrain.version>Neumann-SR9</spring-data-releasetrain.version>
+        <hibernate.version>5.5.3.Final</hibernate.version>
+        <hibernate-annotations.version>5.1.2.Final</hibernate-annotations.version>
+        <hsqldb.version>2.6.0</hsqldb.version>
         <ehcache.version>2.10.6</ehcache.version>
 
         <!-- Java EE -->
         <taglibs-standard.version>1.2.5</taglibs-standard.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <jaxb-api.version>2.2.12</jaxb-api.version>
-        <jaxb-runtime.version>2.3.0</jaxb-runtime.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <jaxb-runtime.version>3.0.1</jaxb-runtime.version>
         <javax-activation.version>1.2.0</javax-activation.version>
 
         <!-- Front -->
-        <webjars-jquery.version>3.5.1</webjars-jquery.version>
+        <webjars-jquery.version>3.6.0</webjars-jquery.version>
         <webjars-popper.js.version>1.14.7</webjars-popper.js.version>
         <webjars-bootstrap.version>4.5.3</webjars-bootstrap.version>
         <webjars-bootstrap-table.version>1.16.0</webjars-bootstrap-table.version>
-        <webjars-font-awesome.version>5.15.1</webjars-font-awesome.version>
-        <webjars-locator.version>0.31</webjars-locator.version>
-        <node.version>v10.23.0</node.version>
-        <npm.version>6.14.8</npm.version>
+        <webjars-font-awesome.version>5.15.3</webjars-font-awesome.version>
+        <webjars-locator.version>0.41</webjars-locator.version>
+        <node.version>v14.17.3</node.version>
+        <npm.version>7.16.0</npm.version>
 
         <!-- Back -->
-        <jackson.version>2.9.10</jackson.version>
-        <jackson-annotations-version>2.9.5</jackson-annotations-version>
+        <jackson.version>2.12.4</jackson.version>
+        <tomcat.version>9.0.46</tomcat.version>
 
         <!-- Logging -->
-        <slf4j.version>1.7.30</slf4j.version>
+        <slf4j.version>1.7.31</slf4j.version>
         <logback.version>1.2.3</logback.version>
 
         <!-- Test -->
-        <assertj.version>3.15.0</assertj.version>
-        <jacoco.version>0.8.2</jacoco.version>
+        <assertj.version>3.20.2</assertj.version>
         <jsonassert.version>1.5.0</jsonassert.version>
-        <mockito.version>2.22.0</mockito.version>
-        <hamcrest.version>2.1</hamcrest.version>
-        <junit-jupiter.version>5.3.2</junit-jupiter.version>
-        <checkstyle.version>8.37</checkstyle.version>
-
-        <!-- Tomcat -->
-        <tomcat.version>7.0.105</tomcat.version>
+        <mockito.version>3.11.2</mockito.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <junit-jupiter.version>5.7.2</junit-jupiter.version>
+        <checkstyle.version>8.44</checkstyle.version>
 
         <!-- JDBC Drivers -->
-        <mysql-driver.version>8.0.21</mysql-driver.version>
+        <mysql-driver.version>8.0.25</mysql-driver.version>
 
         <!-- Plugins -->
-        <tomcat-maven-plugin.version>2.2</tomcat-maven-plugin.version>
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-maven-war-plugin.version>3.2.2</maven-maven-war-plugin.version>
-        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-sonar-plugin>3.7.0.1746</maven-sonar-plugin>
-        <maven-frontend-plugin>1.10.3</maven-frontend-plugin>
-        <maven-jacoco-plugin>0.8.2</maven-jacoco-plugin>
+        <maven-jetty-plugin.version>9.4.43.v20210629</maven-jetty-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-sonar-plugin>3.9.0.2155</maven-sonar-plugin>
+        <maven-frontend-plugin>1.12.0</maven-frontend-plugin>
+        <maven-jacoco-plugin>0.8.7</maven-jacoco-plugin>
 
     </properties>
 
@@ -124,6 +120,12 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jdbc</artifactId>
             <version>${spring-data-jdbc.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.data</groupId>
+                    <artifactId>spring-data-relational</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -164,6 +166,12 @@
             <groupId>org.apache.taglibs</groupId>
             <artifactId>taglibs-standard-jstlel</artifactId>
             <version>${taglibs-standard.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.taglibs</groupId>
+                    <artifactId>taglibs-standard-impl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -172,7 +180,7 @@
             <version>${javax.validation.version}</version>
         </dependency>
 
-         <!-- JAXB and Activation added for OpenJava and newer version compatibility -->
+        <!-- JAXB and Activation added for OpenJava and newer version compatibility -->
 
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -190,22 +198,6 @@
             <groupId>javax.activation</groupId>
             <artifactId>javax.activation-api</artifactId>
             <version>${javax-activation.version}</version>
-        </dependency>
-
-        <!-- Tomcat -->
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>${tomcat.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>${tomcat.version}</version>
-            <scope>runtime</scope>
         </dependency>
 
         <!-- Logging with SLF4J & LogBack -->
@@ -273,6 +265,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Need include back for test -->
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Front -->
 
         <dependency>
@@ -314,6 +315,18 @@
         <!-- Back -->
 
         <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>${tomcat.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-juli</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
@@ -328,7 +341,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-annotations-version}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
     </dependencies>
@@ -356,14 +369,19 @@
                 <version>${maven-resources-plugin.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat-maven-plugin.version}</version>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${maven-jetty-plugin.version}</version>
                 <configuration>
                     <systemProperties>
-                        <spring.profiles.active>${maven.spring.profiles.active}</spring.profiles.active>
+                        <systemProperty>
+                            <name>spring.profiles.active</name>
+                            <value>${maven.spring.profiles.active}</value>
+                        </systemProperty>
                     </systemProperties>
-                    <path>/Students-WebApp</path>
+                    <webApp>
+                        <contextPath>/Students-WebApp</contextPath>
+                    </webApp>
                 </configuration>
             </plugin>
             <plugin>
@@ -371,14 +389,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-maven-war-plugin.version}</version>
+                <version>${maven-war-plugin.version}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
@@ -416,7 +433,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <argLine>@{surefireArgLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>
+                    <argLine>@{surefireArgLine} --illegal-access=permit -Dfile.encoding=${project.build.sourceEncoding}</argLine>
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
@@ -497,7 +514,7 @@
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
                 <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
                 <maven.jdbc.username>sa</maven.jdbc.username>
-                <maven.jdbc.password/>
+                <maven.jdbc.password />
             </properties>
             <dependencies>
                 <dependency>
@@ -518,7 +535,7 @@
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
                 <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
                 <maven.jdbc.username>sa</maven.jdbc.username>
-                <maven.jdbc.password/>
+                <maven.jdbc.password />
             </properties>
             <dependencies>
                 <dependency>
@@ -539,7 +556,7 @@
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
                 <maven.jdbc.url>jdbc:hsqldb:mem:students-webapp</maven.jdbc.url>
                 <maven.jdbc.username>sa</maven.jdbc.username>
-                <maven.jdbc.password/>
+                <maven.jdbc.password />
             </properties>
             <dependencies>
                 <dependency>

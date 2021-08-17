@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,10 +15,8 @@
 
 package org.spring.samples.swa.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * A controller that return home page.
@@ -29,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
-  @RequestMapping(value = {"/home", "/"}, method = GET)
+  @GetMapping(value = {"/home", "/"})
   public String home() {
     return "home";
   }

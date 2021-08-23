@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,8 +15,6 @@
 
 package org.spring.samples.swa.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
@@ -24,6 +22,7 @@ import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -46,19 +45,19 @@ public class InstituteController {
     this.service = is;
   }
 
-  @RequestMapping(value = "/{facultyId}", method = GET)
+  @GetMapping(value = "/{facultyId}")
   public String showFacultyProfile(@PathVariable int facultyId, Model model) {
     model.addAttribute(service.findFacultyById(facultyId));
     return "institute/facultyProfile";
   }
 
-  @RequestMapping(method = GET)
+  @GetMapping
   public String showAllFaculties(Model model) {
     model.addAttribute("faculty_list", service.getFaculties());
     return "institute/facultyList";
   }
 
-  @RequestMapping(value = "/*/cathedras/{cathedraId}", method = GET)
+  @GetMapping(value = "/*/cathedras/{cathedraId}")
   public String showCathedraProfile(@PathVariable int cathedraId, Model model) {
     model.addAttribute(service.findCathedraById(cathedraId));
     return "institute/cathedraProfile";
@@ -71,7 +70,7 @@ public class InstituteController {
    * @param model     model with faculty and cathedra_list.
    * @return name of view.
    */
-  @RequestMapping(value = "/{facultyId}/cathedras", method = GET)
+  @GetMapping(value = "/{facultyId}/cathedras")
   public String showAllCathedras(@PathVariable int facultyId, Model model) {
     Faculty faculty = service.findFacultyById(facultyId);
     model.addAttribute(faculty);
@@ -91,13 +90,13 @@ public class InstituteController {
     }
   }
 
-  @RequestMapping(value = "/{facultyId}/employees", method = GET)
+  @GetMapping(value = "/{facultyId}/employees")
   public String showFacultyEmployees(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, false);
     return INSTITUTE_UNIT_EMPLOYEES;
   }
 
-  @RequestMapping(value = "/{facultyId}/board", method = GET)
+  @GetMapping(value = "/{facultyId}/board")
   public String showFacultyBoard(@PathVariable int facultyId, Model model) {
     getEmployeesModel(model, facultyId, true);
     return INSTITUTE_UNIT_EMPLOYEES;
@@ -110,7 +109,7 @@ public class InstituteController {
    * @param model      model with cathedra and employee_list.
    * @return name of view.
    */
-  @RequestMapping(value = "/*/cathedras/{cathedraId}/lecturers", method = GET)
+  @GetMapping(value = "/*/cathedras/{cathedraId}/lecturers")
   public String showCathedraLecturers(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
@@ -126,7 +125,7 @@ public class InstituteController {
    * @param model      model with cathedra and group_class_list.
    * @return name of view.
    */
-  @RequestMapping(value = "/*/cathedras/{cathedraId}/groupClasses", method = GET)
+  @GetMapping(value = "/*/cathedras/{cathedraId}/groupClasses")
   public String showAllGroupClass(@PathVariable int cathedraId, Model model) {
     Cathedra cathedra = service.findCathedraById(cathedraId);
     model.addAttribute(cathedra);
@@ -141,7 +140,7 @@ public class InstituteController {
    * @param model        model with groupClass and group_students_list.
    * @return name of view.
    */
-  @RequestMapping(value = "/*/cathedras/*/groupClasses/{groupClassId}", method = GET)
+  @GetMapping(value = "/*/cathedras/*/groupClasses/{groupClassId}")
   public String showGroupClassProfile(@PathVariable int groupClassId, Model model) {
     GroupClass groupClass = service.findGroupClassById(groupClassId);
     model.addAttribute(groupClass);

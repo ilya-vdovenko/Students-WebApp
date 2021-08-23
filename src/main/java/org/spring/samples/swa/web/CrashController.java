@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,11 +15,9 @@
 
 package org.spring.samples.swa.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import org.spring.samples.swa.web.exception.AppOwnRuntimeException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Controller used to showcase what happens when an exception is thrown.
@@ -30,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CrashController {
 
-  @RequestMapping(value = {"/oups"}, method = GET)
+  @GetMapping(value = {"/oups"})
   public String triggerException() {
     throw new AppOwnRuntimeException(
         "Example of showcase what happens when an exception is thrown");

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,12 +15,11 @@
 
 package org.spring.samples.swa.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,13 +40,13 @@ public class EmployeeController {
     this.service = is;
   }
 
-  @RequestMapping(value = "/{employeeId}", method = GET)
+  @GetMapping(value = "/{employeeId}")
   public String showEmployeeProfile(@PathVariable int employeeId, Model model) {
     model.addAttribute("employee", service.findEmployeeById(employeeId));
     return "institute/employeeProfile";
   }
 
-  @RequestMapping(method = GET)
+  @GetMapping
   public String showAllEmployees(Model model) {
     model.addAttribute("employee_list", service.getEmployees());
     return "institute/employeeList";

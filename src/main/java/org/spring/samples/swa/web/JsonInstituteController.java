@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,8 +15,6 @@
 
 package org.spring.samples.swa.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import java.util.Collection;
 import java.util.Set;
 import org.spring.samples.swa.model.Cathedra;
@@ -25,7 +23,7 @@ import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.service.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,21 +43,20 @@ public class JsonInstituteController {
     this.service = is;
   }
 
-  @RequestMapping(value = "/faculties/getFacList", produces = "application/json", method = GET)
+  @GetMapping(value = "/faculties/getFacList", produces = "application/json")
   public @ResponseBody
   Collection<Faculty> getFacList() {
     return service.getFaculties();
   }
 
-  @RequestMapping(value = "/cathedras/getCatList", produces = "application/json", method = GET)
+  @GetMapping(value = "/cathedras/getCatList", produces = "application/json")
   public @ResponseBody
   Set<Cathedra> getCatList(@RequestParam int facultyId) {
     Faculty faculty = service.findFacultyById(facultyId);
     return faculty.getCathedras();
   }
 
-  @RequestMapping(value = "/groupClasses/getGroupList", produces = "application/json",
-      method = GET)
+  @GetMapping(value = "/groupClasses/getGroupList", produces = "application/json")
   public @ResponseBody
   Set<GroupClass> getGroupList(@RequestParam int cathedraId) {
     Cathedra cathedra = service.findCathedraById(cathedraId);

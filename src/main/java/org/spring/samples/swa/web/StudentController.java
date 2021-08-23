@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,9 +14,6 @@
  */
 
 package org.spring.samples.swa.web;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.validation.Valid;
 import org.spring.samples.swa.model.Cathedra;
@@ -33,8 +30,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -68,19 +67,19 @@ public class StudentController {
     binder.setValidator(new StudentValidator());
   }
 
-  @RequestMapping(value = "/{studentId}", method = GET)
+  @GetMapping(value = "/{studentId}")
   public String showStudentProfile(@PathVariable int studentId, Model model) {
     model.addAttribute(service.findStudentById(studentId));
     return "student/studentProfile";
   }
 
-  @RequestMapping(method = GET)
+  @GetMapping
   public String showAllStudents(Model model) {
     model.addAttribute("student_list", service.getStudents());
     return "student/studentList";
   }
 
-  @RequestMapping(value = "/new", method = GET)
+  @GetMapping(value = "/new")
   public String initCreationForm(Model model) {
     model.addAttribute(new StudentDto());
     return STUDENT_CREATE_OR_UPDATE_FORM;
@@ -94,7 +93,7 @@ public class StudentController {
    * @param model      model with same student if errors happen.
    * @return redirect.
    */
-  @RequestMapping(value = "/new", method = POST)
+  @PostMapping(value = "/new")
   public String processCreationForm(@Valid StudentDto studentDto, BindingResult result,
       Model model) {
     if (result.hasErrors()) {
@@ -105,7 +104,7 @@ public class StudentController {
     return "redirect:/students";
   }
 
-  @RequestMapping(value = "/{studentId}/edit", method = GET)
+  @GetMapping(value = "/{studentId}/edit")
   public String initUpdateOwnerForm(@PathVariable int studentId, Model model) {
     model.addAttribute(new StudentDto(service.findStudentById(studentId)));
     return STUDENT_CREATE_OR_UPDATE_FORM;
@@ -120,7 +119,7 @@ public class StudentController {
    * @param model      model with same student if errors happen.
    * @return redirect.
    */
-  @RequestMapping(value = "/{studentId}/edit", method = POST)
+  @PostMapping(value = "/{studentId}/edit")
   public String processUpdateOwnerForm(@PathVariable int studentId, @Valid StudentDto studentDto,
       BindingResult result, Model model) {
     if (result.hasErrors()) {

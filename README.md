@@ -1,7 +1,7 @@
 # Students-WebApp
 
 ![SonarCloud](https://github.com/ilya-vdovenko/Students-WebApp/workflows/SonarCloud/badge.svg)
-![Build and deploy tests](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy%20tests/badge.svg)
+![Build and deploy](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy%20tests/badge.svg)
 ![Lint Code Base](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Lint%20Code%20Base/badge.svg)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/ilya-vdovenko/Students-WebApp)
 

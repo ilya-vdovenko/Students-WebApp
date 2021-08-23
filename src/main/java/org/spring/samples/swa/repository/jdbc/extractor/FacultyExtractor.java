@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.spring.samples.swa.model.BaseEntity;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
@@ -84,7 +83,8 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
       List<Cathedra> cathedraList = facultyData.get(fac.getId());
       cathedraList.parallelStream().forEach(cat -> {
         List<GroupClass> groupClassList = cathedraData.get(cat.getId());
-        groupClassList.parallelStream().forEach(grp -> grp.setGroupStudents(new HashSet<>(groupData.get(grp.getId()))));
+        groupClassList.parallelStream().forEach(grp -> grp.setGroupStudents(
+            new HashSet<>(groupData.get(grp.getId()))));
         cat.setGroupClasses(new HashSet<>(groupClassList));
       });
       fac.setCathedras(new HashSet<>(cathedraList));
@@ -92,8 +92,10 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
     return facultyList;
   }
 
-  private <T extends UnitEntity, K extends BaseEntity> void dataSet(Map<Integer, List<K>> data, int id, ResultSet rs,
-      T entity) throws SQLException {
+  private <T extends UnitEntity, K extends BaseEntity> void dataSet(Map<Integer, List<K>> data, 
+                                                                    int id, 
+                                                                    ResultSet rs, 
+                                                                    T entity) throws SQLException {
     if (!data.containsKey(id)) {
       String type = entity.getClass().getSimpleName().toLowerCase();
       data.put(id, new ArrayList<>());

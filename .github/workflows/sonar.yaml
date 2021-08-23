@@ -2,9 +2,7 @@ name: SonarCloud
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    #java8 not supported anymore. This command off workflow.
-    branches-ignore:
-      - "**"
+    branches: [javaconfig]
 
 jobs:
   build:
@@ -15,20 +13,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2.2.0
         with:
-          java-version: 1.8
+          distribution: 'adopt'
+          java-version: '11'
+          architecture: x64
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache Maven packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}

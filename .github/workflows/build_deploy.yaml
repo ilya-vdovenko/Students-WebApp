@@ -1,29 +1,28 @@
-name: Build and deploy tests
+name: Build and deploy
 on:
   pull_request:
-    branches:
-      - master
+    branches: [javaconfig]
 
 jobs:
   deploy:
-    name: Deploy on Tomcat
+    name: Deploy on Jetty
     runs-on: ubuntu-latest
     services:
-      tomcat:
-        image: tomcat:7.0.106-jdk8-adoptopenjdk-hotspot
+      jetty:
+        image: jetty:9.4.43-jre11
         ports:
           - 8282:8080
         env:
-          spring.profiles.active: jdbc
+          SPRING_PROFILES_ACTIVE: jdbc
         volumes:
-          - /host/webapps:/usr/local/tomcat/webapps
+          - /host/webapps:/var/lib/jetty/webapps
 
       mysql:
         image: mysql:8.0
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: root2020
+          MYSQL_ROOT_PASSWORD: root2021
           MYSQL_DATABASE: institute
           MYSQL_USER: institute
           MYSQL_PASSWORD: institute
@@ -33,35 +32,43 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2.2.0
         with:
-          java-version: 1.8
+          distribution: 'adopt'
+          java-version: '11'
           architecture: x64
 
       - name: Cache Maven packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build and Test with default (JPA) profile
-        run: mvn -B package
+      - name: Build project
+        run: mvn -B package -P JBDC_MySQL
 
       - name: Copy to webapps folder
         run: |
           sudo cp -f /home/runner/work/Students-WebApp/Students-WebApp/target/Students-WebApp.war /host/webapps
-          echo "Timeout for 40 sec (app must deploy on Tomcat during this time)"
-          sleep 40
+          if [ -f /host/webapps/Students-WebApp.war ]
+          then
+            echo "File copied to /host/webapps"
+          else
+            echo "File not copied to /host/webapps"
+            exit 1
+          fi
+          echo "Timeout for 10 sec (app must deploy on Jetty during this time)"
+          sleep 10
 
       - name: Webapp deploy test
         run: |
           HTTP_CODE=$(curl http://localhost:8282/Students-WebApp/students -s -o /dev/null -I -w "%{http_code}")
           if [[ $HTTP_CODE -eq 200 ]]
           then
-            echo "Success"
+            echo "Success. http_code: $HTTP_CODE"
           else
-            echo "Fail"
+            echo "Fail. http_code: $HTTP_CODE"
             exit 1
           fi

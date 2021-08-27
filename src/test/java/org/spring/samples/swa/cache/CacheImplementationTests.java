@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.spring.samples.swa.config.CacheTestConfig;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
@@ -114,5 +115,23 @@ class CacheImplementationTests {
     Employee employee = this.service.findEmployeeById(TEST_ID);
     assertThat(employee.getFullName()).isEqualTo("Бурковский Виктор Леонидович");
     verify(employeeRepository, times(1)).findById(TEST_ID);
+  }
+
+  @Test
+  void shouldEvictCacheAfterSave() {
+    callFinds();
+    this.service.saveStudent(new Student());
+    callFinds();
+    verify(instituteRepository, times(2)).findFacultyById(TEST_ID);
+    verify(instituteRepository, times(2)).findCathedraById(TEST_ID);
+    verify(instituteRepository, times(2)).findGroupClassById(TEST_ID);
+    verify(studentRepository, times(2)).findById(TEST_ID);
+  }
+
+  private void callFinds() {
+    this.service.findFacultyById(TEST_ID);
+    this.service.findCathedraById(TEST_ID);
+    this.service.findGroupClassById(TEST_ID);
+    this.service.findStudentById(TEST_ID);
   }
 }

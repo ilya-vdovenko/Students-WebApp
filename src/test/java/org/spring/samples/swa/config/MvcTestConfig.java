@@ -13,22 +13,25 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.service;
+package org.spring.samples.swa.config;
 
-import org.spring.samples.swa.config.RootAppConfig;
-
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.mockito.Mockito;
+import org.spring.samples.swa.service.InstituteService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Integration test using the jpa profile.
+ * Configuration for mvc tests.
  *
  * @author Ilya Vdovenko
- * @see AbstractInstituteServiceTests AbstractInstituteServiceTests for more details.
  */
 
-@SpringJUnitConfig(RootAppConfig.class)
-@ActiveProfiles("jpa")
-public class InstituteServiceJpaTests extends AbstractInstituteServiceTests {
+@Configuration
+public class MvcTestConfig {
 
+  @Bean
+  public InstituteService instituteService() {
+    return Mockito.mock(InstituteService.class);
+  }
+    
 }

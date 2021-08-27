@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -85,9 +85,6 @@ abstract class AbstractInstituteServiceTests {
   @Test
   @Transactional
   void shouldInsertStudent() {
-    Collection<Student> students = this.service.getStudents();
-    int found = students.size();
-
     Student student = new Student();
     student.setFullName("Иванов Иван Иванович");
     student.setBirthday(LocalDate.parse("1994-06-23"));
@@ -99,10 +96,10 @@ abstract class AbstractInstituteServiceTests {
     student.setCathedra(this.service.findCathedraById(2));
     student.setGroupClass(this.service.findGroupClassById(3));
 
+    Collection<Student> beforeStudents = this.service.getStudents();
     this.service.saveStudent(student);
     assertThat(student.getId()).isNotZero();
-    students = this.service.getStudents();
-    assertThat(students).hasSize(found + 1);
+    assertThat(this.service.getStudents()).hasSize(beforeStudents.size() + 1);
   }
 
   @Test

@@ -1,12 +1,12 @@
 # Students-WebApp
 
 ![SonarCloud](https://github.com/ilya-vdovenko/Students-WebApp/workflows/SonarCloud/badge.svg)
-![Build and deploy](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy%20tests/badge.svg)
+![Build and deploy](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Build%20and%20deploy/badge.svg)
 ![Lint Code Base](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Lint%20Code%20Base/badge.svg)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/ilya-vdovenko/Students-WebApp)
 
-This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a plain old **XML**
-spring framework configuration (a java based configuration [here](https://github.com/ilya-vdovenko/Students-WebApp/tree/javaconfig)) and with a **3-layer architecture** (i.e. presentation --> service --> repository).
+This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a java based
+spring framework configuration (a plain old **XML** configuration [here](https://github.com/ilya-vdovenko/Students-WebApp/tree/master)) and with a **3-layer architecture** (i.e. presentation --> service --> repository).
 Created by following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic).
 
 ## Running web-app locally
@@ -16,8 +16,8 @@ Created by following the example of this repository [spring-projects/spring-fram
 ```cmd
 git clone https://github.com/ilya-vdovenko/Students-WebApp.git
 cd Students-WebApp
-./mvnw tomcat:run-war
-# For Windows : ./mvnw.cmd tomcat:run-war
+./mvnw jetty:run-war
+# For Windows : ./mvnw.cmd jetty:run-war
 ```
 
 You can then access app here: localhost:8080/Students-WebApp
@@ -48,7 +48,7 @@ git clone https://github.com/ilya-vdovenko/Students-WebApp.git
 File -> Import -> Maven -> Existing Maven project
 ```
 
-3) After import, click `tomcat:run` from maven window, or type in IDE command line `mvn tomcat:run`
+3) After import, click `jetty:run` from maven window, or type in IDE command line `mvn jetty:run`
 
 4) Visit localhost:8080/Students-WebApp in your browser.
 
@@ -61,7 +61,7 @@ To run web-app locally using persistent database, it is needed to run with profi
 For MySQL database, it is needed to run with 'MySQL' profile defined in main pom.xml file.
 
 ```cmd
-./mvnw tomcat:run-war -P JDBC_MySQL
+./mvnw jetty:run-war -P JDBC_MySQL
 ```
 
 Before do this, would be good to check properties defined in MySQL profile inside pom.xml file.

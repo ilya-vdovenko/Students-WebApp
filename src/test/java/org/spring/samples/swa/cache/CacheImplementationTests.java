@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,6 +22,8 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+import org.spring.samples.swa.config.CacheTestConfig;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.model.Faculty;
@@ -36,7 +38,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@SpringJUnitConfig(locations = "classpath:SpringConfigs/cache-test-config.xml")
+@SpringJUnitConfig(CacheTestConfig.class)
 @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 class CacheImplementationTests {
 
@@ -113,5 +115,23 @@ class CacheImplementationTests {
     Employee employee = this.service.findEmployeeById(TEST_ID);
     assertThat(employee.getFullName()).isEqualTo("Бурковский Виктор Леонидович");
     verify(employeeRepository, times(1)).findById(TEST_ID);
+  }
+
+  @Test
+  void shouldEvictCacheAfterSave() {
+    callFinds();
+    this.service.saveStudent(new Student());
+    callFinds();
+    verify(instituteRepository, times(2)).findFacultyById(TEST_ID);
+    verify(instituteRepository, times(2)).findCathedraById(TEST_ID);
+    verify(instituteRepository, times(2)).findGroupClassById(TEST_ID);
+    verify(studentRepository, times(2)).findById(TEST_ID);
+  }
+
+  private void callFinds() {
+    this.service.findFacultyById(TEST_ID);
+    this.service.findCathedraById(TEST_ID);
+    this.service.findGroupClassById(TEST_ID);
+    this.service.findStudentById(TEST_ID);
   }
 }

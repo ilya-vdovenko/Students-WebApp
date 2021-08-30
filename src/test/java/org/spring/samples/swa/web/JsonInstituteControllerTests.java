@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,6 +24,8 @@ import java.util.HashSet;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.spring.samples.swa.config.MvcTestConfig;
+import org.spring.samples.swa.config.MvcAppConfig;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
@@ -34,13 +36,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
- * Test class for {@link JsonInstituteController}
+ * Test class for {@link JsonInstituteController}.
  *
  * @author Ilya Vdovenko
  */
 
-@SpringJUnitWebConfig(locations = {"classpath:SpringConfigs/mvc-config.xml",
-    "classpath:SpringConfigs/mvc-test-config.xml"})
+@SpringJUnitWebConfig({MvcAppConfig.class, MvcTestConfig.class})
 class JsonInstituteControllerTests {
 
   private final int TEST_FACULTY_ID = 1;

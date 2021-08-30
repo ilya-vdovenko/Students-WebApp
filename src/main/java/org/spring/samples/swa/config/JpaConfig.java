@@ -13,22 +13,21 @@
  * limitations under the License.
  */
 
-package org.spring.samples.swa.service;
+package org.spring.samples.swa.config;
 
-import org.spring.samples.swa.config.RootAppConfig;
-
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
- * Integration test using the jpa profile.
- *
- * @author Ilya Vdovenko
- * @see AbstractInstituteServiceTests AbstractInstituteServiceTests for more details.
- */
+* Configuration persist layer for JPA profile.
+*
+* @author Ilya Vdovenko
+*/
 
-@SpringJUnitConfig(RootAppConfig.class)
-@ActiveProfiles("jpa")
-public class InstituteServiceJpaTests extends AbstractInstituteServiceTests {
-
+@Configuration
+@Profile("jpa")
+@ComponentScan("org.spring.samples.swa.repository.jpa")
+public class JpaConfig {
+    
 }

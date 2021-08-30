@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,8 +16,10 @@
 package org.spring.samples.swa;
 
 import javax.servlet.Filter;
+import org.spring.samples.swa.config.MvcAppConfig;
+import org.spring.samples.swa.config.RootAppConfig;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
@@ -31,16 +33,16 @@ public class StudentsWebAppInitializer extends AbstractDispatcherServletInitiali
 
   @Override
   protected WebApplicationContext createRootApplicationContext() {
-    XmlWebApplicationContext rootAppContext = new XmlWebApplicationContext();
-    rootAppContext.setConfigLocations("classpath:SpringConfigs/root-config.xml");
-    return rootAppContext;
+    AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+    rootContext.register(RootAppConfig.class);
+    return rootContext;
   }
 
   @Override
   protected WebApplicationContext createServletApplicationContext() {
-    XmlWebApplicationContext rootAppContext = new XmlWebApplicationContext();
-    rootAppContext.setConfigLocations("classpath:SpringConfigs/mvc-config.xml");
-    return rootAppContext;
+    AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
+    webContext.register(MvcAppConfig.class);
+    return webContext;
   }
 
   @Override

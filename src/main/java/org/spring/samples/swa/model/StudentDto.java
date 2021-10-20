@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,16 +15,18 @@
 
 package org.spring.samples.swa.model;
 
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 /**
  * Data Transfer Object for student model.
  *
  * @author Ilya Vdovenko
  */
 
+@ToString
+@NoArgsConstructor
 public class StudentDto extends Student {
-
-  public StudentDto() {
-  }
 
   /**
    * Constructor that initialise this object by student object.
@@ -44,10 +46,4 @@ public class StudentDto extends Student {
     this.setGroupClass(student.getGroupClass());
   }
 
-  @Override
-  public String toString() {
-    return "StudentDto{"
-        + "id=" + id
-        + '}';
-  }
 }

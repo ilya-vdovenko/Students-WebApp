@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,6 +20,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -31,6 +34,9 @@ import org.hibernate.annotations.CascadeType;
  */
 
 @MappedSuperclass
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
 public class Person extends BaseEntity {
 
   @NotEmpty
@@ -39,36 +45,15 @@ public class Person extends BaseEntity {
 
   @NotEmpty
   @ManyToOne
+  @EqualsAndHashCode.Exclude
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "faculty_id")
   private Faculty faculty;
 
   @ManyToOne
+  @EqualsAndHashCode.Exclude
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
 
-  public String getFullName() {
-    return fullName;
-  }
-
-  public void setFullName(String name) {
-    this.fullName = name;
-  }
-
-  public Faculty getFaculty() {
-    return faculty;
-  }
-
-  public void setFaculty(Faculty faculty) {
-    this.faculty = faculty;
-  }
-
-  public Cathedra getCathedra() {
-    return cathedra;
-  }
-
-  public void setCathedra(Cathedra cathedra) {
-    this.cathedra = cathedra;
-  }
 }

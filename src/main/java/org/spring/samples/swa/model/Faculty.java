@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,6 +22,10 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Simple JavaBean domain object representing a faculty.
@@ -31,39 +35,20 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "faculties")
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = UnitEntitySerializer.class)
 public class Faculty extends UnitEntity {
 
+  @EqualsAndHashCode.Exclude
   @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
   private Set<Cathedra> cathedras;
 
   @NotEmpty
+  @EqualsAndHashCode.Exclude
   @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
   private Set<Employee> employees;
 
-  public Set<Cathedra> getCathedras() {
-    return cathedras;
-  }
-
-  public void setCathedras(Set<Cathedra> cathedras) {
-    this.cathedras = cathedras;
-  }
-
-  public Set<Employee> getEmployees() {
-    return employees;
-  }
-
-  public void setEmployees(Set<Employee> employees) {
-    this.employees = employees;
-  }
-
-  @Override
-  public String toString() {
-    return "Faculty{"
-        + "id=" + id
-        + ", title='" + super.getTitle() + '\''
-        + ", cathedras=" + cathedras
-        + ", employees=" + employees
-        + '}';
-  }
 }

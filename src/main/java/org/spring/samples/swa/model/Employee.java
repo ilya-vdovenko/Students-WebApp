@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,6 +19,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Simple JavaBean domain object representing an employee.
@@ -28,6 +32,10 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "employees")
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Employee extends Person {
 
   @NotEmpty
@@ -37,30 +45,4 @@ public class Employee extends Person {
   @Column(name = "degree")
   private String degree;
 
-  public String getPosition() {
-    return position;
-  }
-
-  public void setPosition(String position) {
-    this.position = position;
-  }
-
-  public String getDegree() {
-    return degree;
-  }
-
-  public void setDegree(String degree) {
-    this.degree = degree;
-  }
-
-  @Override
-  public String toString() {
-    return "Employee{"
-        + "id=" + id
-        + ", position='" + position + '\''
-        + ", degree='" + degree + '\''
-        + ", faculty id=" + id
-        + ", cathedra id=" + id
-        + '}';
-  }
 }

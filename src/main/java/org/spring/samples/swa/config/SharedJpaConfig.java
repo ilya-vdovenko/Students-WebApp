@@ -44,16 +44,13 @@ public class SharedJpaConfig {
   @Autowired
   private Environment env;
 
-  @Autowired
-  private DataSource dataSource;
-
   /**
    * Congigurate entity manager bean. 
    *
    * @return entityManagerFactory.
    */
   @Bean
-  public EntityManagerFactory entityManagerFactory() {
+  public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource);
     em.setJpaVendorAdapter(jpaVendorAdapter());
@@ -85,9 +82,9 @@ public class SharedJpaConfig {
    * @return jpaTransactionManager.
    */
   @Bean("transactionManager")
-  public JpaTransactionManager jpaTransactionManager() {
+  public JpaTransactionManager jpaTransactionManager(EntityManagerFactory entityManagerFactory) {
     JpaTransactionManager manager = new JpaTransactionManager();
-    manager.setEntityManagerFactory(entityManagerFactory());
+    manager.setEntityManagerFactory(entityManagerFactory);
     return manager;
   }
     

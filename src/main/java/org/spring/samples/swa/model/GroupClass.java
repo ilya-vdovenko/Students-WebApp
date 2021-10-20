@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -25,6 +25,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -36,6 +40,10 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "group_classes")
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = GroupClassSerializer.class)
 public class GroupClass extends BaseEntity {
 
@@ -49,6 +57,8 @@ public class GroupClass extends BaseEntity {
 
   @NotEmpty
   @ManyToOne
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "cathedra_id")
   private Cathedra cathedra;
@@ -56,46 +66,4 @@ public class GroupClass extends BaseEntity {
   @OneToMany(mappedBy = "groupClass", fetch = FetchType.EAGER)
   private Set<Student> groupStudents;
 
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String number) {
-    this.title = number;
-  }
-
-  public Cathedra getCathedra() {
-    return cathedra;
-  }
-
-  public void setCathedra(Cathedra cathedra) {
-    this.cathedra = cathedra;
-  }
-
-  public Set<Student> getGroupStudents() {
-    return groupStudents;
-  }
-
-  public void setGroupStudents(Set<Student> groupStudents) {
-    this.groupStudents = groupStudents;
-  }
-
-  public String getEduForm() {
-    return eduForm;
-  }
-
-  public void setEduForm(String fos) {
-    this.eduForm = fos;
-  }
-
-  @Override
-  public String toString() {
-    return "GroupClass{"
-        + ", id=" + id
-        + ", title='" + title + '\''
-        + ", eduForm='" + eduForm + '\''
-        + ", cathedra id=" + cathedra.getId()
-        + ", group students=" + groupStudents
-        + '}';
-  }
 }

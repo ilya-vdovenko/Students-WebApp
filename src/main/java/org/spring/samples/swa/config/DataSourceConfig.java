@@ -16,7 +16,6 @@
 package org.spring.samples.swa.config;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -32,16 +31,13 @@ import org.springframework.core.env.Environment;
 @PropertySource("classpath:spring/data-access.properties")
 public class DataSourceConfig {
 
-  @Autowired
-  private Environment env;
-
   /**
    * Configurate datasource for the tomcat jdbc connection pool.
    *
    * @return dataSource.
    */
   @Bean
-  public DataSource dataSource() {
+  public DataSource dataSource(Environment env) {
     DataSource dataSource = new DataSource();
     dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
     dataSource.setUrl(env.getProperty("jdbc.url"));

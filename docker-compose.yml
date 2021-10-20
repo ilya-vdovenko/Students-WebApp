@@ -3,9 +3,17 @@ services:
     image: mysql:8.0
     command: mysqld --default-authentication-plugin=mysql_native_password
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root2021
       - MYSQL_USER=institute
       - MYSQL_PASSWORD=institute
       - MYSQL_DATABASE=institute
+  # jetty:
+  #   image: jetty:9.4.43-jre11
+  #   ports:
+  #     - 8282:8080
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: jdbc
+  #   volumes:
+  #     - ./target:/var/lib/jetty/webapps

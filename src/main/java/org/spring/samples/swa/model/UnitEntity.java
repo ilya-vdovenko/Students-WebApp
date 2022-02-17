@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,6 +20,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Simple JavaBean domain object adds a multiple property to {@link BaseEntity}. Used as a base
@@ -29,6 +32,9 @@ import javax.validation.constraints.NotEmpty;
  */
 
 @MappedSuperclass
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class UnitEntity extends BaseEntity {
 
   @NotEmpty
@@ -48,35 +54,4 @@ public class UnitEntity extends BaseEntity {
   @Column(name = "contact_inf")
   private String contactInf;
 
-  public String getInformation() {
-    return information;
-  }
-
-  public void setInformation(String information) {
-    this.information = information;
-  }
-
-  public Employee getBoss() {
-    return boss;
-  }
-
-  public void setBoss(Employee boss) {
-    this.boss = boss;
-  }
-
-  public String getContactInf() {
-    return contactInf;
-  }
-
-  public void setContactInf(String contactInf) {
-    this.contactInf = contactInf;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
 }

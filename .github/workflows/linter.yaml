@@ -21,14 +21,14 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: start lint code through Mega-Linter
-        uses: nvuillam/mega-linter@v4
+        uses: megalinter/megalinter@v5.7.1
         env:
-          ENABLE: SQL,CSS,XML,YAML #, MARKDOWN ,JAVASCRIPT
-          DISABLE: COPYPASTE,SPELL
+          ENABLE: CSS,XML #,YAML, MARKDOWN ,JAVASCRIPT
+          DISABLE: COPYPASTE,SPELL,SQL
           ENABLE_LINTERS: MARKDOWN_MARKDOWNLINT
           DISABLE_LINTERS: YAML_V8R
           VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
+          DEFAULT_BRANCH: javaconfig
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Checkstyle:

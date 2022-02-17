@@ -20,9 +20,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.spring.samples.swa.config.CacheTestConfig;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
@@ -33,13 +36,13 @@ import org.spring.samples.swa.repository.EmployeeRepository;
 import org.spring.samples.swa.repository.InstituteRepository;
 import org.spring.samples.swa.repository.StudentRepository;
 import org.spring.samples.swa.service.InstituteService;
+import org.spring.samples.swa.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(CacheTestConfig.class)
-@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+@TestInstance(Lifecycle.PER_CLASS)
 class CacheImplementationTests {
 
   private final int TEST_ID = 1;
@@ -56,8 +59,17 @@ class CacheImplementationTests {
   @Autowired
   private StudentRepository studentRepository;
 
-  @BeforeEach
+  @Autowired
+  private EhCacheCacheManager cacheManager;
+
+  @AfterAll
+  void clearAllCachesAfter() {
+    EntityUtils.evictAllCaches(cacheManager);
+  }
+
+  @BeforeAll
   void setup() {
+    EntityUtils.evictAllCaches(cacheManager);
     Faculty faculty = new Faculty();
     faculty.setId(TEST_ID);
     faculty.setTitle("Энергетики и систем управления");
@@ -91,8 +103,7 @@ class CacheImplementationTests {
   @RepeatedTest(2)
   void shouldFindCathedraById() {
     Cathedra cathedra = this.service.findCathedraById(TEST_ID);
-    assertThat(cathedra.getTitle())
-        .isEqualTo("Электропривода, автоматики и управления в технических системах");
+    assertThat(cathedra.getTitle()).isEqualTo("Электропривода, автоматики и управления в технических системах");
     verify(instituteRepository, times(1)).findCathedraById(TEST_ID);
   }
 

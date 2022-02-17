@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,6 +23,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,6 +40,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @NotEmpty
 @Table(name = "students")
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Student extends Person {
 
   @Column(name = "birthday")
@@ -56,70 +64,10 @@ public class Student extends Person {
   private String telephone;
 
   @ManyToOne
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "group_class_id")
   private GroupClass groupClass;
 
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(LocalDate birthday) {
-    this.birthday = birthday;
-  }
-
-  public String getSex() {
-    return sex;
-  }
-
-  public void setSex(String sex) {
-    this.sex = sex;
-  }
-
-  public String getActualAddress() {
-    return actualAddress;
-  }
-
-  public void setActualAddress(String address) {
-    this.actualAddress = address;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getTelephone() {
-    return telephone;
-  }
-
-  public void setTelephone(String telephone) {
-    this.telephone = telephone;
-  }
-
-  public GroupClass getGroupClass() {
-    return groupClass;
-  }
-
-  public void setGroupClass(GroupClass groupClass) {
-    this.groupClass = groupClass;
-  }
-
-  @Override
-  public String toString() {
-    return "Student{"
-        + "id=" + id
-        + ", birthday=" + birthday
-        + ", sex='" + sex + '\''
-        + ", actualAddress='" + actualAddress + '\''
-        + ", address='" + address + '\''
-        + ", telephone='" + telephone + '\''
-        + ", groupClass id=" + groupClass.getId()
-        + ", cathedra id=" + getCathedra().getId()
-        + ", faculty id=" + getFaculty().getId()
-        + '}';
-  }
 }

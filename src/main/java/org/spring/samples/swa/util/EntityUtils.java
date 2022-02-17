@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,6 +22,7 @@ import java.util.Collection;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 
 /**
  * Class of useful methods for manipulating Entities.
@@ -61,6 +62,11 @@ public class EntityUtils {
     student.setGroupClass(groupClass);
     student.setCathedra(cathedra);
     return student;
+  }
+
+  public static void evictAllCaches(EhCacheCacheManager cacheManager) {
+    cacheManager.getCacheNames().stream()
+      .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
   }
 
 }

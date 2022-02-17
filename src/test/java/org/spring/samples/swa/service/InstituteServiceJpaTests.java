@@ -29,6 +29,6 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(RootAppConfig.class)
 @ActiveProfiles("jpa")
-public class InstituteServiceJpaTests extends AbstractInstituteServiceTests {
+class InstituteServiceJpaTests extends AbstractInstituteServiceTests {
 
 }

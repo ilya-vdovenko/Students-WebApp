@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -25,6 +25,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -36,6 +40,10 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "cathedras")
+@Getter
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = UnitEntitySerializer.class)
 public class Cathedra extends UnitEntity {
 
@@ -49,6 +57,7 @@ public class Cathedra extends UnitEntity {
 
   @NotEmpty
   @ManyToOne
+  @ToString.Exclude
   @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "faculty_id")
   private Faculty faculty;
@@ -56,47 +65,4 @@ public class Cathedra extends UnitEntity {
   @OneToMany(mappedBy = "cathedra", fetch = FetchType.EAGER)
   private Set<GroupClass> groupClasses;
 
-  public String getEduPrograms() {
-    return eduPrograms;
-  }
-
-  public void setEduPrograms(String programs) {
-    this.eduPrograms = programs;
-  }
-
-  public Set<Employee> getEmployees() {
-    return employees;
-  }
-
-  public void setEmployees(Set<Employee> employees) {
-    this.employees = employees;
-  }
-
-  public Faculty getFaculty() {
-    return faculty;
-  }
-
-  public void setFaculty(Faculty faculty) {
-    this.faculty = faculty;
-  }
-
-  public Set<GroupClass> getGroupClasses() {
-    return groupClasses;
-  }
-
-  public void setGroupClasses(Set<GroupClass> groupClasses) {
-    this.groupClasses = groupClasses;
-  }
-
-  @Override
-  public String toString() {
-    return "Cathedra{"
-        + "id=" + id
-        + ", title='" + super.getTitle() + '\''
-        + ", eduPrograms='" + eduPrograms + '\''
-        + ", employees=" + employees
-        + ", faculty id=" + faculty.getId()
-        + ", group_classes=" + groupClasses
-        + '}';
-  }
 }

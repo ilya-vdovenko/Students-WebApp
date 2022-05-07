@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2021, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,12 +24,13 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.spring.samples.swa.model.BaseEntity;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.Employee;
 import org.spring.samples.swa.model.Faculty;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
-import org.spring.samples.swa.util.EntityUtils;
+import org.spring.samples.swa.model.UnitEntity;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
@@ -43,53 +44,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
 
+  private Faculty faculty = null;
+  private Cathedra cathedra = null;
+  private List<Faculty> facultyList = null;
+  private Map<Integer, List<Cathedra>> facultyData = null;
+  private int facultyId;
+
   @Override
   public List<Faculty> extractData(ResultSet rs) throws SQLException {
-    List<Faculty> facultyList = new ArrayList<>();
-    Map<Integer, List<Cathedra>> facultyData = new LinkedHashMap<>();
+    facultyList = new ArrayList<>();
+    facultyData = new LinkedHashMap<>();
     Map<Integer, List<GroupClass>> cathedraData = new LinkedHashMap<>();
     Map<Integer, List<Student>> groupData = new LinkedHashMap<>();
-    Faculty faculty = null;
-    Cathedra cathedra = null;
     GroupClass groupClass = null;
     while (rs.next()) {
-      int facultyId = rs.getInt("facultyID");
-      if (!facultyData.containsKey(facultyId)) {
-        facultyData.put(facultyId, new ArrayList<>());
-        faculty = new Faculty();
-        faculty.setId(facultyId);
-        faculty.setTitle(rs.getString("facultyTitle"));
-        Employee facultyBoss = new Employee();
-        facultyBoss.setId(rs.getInt("facultyBossID"));
-        facultyBoss.setFullName(rs.getString("facultyBossName"));
-        facultyBoss.setPosition(rs.getString("facultyBossPosition"));
-        facultyBoss.setDegree(rs.getString("facultyBossDegree"));
-        facultyBoss.setFaculty(faculty);
-        faculty.setBoss(facultyBoss);
-        faculty.setInformation(rs.getString("facultyInfo"));
-        faculty.setContactInf(rs.getString("facultyContInf"));
-        facultyList.add(faculty);
-      }
+      facultyId = rs.getInt("facultyID");
+      dataSet(facultyData, facultyId, rs, new Faculty());
       int cathedraId = rs.getInt("cathedraID");
-      if (!cathedraData.containsKey(cathedraId)) {
-        cathedraData.put(cathedraId, new ArrayList<>());
-        cathedra = new Cathedra();
-        cathedra.setId(cathedraId);
-        cathedra.setTitle(rs.getString("cathedraTitle"));
-        Employee cathedraBoss = new Employee();
-        cathedraBoss.setId(rs.getInt("cathedraBossID"));
-        cathedraBoss.setFullName(rs.getString("cathedraBossName"));
-        cathedraBoss.setPosition(rs.getString("cathedraBossPosition"));
-        cathedraBoss.setDegree(rs.getString("cathedraBossDegree"));
-        cathedraBoss.setFaculty(faculty);
-        cathedraBoss.setCathedra(cathedra);
-        cathedra.setBoss(cathedraBoss);
-        cathedra.setInformation(rs.getString("cathedraInfo"));
-        cathedra.setContactInf(rs.getString("cathedraContInf"));
-        cathedra.setEduPrograms(rs.getString("edu_programs"));
-        cathedra.setFaculty(faculty);
-        facultyData.get(facultyId).add(cathedra);
-      }
+      dataSet(cathedraData, cathedraId, rs, new Cathedra());
       int groupId = rs.getInt("groupID");
       if (!groupData.containsKey(groupId)) {
         groupData.put(groupId, new ArrayList<>());
@@ -105,23 +77,47 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
       groupData.get(groupId).add(student);
     }
 
-    if (EntityUtils.isValidCollection(facultyList)) {
-      for (Faculty fac : facultyList) {
-        List<Cathedra> cathedraList = facultyData.get(fac.getId());
-        if (EntityUtils.isValidCollection(cathedraList)) {
-          for (Cathedra cat : cathedraList) {
-            List<GroupClass> groupClassList = cathedraData.get(cat.getId());
-            if (EntityUtils.isValidCollection(groupClassList)) {
-              for (GroupClass grp : groupClassList) {
-                grp.setGroupStudents(new HashSet<>(groupData.get(grp.getId())));
-              }
-              cat.setGroupClasses(new HashSet<>(groupClassList));
-            }
-          }
-          fac.setCathedras(new HashSet<>(cathedraList));
-        }
-      }
-    }
+    facultyList.parallelStream().forEach(fac -> {
+      List<Cathedra> cathedraList = facultyData.get(fac.getId());
+      cathedraList.parallelStream().forEach(cat -> {
+        List<GroupClass> groupClassList = cathedraData.get(cat.getId());
+        groupClassList.parallelStream().forEach(grp -> grp.setGroupStudents(
+            new HashSet<>(groupData.get(grp.getId()))));
+        cat.setGroupClasses(new HashSet<>(groupClassList));
+      });
+      fac.setCathedras(new HashSet<>(cathedraList));
+    });
     return facultyList;
+  }
+
+  private <T extends UnitEntity, K extends BaseEntity> void dataSet(Map<Integer, List<K>> data, 
+                                                                    int id, 
+                                                                    ResultSet rs, 
+                                                                    T entity) throws SQLException {
+    if (!data.containsKey(id)) {
+      String type = entity.getClass().getSimpleName().toLowerCase();
+      data.put(id, new ArrayList<>());
+      entity.setId(id);
+      entity.setTitle(rs.getString(type + "Title"));
+      entity.setInformation(rs.getString(type + "Info"));
+      entity.setContactInf(rs.getString(type + "ContInf"));
+      Employee boss = new Employee();
+      boss.setId(rs.getInt(type + "BossID"));
+      boss.setFullName(rs.getString(type + "BossName"));
+      boss.setPosition(rs.getString(type + "BossPosition"));
+      boss.setDegree(rs.getString(type + "BossDegree"));
+      if (entity instanceof Faculty) {
+        faculty = (Faculty) entity;
+        boss.setFaculty(faculty);
+        facultyList.add(faculty);
+      } else {
+        cathedra = (Cathedra) entity;
+        boss.setCathedra(cathedra);
+        cathedra.setEduPrograms(rs.getString("edu_programs"));
+        cathedra.setFaculty(faculty);
+        facultyData.get(facultyId).add(cathedra);
+      }
+      entity.setBoss(boss);
+    }
   }
 }

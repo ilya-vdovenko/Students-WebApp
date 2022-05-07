@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2022, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -38,9 +38,9 @@ public class StudentsWebAppInitializer extends AbstractDispatcherServletInitiali
 
   @Override
   protected WebApplicationContext createServletApplicationContext() {
-    XmlWebApplicationContext rootAppContext = new XmlWebApplicationContext();
-    rootAppContext.setConfigLocations("classpath:SpringConfigs/mvc-config.xml");
-    return rootAppContext;
+    XmlWebApplicationContext webContext = new XmlWebApplicationContext();
+    webContext.setConfigLocations("classpath:SpringConfigs/mvc-config.xml");
+    return webContext;
   }
 
   @Override

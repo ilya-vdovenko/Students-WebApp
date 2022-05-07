@@ -27,6 +27,6 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(locations = "classpath:SpringConfigs/root-config.xml")
 @ActiveProfiles("spring-data-jpa")
-public class InstituteServiceSpringDataJpaTests extends AbstractInstituteServiceTests {
+class InstituteServiceSpringDataJpaTests extends AbstractInstituteServiceTests {
 
 }

@@ -22,6 +22,7 @@ import java.util.Collection;
 import org.spring.samples.swa.model.Cathedra;
 import org.spring.samples.swa.model.GroupClass;
 import org.spring.samples.swa.model.Student;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 
 /**
  * Class of useful methods for manipulating Entities.
@@ -61,6 +62,11 @@ public class EntityUtils {
     student.setGroupClass(groupClass);
     student.setCathedra(cathedra);
     return student;
+  }
+
+  public static void evictAllCaches(EhCacheCacheManager cacheManager) {
+    cacheManager.getCacheNames().stream()
+      .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
   }
 
 }

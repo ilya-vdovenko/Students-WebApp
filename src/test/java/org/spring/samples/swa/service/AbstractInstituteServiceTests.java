@@ -43,6 +43,9 @@ abstract class AbstractInstituteServiceTests {
     Faculty faculty = this.service.findFacultyById(1);
     assertThat(faculty.getTitle()).isEqualTo("Энергетики и систем управления");
     assertThat(faculty.getCathedras().size()).isEqualTo(2);
+    faculty.getCathedras().forEach(cat -> {
+      assertThat(cat.getFaculty().getId()).isEqualTo(1);
+    });
     assertThat(faculty.getEmployees().isEmpty()).isFalse();
   }
 
@@ -85,9 +88,6 @@ abstract class AbstractInstituteServiceTests {
   @Test
   @Transactional
   void shouldInsertStudent() {
-    Collection<Student> students = this.service.getStudents();
-    int found = students.size();
-
     Student student = new Student();
     student.setFullName("Иванов Иван Иванович");
     student.setBirthday(LocalDate.parse("1994-06-23"));
@@ -99,10 +99,10 @@ abstract class AbstractInstituteServiceTests {
     student.setCathedra(this.service.findCathedraById(2));
     student.setGroupClass(this.service.findGroupClassById(3));
 
+    Collection<Student> beforeStudents = this.service.getStudents();
     this.service.saveStudent(student);
     assertThat(student.getId()).isNotZero();
-    students = this.service.getStudents();
-    assertThat(students).hasSize(found + 1);
+    assertThat(this.service.getStudents()).hasSize(beforeStudents.size() + 1);
   }
 
   @Test

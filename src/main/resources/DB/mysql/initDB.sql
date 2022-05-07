@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS institute.students
 
 CREATE TABLE IF NOT EXISTS institute.facultyWorker
 (
+    id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     faculty_id  INT(4) UNSIGNED NOT NULL,
     employee_id INT(4) UNSIGNED NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees (id),
@@ -78,6 +79,7 @@ CREATE TABLE IF NOT EXISTS institute.facultyWorker
 
 CREATE TABLE IF NOT EXISTS institute.facultyBoard
 (
+    id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     faculty_id  INT(4) UNSIGNED NOT NULL,
     employee_id INT(4) UNSIGNED NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees (id),
@@ -86,6 +88,7 @@ CREATE TABLE IF NOT EXISTS institute.facultyBoard
 
 CREATE TABLE IF NOT EXISTS institute.cathedraLectures
 (
+    id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     cathedra_id INT(4) UNSIGNED,
     employee_id INT(4) UNSIGNED NOT NULL,
     FOREIGN KEY (cathedra_id) REFERENCES cathedras (id),

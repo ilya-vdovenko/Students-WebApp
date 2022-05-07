@@ -24,7 +24,7 @@
         <sonar.organization>ilya-vdovenko</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
-        <sonar.nodejs.executable>${project.basedir}/frontend/node/node.exe</sonar.nodejs.executable>
+        <sonar.nodejs.executable>${project.basedir}/frontend/node/node</sonar.nodejs.executable>
         <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
         <!-- Spring -->
@@ -77,12 +77,12 @@
         <tomcat.version>7.0.105</tomcat.version>
 
         <!-- JDBC Drivers -->
-        <mysql-driver.version>8.0.21</mysql-driver.version>
+        <mysql-driver.version>8.0.28</mysql-driver.version>
 
         <!-- Plugins -->
         <tomcat-maven-plugin.version>2.2</tomcat-maven-plugin.version>
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-maven-war-plugin.version>3.2.2</maven-maven-war-plugin.version>
+        <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
@@ -378,7 +378,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-maven-war-plugin.version}</version>
+                <version>${maven-war-plugin.version}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
@@ -420,7 +420,9 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-                    <skipTests>${maven.skipTests}</skipTests>
+                    <excludes>
+                        <exclude>${maven.skipTests}</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -491,7 +493,7 @@
             </activation>
             <properties>
                 <maven.spring.profiles.active>jpa</maven.spring.profiles.active>
-                <maven.skipTests>false</maven.skipTests>
+                <maven.skipTests>%regex[.*(Jdbc|SpringDataJpa).*Tests.*]</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -512,7 +514,7 @@
             <id>JDBC_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-                <maven.skipTests>false</maven.skipTests>
+                <maven.skipTests>%regex[.*Jpa.*Tests.*]</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -533,7 +535,7 @@
             <id>SDJ_HSQLDB</id>
             <properties>
                 <maven.spring.profiles.active>spring-data-jpa</maven.spring.profiles.active>
-                <maven.skipTests>false</maven.skipTests>
+                <maven.skipTests>%regex[.*(Jdbc|ServiceJpa).*Test.*]</maven.skipTests>
                 <maven.db.script>hsqldb</maven.db.script>
                 <maven.jpa.database>HSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>org.hsqldb.jdbcDriver</maven.jdbc.driverClassName>
@@ -554,11 +556,11 @@
             <id>JDBC_MySQL</id>
             <properties>
                 <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-                <maven.skipTests>true</maven.skipTests>
+                <maven.skipTests>%regex[.*Jpa.*Tests.*]</maven.skipTests>
                 <maven.db.script>mysql</maven.db.script>
                 <maven.jpa.database>MYSQL</maven.jpa.database>
                 <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
-                <maven.jdbc.url>jdbc:mysql://localhost:3306</maven.jdbc.url>
+                <maven.jdbc.url>jdbc:mysql://localhost:3306, mysql:3306/institute?failOverReadOnly=false</maven.jdbc.url>
                 <maven.jdbc.username>institute</maven.jdbc.username>
                 <maven.jdbc.password>institute</maven.jdbc.password>
             </properties>

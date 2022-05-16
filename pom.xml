@@ -87,6 +87,7 @@
         <maven-sonar-plugin>3.9.0.2155</maven-sonar-plugin>
         <maven-frontend-plugin>1.12.0</maven-frontend-plugin>
         <maven-jacoco-plugin>0.8.7</maven-jacoco-plugin>
+        <heroku-maven-plugin>3.0.3</heroku-maven-plugin>
 
     </properties>
 
@@ -239,6 +240,13 @@
                     <artifactId>taglibs-standard-impl</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!--For tomcat on heroku-->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>1.2.6</version>
         </dependency>
 
         <dependency>
@@ -599,6 +607,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>${heroku-maven-plugin}</version>
+                <configuration>
+                    <jdkVersion>${java.version}</jdkVersion>
+                </configuration>
             </plugin>
         </plugins>
     </build>

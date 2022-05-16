@@ -30,7 +30,7 @@ $(document).ready(function () {
   logId()
 
   selFac.mouseenter(function () {
-    loadOnEnter(loadFac, selFac, 'faculties', '/Students-WebApp/faculties/getFacList', facId)
+    loadOnEnter(loadFac, selFac, 'faculties', '/faculties/getFacList', facId)
   })
 
   selFac.change(function () {
@@ -38,7 +38,7 @@ $(document).ready(function () {
   })
 
   selCat.mouseenter(function () {
-    loadOnEnter(loadCat, selCat, 'cathedras', '/Students-WebApp/cathedras/getCatList?facultyId=' + facId, catId)
+    loadOnEnter(loadCat, selCat, 'cathedras', '/cathedras/getCatList?facultyId=' + facId, catId)
   })
 
   selCat.change(function () {
@@ -46,7 +46,7 @@ $(document).ready(function () {
   })
 
   selGrp.mouseenter(function () {
-    loadOnEnter(loadGrp, selGrp, 'groups', '/Students-WebApp/groupClasses/getGroupList?cathedraId=' + catId, grpId)
+    loadOnEnter(loadGrp, selGrp, 'groups', '/groupClasses/getGroupList?cathedraId=' + catId, grpId)
   })
 
   function logId () {

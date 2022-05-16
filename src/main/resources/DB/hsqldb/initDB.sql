@@ -57,6 +57,7 @@ ALTER TABLE employees ADD CONSTRAINT fk_employees_cathedras FOREIGN KEY (cathedr
 ALTER TABLE employees ADD CONSTRAINT fk_employees_faculties FOREIGN KEY (faculty_id) REFERENCES faculties (id);
 
 CREATE TABLE facultyWorker (
+    id             INTEGER IDENTITY PRIMARY KEY,
     faculty_id     INTEGER NOT NULL,
     employee_id    INTEGER NOT NULL
 );
@@ -64,6 +65,7 @@ ALTER TABLE facultyWorker ADD CONSTRAINT fk_facultyWorker_faculties FOREIGN KEY 
 ALTER TABLE facultyWorker ADD CONSTRAINT fk_facultyWorker_employees FOREIGN KEY (employee_id) REFERENCES employees (id);
 
 CREATE TABLE facultyBoard (
+    id             INTEGER IDENTITY PRIMARY KEY,
     faculty_id     INTEGER NOT NULL,
     employee_id    INTEGER NOT NULL
 );
@@ -71,6 +73,7 @@ ALTER TABLE facultyBoard ADD CONSTRAINT fk_facultyBoard_faculties FOREIGN KEY (f
 ALTER TABLE facultyBoard ADD CONSTRAINT fk_facultyBoard_employees FOREIGN KEY (employee_id) REFERENCES employees (id);
 
 CREATE TABLE cathedraLectures (
+    id             INTEGER IDENTITY PRIMARY KEY,
     cathedra_id    INTEGER NOT NULL,
     employee_id    INTEGER NOT NULL
 );

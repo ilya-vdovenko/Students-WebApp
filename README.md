@@ -5,9 +5,12 @@
 ![Lint Code Base](https://github.com/ilya-vdovenko/Students-WebApp/workflows/Lint%20Code%20Base/badge.svg)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/ilya-vdovenko/Students-WebApp)
 
+<img width="1042" alt="StudentsWebApp-screenshot" src="https://i.imgur.com/8Bky2eW.png">
+
 This repo is a Pet-project of web application represent list of students from database (HSQLDB, MySQl), with a java based
 spring framework configuration (a plain old **XML** configuration [here](https://github.com/ilya-vdovenko/Students-WebApp/tree/master)) and with a **3-layer architecture** (i.e. presentation --> service --> repository).
 Created by following the example of this repository [spring-projects/spring-framework-petclinic](https://github.com/spring-petclinic/spring-framework-petclinic).
+You can see already deployed app [here](https://pet-project-students-webapp.herokuapp.com/).
 
 ## Running web-app locally
 
@@ -68,14 +71,14 @@ Before do this, would be good to check properties defined in MySQL profile insid
 
 ```xml
 <properties>
-      <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
-      <maven.skipTests>true</maven.skipTests>
-      <maven.db.script>mysql</maven.db.script>
-      <maven.jpa.database>MYSQL</maven.jpa.database>
-      <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
-      <maven.jdbc.url>jdbc:mysql://localhost:3306</maven.jdbc.url>
-      <maven.jdbc.username>institute</maven.jdbc.username>
-      <maven.jdbc.password>institute</maven.jdbc.password>
+    <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+    <maven.skipTests>%regex[.*Jpa.*Tests.*]</maven.skipTests>
+    <maven.db.script>mysql</maven.db.script>
+    <maven.jpa.database>MYSQL</maven.jpa.database>
+    <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
+    <maven.jdbc.url>jdbc:mysql://localhost:3306, mysql:3306/institute?failOverReadOnly=false</maven.jdbc.url>
+    <maven.jdbc.username>institute</maven.jdbc.username>
+    <maven.jdbc.password>institute</maven.jdbc.password>
 </properties>
 ```
 

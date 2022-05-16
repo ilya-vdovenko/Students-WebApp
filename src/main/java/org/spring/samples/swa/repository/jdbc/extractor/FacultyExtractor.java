@@ -59,11 +59,9 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
     GroupClass groupClass = null;
     while (rs.next()) {
       facultyId = rs.getInt("facultyID");
-      faculty = new Faculty();
-      dataSet(facultyData, facultyId, rs, faculty);
+      dataSet(facultyData, facultyId, rs, new Faculty());
       int cathedraId = rs.getInt("cathedraID");
-      cathedra = new Cathedra();
-      dataSet(cathedraData, cathedraId, rs, cathedra);
+      dataSet(cathedraData, cathedraId, rs, new Cathedra());
       int groupId = rs.getInt("groupID");
       if (!groupData.containsKey(groupId)) {
         groupData.put(groupId, new ArrayList<>());
@@ -109,11 +107,13 @@ public class FacultyExtractor implements ResultSetExtractor<List<Faculty>> {
       boss.setPosition(rs.getString(type + "BossPosition"));
       boss.setDegree(rs.getString(type + "BossDegree"));
       if (entity instanceof Faculty) {
-        boss.setFaculty((Faculty) entity);
+        faculty = (Faculty) entity;
+        boss.setFaculty(faculty);
         facultyList.add(faculty);
       } else {
-        boss.setCathedra((Cathedra) entity);
-        ((Cathedra) entity).setEduPrograms(rs.getString("edu_programs"));
+        cathedra = (Cathedra) entity;
+        boss.setCathedra(cathedra);
+        cathedra.setEduPrograms(rs.getString("edu_programs"));
         cathedra.setFaculty(faculty);
         facultyData.get(facultyId).add(cathedra);
       }

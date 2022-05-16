@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, Ilya Vdovenko and the Students-WebApp contributors.
+ * Copyright 2019-2022, Ilya Vdovenko and the Students-WebApp contributors.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -30,7 +30,7 @@ $(document).ready(function () {
   logId()
 
   selFac.mouseenter(function () {
-    loadOnEnter(loadFac, selFac, 'faculties', '/Students-WebApp/faculties/getFacList', facId)
+    loadOnEnter(loadFac, selFac, 'faculties', '/faculties/getFacList', facId)
   })
 
   selFac.change(function () {
@@ -38,7 +38,7 @@ $(document).ready(function () {
   })
 
   selCat.mouseenter(function () {
-    loadOnEnter(loadCat, selCat, 'cathedras', '/Students-WebApp/cathedras/getCatList?facultyId=' + facId, catId)
+    loadOnEnter(loadCat, selCat, 'cathedras', '/cathedras/getCatList?facultyId=' + facId, catId)
   })
 
   selCat.change(function () {
@@ -46,7 +46,7 @@ $(document).ready(function () {
   })
 
   selGrp.mouseenter(function () {
-    loadOnEnter(loadGrp, selGrp, 'groups', '/Students-WebApp/groupClasses/getGroupList?cathedraId=' + catId, grpId)
+    loadOnEnter(loadGrp, selGrp, 'groups', '/groupClasses/getGroupList?cathedraId=' + catId, grpId)
   })
 
   function logId () {

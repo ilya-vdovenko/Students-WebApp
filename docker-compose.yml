@@ -9,6 +9,14 @@ services:
       - MYSQL_USER=institute
       - MYSQL_PASSWORD=institute
       - MYSQL_DATABASE=institute
+  # tomcat:
+  #     image: tomcat:9.0.62-jre11
+  #     ports:
+  #       - 8282:8080
+  #     environment:
+  #         spring.profiles.active: jdbc
+  #     volumes:
+  #      - ./target/app:/usr/local/tomcat/webapps
   # jetty:
   #   image: jetty:9.4.43-jre11
   #   ports:

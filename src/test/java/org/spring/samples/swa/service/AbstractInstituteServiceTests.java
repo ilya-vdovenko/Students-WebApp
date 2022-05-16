@@ -43,6 +43,9 @@ abstract class AbstractInstituteServiceTests {
     Faculty faculty = this.service.findFacultyById(1);
     assertThat(faculty.getTitle()).isEqualTo("Энергетики и систем управления");
     assertThat(faculty.getCathedras().size()).isEqualTo(2);
+    faculty.getCathedras().forEach(cat -> {
+      assertThat(cat.getFaculty().getId()).isEqualTo(1);
+    });
     assertThat(faculty.getEmployees().isEmpty()).isFalse();
   }
 

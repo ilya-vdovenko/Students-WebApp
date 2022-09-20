@@ -1,10 +1,8 @@
-CREATE DATABASE IF NOT EXISTS institute;
-
-ALTER DATABASE institute
+ALTER DATABASE
     DEFAULT CHARACTER SET utf8
     DEFAULT COLLATE utf8_general_ci;
 
-CREATE TABLE IF NOT EXISTS institute.employees
+CREATE TABLE IF NOT EXISTS employees
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fullName    VARCHAR(60),
@@ -14,7 +12,7 @@ CREATE TABLE IF NOT EXISTS institute.employees
     faculty_id  INT(4) UNSIGNED NOT NULL
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.faculties
+CREATE TABLE IF NOT EXISTS faculties
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title       VARCHAR(120),
@@ -24,7 +22,7 @@ CREATE TABLE IF NOT EXISTS institute.faculties
     FOREIGN KEY (boss) REFERENCES employees (id)
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.cathedras
+CREATE TABLE IF NOT EXISTS cathedras
 (
     id           INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title        VARCHAR(120),
@@ -37,12 +35,12 @@ CREATE TABLE IF NOT EXISTS institute.cathedras
     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
 ) engine = InnoDB;
 
-ALTER TABLE institute.employees
+ALTER TABLE employees
     ADD FOREIGN KEY (cathedra_id) REFERENCES cathedras (id);
-ALTER TABLE institute.employees
+ALTER TABLE employees
     ADD FOREIGN KEY (faculty_id) REFERENCES faculties (id);
 
-CREATE TABLE IF NOT EXISTS institute.group_classes
+CREATE TABLE IF NOT EXISTS group_classes
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title       VARCHAR(7),
@@ -51,7 +49,7 @@ CREATE TABLE IF NOT EXISTS institute.group_classes
     FOREIGN KEY (cathedra_id) REFERENCES cathedras (id)
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.students
+CREATE TABLE IF NOT EXISTS students
 (
     id             INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fullName       VARCHAR(40),
@@ -68,7 +66,7 @@ CREATE TABLE IF NOT EXISTS institute.students
     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.facultyWorker
+CREATE TABLE IF NOT EXISTS facultyWorker
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     faculty_id  INT(4) UNSIGNED NOT NULL,
@@ -77,7 +75,7 @@ CREATE TABLE IF NOT EXISTS institute.facultyWorker
     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.facultyBoard
+CREATE TABLE IF NOT EXISTS facultyBoard
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     faculty_id  INT(4) UNSIGNED NOT NULL,
@@ -86,7 +84,7 @@ CREATE TABLE IF NOT EXISTS institute.facultyBoard
     FOREIGN KEY (faculty_id) REFERENCES faculties (id)
 ) engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS institute.cathedraLectures
+CREATE TABLE IF NOT EXISTS cathedraLectures
 (
     id          INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     cathedra_id INT(4) UNSIGNED,

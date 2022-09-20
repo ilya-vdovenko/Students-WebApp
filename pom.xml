@@ -81,6 +81,7 @@
         <maven-jetty-plugin.version>9.4.43.v20210629</maven-jetty-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
+        <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
@@ -88,6 +89,7 @@
         <maven-frontend-plugin>1.12.0</maven-frontend-plugin>
         <maven-jacoco-plugin>0.8.7</maven-jacoco-plugin>
         <heroku-maven-plugin>3.0.3</heroku-maven-plugin>
+        <webapp-runner.version>9.0.52.1</webapp-runner.version>
 
     </properties>
 
@@ -478,6 +480,30 @@
                 <version>${maven-resources-plugin.version}</version>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.heroku</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>${webapp-runner.version}</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>target/artifacts</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${maven-jetty-plugin.version}</version>
@@ -697,6 +723,27 @@
                 <maven.jdbc.url>jdbc:mysql://localhost:3306, mysql:3306/institute?failOverReadOnly=false</maven.jdbc.url>
                 <maven.jdbc.username>institute</maven.jdbc.username>
                 <maven.jdbc.password>institute</maven.jdbc.password>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>${mysql-driver.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>HEROKU_MySQL</id>
+            <properties>
+                <maven.spring.profiles.active>jdbc</maven.spring.profiles.active>
+                <maven.skipTests>%regex[.*.*Tests.*]</maven.skipTests>
+                <maven.db.script>mysql</maven.db.script>
+                <maven.jpa.database>MYSQL</maven.jpa.database>
+                <maven.jdbc.driverClassName>com.mysql.cj.jdbc.Driver</maven.jdbc.driverClassName>
+                <maven.jdbc.url></maven.jdbc.url>
+                <maven.jdbc.username></maven.jdbc.username>
+                <maven.jdbc.password></maven.jdbc.password>
             </properties>
             <dependencies>
                 <dependency>

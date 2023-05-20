@@ -2,7 +2,9 @@ name: SonarCloud
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [javaconfig]
+    #Off workflow due to sonarcloud plugin was integrated in github.
+    branches-ignore:
+      - "**"
 
 jobs:
   build:

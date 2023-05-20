@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.springframework.app</groupId>
     <artifactId>Students-WebApp</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>war</packaging>
     <description>A Spring Framework application based on JSP, Spring MVC, Spring Data JPA, Hibernate and JDBC
     </description>
@@ -27,11 +27,9 @@
         <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
         <!-- Spring -->
-        <spring-framework.version>5.3.9</spring-framework.version>
-        <spring-data-jdbc.version>2.2.3</spring-data-jdbc.version>
-
-        <!-- Persistence -->
+        <spring-framework.version>5.3.27</spring-framework.version>
         <spring-data-releasetrain.version>Neumann-SR9</spring-data-releasetrain.version>
+        <spring-data-jdbc.version>2.2.3</spring-data-jdbc.version>
         <hibernate.version>5.5.3.Final</hibernate.version>
         <hibernate-annotations.version>5.1.2.Final</hibernate-annotations.version>
         <hsqldb.version>2.6.0</hsqldb.version>
@@ -53,7 +51,7 @@
         <webjars-bootstrap-table.version>1.16.0</webjars-bootstrap-table.version>
         <webjars-font-awesome.version>5.15.3</webjars-font-awesome.version>
         <webjars-locator.version>0.42</webjars-locator.version>
-        <node.version>v14.17.3</node.version>
+        <node.version>v18.16.0</node.version>
         <npm.version>7.16.0</npm.version>
 
         <!-- Back -->
@@ -84,7 +82,7 @@
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-        <maven-sonar-plugin>3.9.0.2155</maven-sonar-plugin>
+        <maven-sonar-plugin>3.9.1.2184</maven-sonar-plugin>
         <maven-frontend-plugin>1.12.0</maven-frontend-plugin>
         <maven-jacoco-plugin>0.8.7</maven-jacoco-plugin>
         <heroku-maven-plugin>3.0.3</heroku-maven-plugin>
